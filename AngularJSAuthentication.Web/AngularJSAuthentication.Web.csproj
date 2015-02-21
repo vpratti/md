@@ -69,13 +69,9 @@
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\ordersService.js" />
     <Content Include="app\services\tokensManagerService.js" />
-    <Content Include="app\views\associate.html" />
-    <Content Include="app\views\home.html" />
     <Content Include="app\views\login.html" />
-    <Content Include="app\views\orders.html" />
-    <Content Include="app\views\refresh.html" />
+    <Content Include="app\views\dashboard.html" />
     <Content Include="app\views\signup.html" />
-    <Content Include="app\views\tokens.html" />
     <Content Include="authComplete.html" />
     <Content Include="content\css\font-awesome.min.css" />
     <Content Include="content\css\loading-bar.css" />

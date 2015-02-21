@@ -13,24 +13,9 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/signup.html"
     });
 
-    $routeProvider.when("/orders", {
+    $routeProvider.when("/dashboard", {
         controller: "ordersController",
-        templateUrl: "/app/views/orders.html"
-    });
-
-    $routeProvider.when("/refresh", {
-        controller: "refreshController",
-        templateUrl: "/app/views/refresh.html"
-    });
-
-    $routeProvider.when("/tokens", {
-        controller: "tokensManagerController",
-        templateUrl: "/app/views/tokens.html"
-    });
-
-    $routeProvider.when("/associate", {
-        controller: "associateController",
-        templateUrl: "/app/views/associate.html"
+        templateUrl: "/app/views/dashboard.html"
     });
 
     $routeProvider.otherwise({ redirectTo: "/login" });

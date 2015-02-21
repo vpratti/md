@@ -31,7 +31,7 @@ app.controller('associateController', ['$scope', '$location','$timeout','authSer
     var startTimer = function () {
         var timer = $timeout(function () {
             $timeout.cancel(timer);
-            $location.path('/orders');
+            $location.path('/dashboard');
         }, 2000);
     }
 
