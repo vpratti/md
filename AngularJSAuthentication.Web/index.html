@@ -13,6 +13,7 @@
     <link href="content/css/social-buttons.css" rel="stylesheet" />
     <link href="content/css/select.css" rel="stylesheet" />
     <link href="content/select2/select2.css" rel="stylesheet" />
+    <link href="content/css/custom.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 </head>
 <body>
@@ -24,9 +25,19 @@
             </div>
             <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
                 <ul class="nav navbar-nav navbar" ng-if="authentication.isAuth">
-                    <li data-ng-hide="!authentication.isAuth"><a href="#/usermanagement">User Management</a></li>
+                    <li ng-if="authentication.isAuth" class="dropdown">
+                        <a vc-header-dropdown class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">User Management<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#/usermanagement">Add New User</a></li>
+                            <li><a href="#/usermanagement">Manage Users</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#/usermanagement">Add New Role</a></li>
+                            <li><a href="#/usermanagement">Manage Roles</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+
                     <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
                     <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
                 </ul>
@@ -80,6 +91,8 @@
     <script src="app/controllers/signupController.js?v=2"></script>
     <script src="app/controllers/tokensManagerController.js?v=2"></script>
     <script src="app/controllers.js?v=2"></script>
+    <script src="app/directives.js?v=2"></script>
+
     <!-- Load custom filters -->
     <!-- Load custom directives -->
 
