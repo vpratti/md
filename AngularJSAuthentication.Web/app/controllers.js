@@ -5,9 +5,7 @@
         .module('VirtualClarityApp')
         .controller('dashboardCtrl', dashboardCtrl);
 
-    dashboardCtrl.$inject = ['ordersService'];
-
-    function dashboardCtrl(ordersService) {
+    function dashboardCtrl() {
         var vm = this;
         vm.name = 'dashboardCtrl';
 
@@ -25,5 +23,7 @@
         var vm = this;
         vm.name = 'usermanagementCtrl';
 
+        vm.availableRoles = ["admin", 'normal', 'other'];
+        vm.roles = [];
     }
 }(angular));

@@ -1,5 +1,5 @@
 ﻿
-var app = angular.module('VirtualClarityApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap']);
+var app = angular.module('VirtualClarityApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap', 'ui.select', 'ngSanitize']);
 
 app.config(function ($routeProvider) {
 

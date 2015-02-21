@@ -7,10 +7,26 @@
             <accordion close-others="oneAtATime">
                 <accordion-group heading="Add User" ng-form="newUserForm">
                     <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.username" required autofocus><br/>
+                    
+                    <ui-select multiple ng-model="vm.roles" theme="select2" style="width: 100%; margin-bottom: 20px;">
+                        <ui-select-match placeholder="Select Roles">{{$item}}</ui-select-match>
+                        <ui-select-choices repeat="role in vm.availableRoles | filter:$select.search">
+                            {{role}}
+                        </ui-select-choices>
+                    </ui-select>
+
                     <input type="text" class="form-control" placeholder="Password" data-ng-model="vm.password" required><br />
                     <input type="text" class="form-control" placeholder="Confirm Password" data-ng-model="vm.confirmPassword" required><br />
+                    
+                    <button class="btn btn-sm btn-info" type="submit" ng-click="createUser()">Create</button>
                 </accordion-group>
                 <accordion-group heading="Manage Users">
+                    This content is straight in the template.
+                </accordion-group>
+                <accordion-group heading="Add Role">
+                    This content is straight in the template.
+                </accordion-group>
+                <accordion-group heading="Manage Roles">
                     This content is straight in the template.
                 </accordion-group>
             </accordion>
