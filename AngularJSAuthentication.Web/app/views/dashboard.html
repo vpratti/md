@@ -1,38 +1,26 @@
 ﻿<div class="row">
-    <div class="col-md-2">
-        <button type="button" ng-click="vm.callOrder()">My BUtton</button>
-        &nbsp;
-    </div>
-    <div class="col-md-8">
+    <div class="col-md-12">
         <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>City</th>
-                    <th>Shipped</th>
+                    <th>Process Area</th>
+                    <th>App Mnemoonics in Scop</th>
+                    <th>MIS Team PM Identified & Contacted</th>
+                    <th>Request Documents from the MIS Team</th>
+                    <th>Prepopulate questionnaire (prep for Intake meeting)</th>
+                    <th>App Discovery Workshop Scheduled</th>
+                    <th>Conduct App Discovery Workshop (Current State)</th>
+                    <th>MIS Questionnaire Sign Off</th>
+                    <th>Current State Defined (Signed off)</th>
+                    <th>Future State Finalized</th>
+                    <th>Future State Approved (Sign-Off)</th>
                 </tr>
             </thead>
             <tbody>
-                <tr data-ng-repeat="order in orders">
-                    <td>
-                        {{ order.orderID }}
-                    </td>
-                    <td>
-                        {{ order.customerName }}
-                    </td>
-                    <td>
-                        {{ order.shipperCity }}
-                    </td>
-                    <td>
-                       <input type="checkbox" data-ng-model="order.isShipped" disabled="disabled">
-                    </td>
+                <tr >
+                  
                 </tr>
             </tbody>
         </table>
-    </div>
-
-    <div class="col-md-2">
-        &nbsp;
     </div>
 </div>
