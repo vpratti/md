@@ -3,11 +3,6 @@ var app = angular.module('AngularAuthApp', ['ngRoute', 'LocalStorageModule', 'an
 
 app.config(function ($routeProvider) {
 
-    $routeProvider.when("/home", {
-        controller: "homeController",
-        templateUrl: "/app/views/home.html"
-    });
-
     $routeProvider.when("/login", {
         controller: "loginController",
         templateUrl: "/app/views/login.html"
@@ -38,7 +33,7 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/associate.html"
     });
 
-    $routeProvider.otherwise({ redirectTo: "/home" });
+    $routeProvider.otherwise({ redirectTo: "/login" });
 
 });
 
