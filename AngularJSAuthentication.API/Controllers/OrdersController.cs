@@ -8,10 +8,10 @@ using System.Web.Http;
 
 namespace AngularJSAuthentication.API.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/Orders")]
     public class OrdersController : ApiController
     {
-        [Authorize]
         [Route("")]
         public IHttpActionResult Get()
         {

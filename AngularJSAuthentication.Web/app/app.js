@@ -1,10 +1,10 @@
 ﻿
-var app = angular.module('AngularAuthApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar']);
+var app = angular.module('VirtualClarityApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap']);
 
 app.config(function ($routeProvider) {
 
     $routeProvider.when("/login", {
-        controller: "loginController",
+        controller: "loginController as vm",
         templateUrl: "/app/views/login.html"
     });
 
@@ -14,8 +14,13 @@ app.config(function ($routeProvider) {
     });
 
     $routeProvider.when("/dashboard", {
-        controller: "ordersController",
+        controller: "dashboardCtrl as vm",
         templateUrl: "/app/views/dashboard.html"
+    });
+
+    $routeProvider.when("/usermanagement", {
+        controller: "usermanagementCtrl as vm",
+        templateUrl: "/app/views/usermanagement.html"
     });
 
     $routeProvider.otherwise({ redirectTo: "/login" });

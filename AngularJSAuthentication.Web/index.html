@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html data-ng-app="AngularAuthApp">
+<html data-ng-app="VirtualClarityApp">
 <head>
 
     <meta name="keywords" content="angularjs,SPA,Single Page Application,refresh tokens,authentication,bearer token authentication,OWIN,bootstrap,bootstrap ui,tutorial,JS framework,ASP.NET WEB API 2,Taiseer Joudeh" />
@@ -17,17 +17,16 @@
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" data-ng-controller="indexController">
         <div class="container">
-            <div class="navbar-header">
-                <button class="btn btn-success navbar-toggle" data-ng-click="navbarExpanded = !navbarExpanded">
-                    <span class="glyphicon glyphicon-chevron-down"></span>
-                </button>
-                <!--<a class="navbar-brand" href="#/">Home</a>-->
+            <div class="navbar-header" ng-if="authentication.isAuth">
+                <a class="navbar-brand" href="#/dashboard">Home</a>
             </div>
             <div class="collapse navbar-collapse" data-collapse="!navbarExpanded">
+                <ul class="nav navbar-nav navbar" ng-if="authentication.isAuth">
+                    <li data-ng-hide="!authentication.isAuth"><a href="#/usermanagement">User Management</a></li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li data-ng-hide="!authentication.isAuth"><a href="" data-ng-click="logOut()">Logout</a></li>
                     <li data-ng-hide="authentication.isAuth"> <a href="#/login">Login</a></li>
-                    <li data-ng-hide="authentication.isAuth"> <a href="#/signup">Sign Up</a></li>
                 </ul>
             </div>
         </div>
@@ -35,7 +34,7 @@
     <div class="jumbotron">
         <div class="container">
             <div class="page-header text-center">
-                <h1>PNC Application Tracker</h1>
+                <h1>PNC App Tracker</h1>
             </div>
         </div>
     </div>
@@ -60,6 +59,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
     <script src="scripts/angular-local-storage.min.js"></script>
     <script src="scripts/loading-bar.min.js"></script>
+    <script src="scripts/ui-bootstrap-tpls-0.12.1.min.js"></script>
 
     <!-- Load app main script -->
     <script src="app/app.js?v=2"></script>
@@ -71,13 +71,10 @@
     <script src="app/services/tokensManagerService.js?v=2"></script>
     <!-- Load controllers -->
     <script src="app/controllers/indexController.js?v=2"></script>
-    <script src="app/controllers/homeController.js?v=2"></script>
     <script src="app/controllers/loginController.js?v=2"></script>
     <script src="app/controllers/signupController.js?v=2"></script>
-    <script src="app/controllers/ordersController.js?v=2"></script>
-    <script src="app/controllers/refreshController.js?v=2"></script>
     <script src="app/controllers/tokensManagerController.js?v=2"></script>
-    <script src="app/controllers/associateController.js?v=2"></script>
+    <script src="app/controllers.js?v=2"></script>
     <!-- Load custom filters -->
     <!-- Load custom directives -->
 
