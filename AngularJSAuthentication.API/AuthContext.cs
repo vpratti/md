@@ -1,10 +1,6 @@
 ﻿using AngularJSAuthentication.API.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
 namespace AngularJSAuthentication.API
 {
@@ -13,7 +9,7 @@ namespace AngularJSAuthentication.API
         public AuthContext()
             : base("AuthContext")
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<AuthContext>());
+            Database.SetInitializer(new AuthContextInitializer());
         }
 
         public DbSet<Client> Clients { get; set; }
