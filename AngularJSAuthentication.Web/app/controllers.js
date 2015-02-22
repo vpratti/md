@@ -19,17 +19,21 @@
         .module('VirtualClarityApp')
         .controller('usermanagementCtrl', usermanagementCtrl);
 
-    usermanagementCtrl.$inject = ['userManagementService', 'rolesService'];
+    usermanagementCtrl.$inject = ['userManagementService', 'rolesService', 'UserModel', 'authService'];
 
-    function usermanagementCtrl(userManagementService, rolesService) {
+    function usermanagementCtrl(userManagementService, rolesService, UserModel, authService) {
         var vm = this;
         vm.name = 'usermanagementCtrl';
 
-        vm.availableRoles = ["admin", 'normal', 'other'];
-        vm.roles = [];
+        vm.availableRoles = [];
+        vm.newUser = new UserModel();
         vm.users = [];
 
-        var init = function() {
+        vm.createUser = function () {
+            authService.saveRegistration(vm.newUser);
+        };
+
+        vm.init = function() {
             userManagementService.getAllUsers().then(function(result) {
                 vm.users = result.data;
             });
@@ -37,10 +41,9 @@
 
             rolesService.getAllRoles().then(function (result) {
                 vm.availableRoles = result.data;
-                console.log(result.data);
             });
         };
 
-        init();
+        vm.init();
     }
 }(angular));

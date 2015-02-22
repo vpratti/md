@@ -24,22 +24,4 @@ namespace AngularJSAuthentication.API.Models
         [DataMember]
         public IEnumerable<RoleDto> Roles { get; set; }
     }
-
-    [DataContract]
-    public class RoleDto
-    {
-        public RoleDto() { }
-
-        public RoleDto(string id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-
-        [DataMember]
-        string Id { get; set; }
-
-        [DataMember]
-        string Name { get; set; }
-    }
 }

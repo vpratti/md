@@ -37,7 +37,8 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // POST api/Account/Register
-        [Authorize]
+        [HttpPost]
+        [Authorize(Users = "admin")]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(UserModel userModel)
         {
