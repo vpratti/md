@@ -5,7 +5,9 @@
         .module('VirtualClarityApp')
         .directive('vcHeaderDropdown', vcHeaderDropdown);
 
-    function vcHeaderDropdown() {
+    vcHeaderDropdown.$inject = ['$document'];
+
+    function vcHeaderDropdown($document) {
         var directive = {
             restrict: 'A',
             link: linkFunc
@@ -14,15 +16,25 @@
         return directive;
 
         function linkFunc(scope, element) {
+            var parent = element.parent()[0];
 
             element.on('click', function () {
-                var parent = element.parent()[0];
-                if (parent.className == "dropdown") {
-                    parent.className += " open";
+                if (isClosed(parent)) {
+                    parent.className += ' open';
                 } else {
-                    parent.className = "dropdown";
+                    parent.className = parent.className.replace('open', '').trim();
                 }
             });
+
+            $document.on('click', function (event) {
+                if (event.target.className.indexOf('dropdown') < 0) {
+                    parent.className = parent.className.replace('open', '').trim();
+                }
+            });
+        }
+
+        function isClosed(parent) {
+            return parent.className.indexOf('open') < 0;
         }
     }
 
