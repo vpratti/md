@@ -17,13 +17,25 @@
 
     angular
         .module('VirtualClarityApp')
-        .controller('usermanagementCtrl', dashboardCtrl);
+        .controller('usermanagementCtrl', usermanagementCtrl);
 
-    function dashboardCtrl() {
+    usermanagementCtrl.$inject = ['userManagementService'];
+
+    function usermanagementCtrl(userManagementService) {
         var vm = this;
         vm.name = 'usermanagementCtrl';
 
         vm.availableRoles = ["admin", 'normal', 'other'];
         vm.roles = [];
+        vm.users = [];
+
+        var init = function() {
+            userManagementService.getAllUsers().then(function(result) {
+                vm.users = result.data;
+                console.log(result.data);
+            });
+        };
+
+        init();
     }
 }(angular));

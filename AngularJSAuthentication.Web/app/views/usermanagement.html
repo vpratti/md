@@ -1,13 +1,10 @@
 ﻿<form role="form">
     <div class="row">
-        <div class="col-md-2">
-            &nbsp;
-        </div>
-        <div class="col-md-8">
+        <div class="col-md-12">
             <accordion close-others="oneAtATime">
                 <accordion-group heading="Add User" ng-form="newUserForm">
-                    <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.username" required autofocus><br/>
-                    
+                    <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.username" required autofocus><br />
+
                     <ui-select multiple ng-model="vm.roles" theme="select2" style="width: 100%; margin-bottom: 20px;">
                         <ui-select-match placeholder="Select Roles">{{$item}}</ui-select-match>
                         <ui-select-choices repeat="role in vm.availableRoles | filter:$select.search">
@@ -17,22 +14,28 @@
 
                     <input type="text" class="form-control" placeholder="Password" data-ng-model="vm.password" required><br />
                     <input type="text" class="form-control" placeholder="Confirm Password" data-ng-model="vm.confirmPassword" required><br />
-                    
+
                     <button class="btn btn-sm btn-info" type="submit" ng-click="createUser()">Create</button>
                 </accordion-group>
-                <accordion-group heading="Manage Users">
-                    This content is straight in the template.
-                </accordion-group>
-                <accordion-group heading="Add Role">
-                    This content is straight in the template.
-                </accordion-group>
-                <accordion-group heading="Manage Roles">
-                    This content is straight in the template.
-                </accordion-group>
             </accordion>
-        </div>
-        <div class="col-md-2">
-            &nbsp;
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Roles</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in vm.users">
+                        <td>{{user.userName}}</td>
+                        <td>
+                            <span ng-repeat="role in user.roles">{{role.name}}&nbsp;</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </form>

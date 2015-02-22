@@ -1,4 +1,6 @@
-﻿using AngularJSAuthentication.API.Models;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using AngularJSAuthentication.API.Models;
 using AngularJSAuthentication.API.Results;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -12,6 +14,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
+using WebGrease.Css.Extensions;
 
 namespace AngularJSAuthentication.API.Controllers
 {
@@ -19,6 +22,8 @@ namespace AngularJSAuthentication.API.Controllers
     public class AccountController : ApiController
     {
         private readonly AuthRepository _repo;
+        private readonly AuthContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager; 
 
         private IAuthenticationManager Authentication
         {
@@ -28,6 +33,8 @@ namespace AngularJSAuthentication.API.Controllers
         public AccountController()
         {
             _repo = new AuthRepository();
+            _context = new AuthContext();
+            _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
         }
 
         // POST api/Account/Register
@@ -190,6 +197,37 @@ namespace AngularJSAuthentication.API.Controllers
             return Ok(accessTokenResponse);
 
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("GetUsers")]
+        public async Task<IHttpActionResult> GetUsers()
+        {
+            var users =  await _context.Users.ToArrayAsync();
+            var userDtos = new List<UserDto>();
+            users.ForEach(i =>
+            {
+                var roles = GetRole(i.Roles);
+                var userDto = new UserDto(i.Id, i.UserName, roles);
+                userDtos.Add(userDto);
+            });
+
+            return Ok(userDtos);
+        }
+
+        private IEnumerable<Role> GetRole(IEnumerable<IdentityUserRole> identityUserRoles)
+        {
+            var roles = new List<Role>();
+            var rolesMetadata = _roleManager.Roles;
+            identityUserRoles.ForEach(i =>
+            {
+                var roleName = rolesMetadata.First(j => j.Id.Equals(i.RoleId)).Name;
+                var role = new Role(i.RoleId, roleName);
+                roles.Add(role);
+            });
+
+            return roles;
+        } 
 
         protected override void Dispose(bool disposing)
         {
