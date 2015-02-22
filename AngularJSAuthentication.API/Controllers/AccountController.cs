@@ -4,7 +4,6 @@ using AngularJSAuthentication.API.Models;
 using AngularJSAuthentication.API.Results;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Linq;
@@ -38,7 +37,7 @@ namespace AngularJSAuthentication.API.Controllers
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
+        [Authorize]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(UserModel userModel)
         {
@@ -113,58 +112,6 @@ namespace AngularJSAuthentication.API.Controllers
 
         }
 
-        // POST api/Account/RegisterExternal
-        [AllowAnonymous]
-        [Route("RegisterExternal")]
-        public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
-        {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var verifiedAccessToken = await VerifyExternalAccessToken(model.Provider, model.ExternalAccessToken);
-            if (verifiedAccessToken == null)
-            {
-                return BadRequest("Invalid Provider or External Access Token");
-            }
-
-            IdentityUser user = await _repo.FindAsync(new UserLoginInfo(model.Provider, verifiedAccessToken.user_id));
-
-            bool hasRegistered = user != null;
-
-            if (hasRegistered)
-            {
-                return BadRequest("External user is already registered");
-            }
-
-            user = new IdentityUser() { UserName = model.UserName };
-
-            IdentityResult result = await _repo.CreateAsync(user);
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            var info = new ExternalLoginInfo()
-            {
-                DefaultUserName = model.UserName,
-                Login = new UserLoginInfo(model.Provider, verifiedAccessToken.user_id)
-            };
-
-            result = await _repo.AddLoginAsync(user.Id, info.Login);
-            if (!result.Succeeded)
-            {
-                return GetErrorResult(result);
-            }
-
-            //generate access token response
-            var accessTokenResponse = GenerateLocalAccessTokenResponse(model.UserName);
-
-            return Ok(accessTokenResponse);
-        }
-
         [AllowAnonymous]
         [HttpGet]
         [Route("ObtainLocalAccessToken")]
@@ -215,14 +162,14 @@ namespace AngularJSAuthentication.API.Controllers
             return Ok(userDtos);
         }
 
-        private IEnumerable<Role> GetRole(IEnumerable<IdentityUserRole> identityUserRoles)
+        private IEnumerable<RoleDto> GetRole(IEnumerable<IdentityUserRole> identityUserRoles)
         {
-            var roles = new List<Role>();
+            var roles = new List<RoleDto>();
             var rolesMetadata = _roleManager.Roles;
             identityUserRoles.ForEach(i =>
             {
                 var roleName = rolesMetadata.First(j => j.Id.Equals(i.RoleId)).Name;
-                var role = new Role(i.RoleId, roleName);
+                var role = new RoleDto(i.RoleId, roleName);
                 roles.Add(role);
             });
 

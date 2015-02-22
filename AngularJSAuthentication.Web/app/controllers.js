@@ -19,9 +19,9 @@
         .module('VirtualClarityApp')
         .controller('usermanagementCtrl', usermanagementCtrl);
 
-    usermanagementCtrl.$inject = ['userManagementService'];
+    usermanagementCtrl.$inject = ['userManagementService', 'rolesService'];
 
-    function usermanagementCtrl(userManagementService) {
+    function usermanagementCtrl(userManagementService, rolesService) {
         var vm = this;
         vm.name = 'usermanagementCtrl';
 
@@ -32,6 +32,11 @@
         var init = function() {
             userManagementService.getAllUsers().then(function(result) {
                 vm.users = result.data;
+            });
+
+
+            rolesService.getAllRoles().then(function (result) {
+                vm.availableRoles = result.data;
                 console.log(result.data);
             });
         };

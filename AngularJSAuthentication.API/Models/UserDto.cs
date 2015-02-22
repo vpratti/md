@@ -8,7 +8,7 @@ namespace AngularJSAuthentication.API.Models
     {
         public UserDto() { }
 
-        public UserDto(string id, string username, IEnumerable<Role> roles)
+        public UserDto(string id, string username, IEnumerable<RoleDto> roles)
         {
             Id = id;
             UserName = username;
@@ -22,15 +22,15 @@ namespace AngularJSAuthentication.API.Models
         public string UserName { get; set; }
 
         [DataMember]
-        public IEnumerable<Role> Roles { get; set; }
+        public IEnumerable<RoleDto> Roles { get; set; }
     }
 
     [DataContract]
-    public class Role
+    public class RoleDto
     {
-        public Role() { }
+        public RoleDto() { }
 
-        public Role(string id, string name)
+        public RoleDto(string id, string name)
         {
             Id = id;
             Name = name;
