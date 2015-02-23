@@ -59,6 +59,16 @@ namespace AngularJSAuthentication.API.Controllers
              return Ok();
         }
 
+        [HttpDelete]
+        [Authorize(Users = "admin")]
+        [Route("DeleteUser")]
+        public async Task<IHttpActionResult> DeleteUser(string userId)
+        {
+            var result = await _repo.DeleteUser(userId);
+            return Ok(result);
+
+        }
+
         // GET api/Account/ExternalLogin
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]

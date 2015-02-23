@@ -33,6 +33,10 @@
             authService.saveRegistration(vm.newUser);
         };
 
+        vm.deleteUser = function (id) {
+            userManagementService.deleteUser(id);
+        };
+
         vm.init = function() {
             userManagementService.getAllUsers().then(function(result) {
                 vm.users = result.data;

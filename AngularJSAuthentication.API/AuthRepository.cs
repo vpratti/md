@@ -41,6 +41,13 @@ namespace AngularJSAuthentication.API
             return result;
         }
 
+        public async Task<IdentityResult> DeleteUser(string userId)
+        {
+            var identityUser = _context.Users.First(i => i.Id.Equals(userId));
+            var result = await _userManager.DeleteAsync(identityUser);
+            return result;
+        } 
+
         private void AddRolesToUser(UserModel userModel, IdentityUser user)
         {
             userModel.Roles.ForEach(i =>

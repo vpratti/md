@@ -9,13 +9,18 @@
 
     function userManagementService($http, ngAuthSettings) {
         var factory = {
-            getAllUsers: getAllUsers
+            getAllUsers: getAllUsers,
+            deleteUser: deleteUser
         };
 
         return factory;
 
         function getAllUsers() {
            return $http.get(ngAuthSettings.apiServiceBaseUri + "api/Account/GetUsers");
+        }
+
+        function deleteUser(id) {
+            return $http.delete(ngAuthSettings.apiServiceBaseUri + "api/Account/DeleteUser?userId=" + id);
         }
     }
 }(angular));
