@@ -30,7 +30,11 @@
         vm.users = [];
 
         vm.createUser = function () {
-            authService.saveRegistration(vm.newUser);
+            authService.saveRegistration(vm.newUser).then(function () {
+                //todo consider sending back in payload so we dont have to do another call to refresh the screen
+                vm.getAllUsers();
+                vm.newUser = new UserModel();
+            });
         };
 
         vm.deleteUser = function (id) {
@@ -40,13 +44,16 @@
         };
 
         vm.init = function() {
-            userManagementService.getAllUsers().then(function(result) {
-                vm.users = result.data;
-            });
-
+            vm.getAllUsers();
 
             rolesService.getAllRoles().then(function (result) {
                 vm.availableRoles = result.data;
+            });
+        };
+
+        vm.getAllUsers = function() {
+            userManagementService.getAllUsers().then(function (result) {
+                vm.users = result.data;
             });
         };
 
