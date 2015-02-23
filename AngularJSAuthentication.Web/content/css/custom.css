@@ -1,3 +1,15 @@
 ﻿a {
     cursor: pointer;
 }
+
+th.usermanagment-action-column {
+    width: 75px;
+}
+
+.center-x {
+     text-align:center;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
