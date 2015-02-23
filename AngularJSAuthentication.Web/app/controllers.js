@@ -34,7 +34,9 @@
         };
 
         vm.deleteUser = function (id) {
-            userManagementService.deleteUser(id);
+            userManagementService.deleteUser(id).then(function() {
+                _.remove(vm.users, { 'id': id });
+            });
         };
 
         vm.init = function() {
