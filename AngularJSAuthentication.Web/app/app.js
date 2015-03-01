@@ -5,7 +5,7 @@ app.config(function ($routeProvider) {
 
     $routeProvider.when("/login", {
         controller: "loginController as vm",
-        templateUrl: "app/views/index2.html"
+        templateUrl: "app/views/login.html"
     });
 
     $routeProvider.when("/signup", {
