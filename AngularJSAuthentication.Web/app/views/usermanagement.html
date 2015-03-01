@@ -1,4 +1,4 @@
-﻿<form role="form">
+﻿<div ng-form="usermanagementForm">
     <div class="row">
         <div class="col-md-12">
             <accordion close-others="oneAtATime">
@@ -16,7 +16,7 @@
                     <input type="password" class="form-control" placeholder="Password" data-ng-model="vm.newUser.password" required><br />
                     <input type="password" class="form-control" placeholder="Confirm Password" data-ng-model="vm.newUser.confirmPassword" required><br />
 
-                    <button class="btn btn-sm btn-info" type="submit" ng-click="vm.createUser()">Create</button>
+                    <button class="btn btn-sm btn-info" type="submit" ng-click="vm.createUser()" ng-disabled="usermanagementForm.$invalid">Create</button>
                 </accordion-group>
             </accordion>
             <div class="panel panel-default">
@@ -27,7 +27,7 @@
                                 <th>Username</th>
                                 <th>Email</th>
                                 <th>Roles</th>
-                                <th class="usermanagment-action-column">Actions</th>
+                                <th class="action-column">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,11 +35,14 @@
                                 <td>{{user.userName}}</td>
                                 <td>{{user.email}}</td>
                                 <td>
-                                    <span ng-repeat="role in user.roles">{{role.name}}&nbsp;</span>
+                                    <span ng-repeat="role in user.roles">
+                                        <span>{{role.name}}</span>
+                                        <span ng-if="$index < user.roles.length-1">,&nbsp;</span>
+                                    </span>
                                 </td>
                                 <td class="center-x">
                                     <span class="glyphicon glyphicon-remove cursor-pointer" ng-click="vm.deleteUser(user.id)" aria-hidden="true"></span>&nbsp;
-                                    <span class="glyphicon glyphicon-pencil cursor-pointer" ng-click="vm.editUser(user.id)" aria-hidden="true"></span>
+                                    <!--<span class="glyphicon glyphicon-pencil cursor-pointer" ng-click="vm.editUser(user.id)" aria-hidden="true"></span>-->
                                 </td>
                             </tr>
                         </tbody>
@@ -48,4 +51,4 @@
             </div>
         </div>
     </div>
-</form>
+</div>

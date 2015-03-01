@@ -1,0 +1,32 @@
+﻿<div ng-form="rolemanagementForm">
+    <div class="row">
+        <div class="col-md-12">
+            <accordion close-others="oneAtATime">
+                <accordion-group heading="Add Role" ng-form="newUserForm">
+                    <input type="text" class="form-control" placeholder="Role Name" data-ng-model="vm.newRole" required autofocus><br />
+                    <button class="btn btn-sm btn-info" type="submit" ng-click="vm.createRole()" ng-disabled="rolemanagementForm.$invalid">Create</button>
+                </accordion-group>
+            </accordion>
+            <div class="panel panel-default">
+                <div class="table-responsive">
+                    <table class="table table-striped b-t b-light">
+                        <thead>
+                            <tr>
+                                <th>Role Name</th>
+                                <th class="action-column">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="role in vm.roles">
+                                <td>{{role.name}}</td>
+                                <td class="center-x">
+                                    <span class="glyphicon glyphicon-remove cursor-pointer" ng-click="vm.deleteRole(role.id)" aria-hidden="true"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
