@@ -36,13 +36,18 @@
 
     function rolesService($http, ngAuthSettings) {
         var factory = {
-            getAllRoles: getAllRoles
+            getAllRoles: getAllRoles,
+            createRole: createRole
         };
 
         return factory;
 
         function getAllRoles() {
             return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Roles/GetRoles');
+        }
+
+        function createRole(name) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Roles/CreateRole?roleName=' + name);
         }
     }
 }(angular));
@@ -66,7 +71,7 @@
         function confirm(message) {
             return $modal.open({
                 templateUrl: 'app/views/confirm.html',
-                controller: 'ConfirmCtrl as vm',
+                controller: 'confirmCtrl as vm',
                 size: 'sm',
                 resolve: {
                     message: function () {

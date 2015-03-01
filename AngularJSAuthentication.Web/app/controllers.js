@@ -29,9 +29,9 @@
         vm.newUser = new UserModel();
         vm.users = [];
 
-        vm.editUser = function(id) {
-            //todo
-        }
+        //vm.editUser = function(id) {
+        //    todo
+        //}
 
         vm.createUser = function () {
             authService.saveRegistration(vm.newUser).then(function () {
@@ -72,11 +72,46 @@
 
     angular
         .module('VirtualClarityApp')
-        .controller('ConfirmCtrl', ConfirmCtrl);
+        .controller('rolemanagementCtrl', rolemanagementCtrl);
 
-    ConfirmCtrl.$inject = ['$modalInstance', 'message'];
+    rolemanagementCtrl.$inject = ['rolesService'];
 
-    function ConfirmCtrl($modalInstance, message) {
+    function rolemanagementCtrl(rolesService) {
+        var vm = this;
+        vm.roles = [];
+        vm.newRole = "";
+
+        vm.createRole = function() {
+            rolesService.createRole(vm.newRole).then(function (result) {
+                vm.newRole = "";
+                vm.roles = result.data;
+            });
+        }
+
+        vm.getRoles = function() {
+            rolesService.getAllRoles().then(function(result) {
+                vm.roles = result.data;
+            });
+        }
+
+        vm.init = function() {
+            vm.getRoles();
+        }
+
+        vm.init();
+    }
+}(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('confirmCtrl', confirmCtrl);
+
+    confirmCtrl.$inject = ['$modalInstance', 'message'];
+
+    function confirmCtrl($modalInstance, message) {
         var vm = this;
         vm.message = message;
         vm.$modalInstance = $modalInstance;

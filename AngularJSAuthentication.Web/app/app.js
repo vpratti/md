@@ -24,6 +24,11 @@ app.config(function ($routeProvider) {
         templateUrl: "/app/views/usermanagement.html"
     });
 
+    $routeProvider.when("/rolemanagement", {
+        controller: "rolemanagementCtrl as vm", //todo
+        templateUrl: "/app/views/rolemanagement.html"
+    });
+
     $routeProvider.otherwise({ redirectTo: "/login" });
 
 });
