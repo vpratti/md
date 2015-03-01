@@ -22,6 +22,10 @@ namespace AngularJSAuthentication.API.Models
 
         [Display(Name = "Roles")]
         public IEnumerable<RoleDto> Roles { get; set; } 
+
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
     }
 
    

@@ -4,6 +4,7 @@
             <accordion close-others="oneAtATime">
                 <accordion-group heading="Add User" ng-form="newUserForm">
                     <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.newUser.userName" required autofocus><br />
+                    <input type="email" class="form-control" placeholder="Email" data-ng-model="vm.newUser.email" required><br />
 
                     <ui-select multiple ng-model="vm.newUser.roles" theme="select2" style="width: 100%; margin-bottom: 20px;">
                         <ui-select-match placeholder="Select Roles">{{$item.name}}</ui-select-match>
@@ -24,6 +25,7 @@
                         <thead>
                             <tr>
                                 <th>Username</th>
+                                <th>Email</th>
                                 <th>Roles</th>
                                 <th class="usermanagment-action-column">Actions</th>
                             </tr>
@@ -31,6 +33,7 @@
                         <tbody>
                             <tr ng-repeat="user in vm.users">
                                 <td>{{user.userName}}</td>
+                                <td>{{user.email}}</td>
                                 <td>
                                     <span ng-repeat="role in user.roles">{{role.name}}&nbsp;</span>
                                 </td>
