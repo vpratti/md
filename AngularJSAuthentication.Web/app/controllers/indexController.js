@@ -1,11 +1,15 @@
 ﻿'use strict';
-app.controller('indexController', ['$scope', '$location', 'authService', function ($scope, $location, authService) {
+app.controller('indexController', [
+    '$scope', '$location', 'authService', 'ngAuthSettings', function($scope, $location, authService, ngAuthSettings) {
 
-    $scope.logOut = function () {
-        authService.logOut();
-        $location.path('/');
+        console.log($location);
+
+        $scope.logOut = function() {
+            authService.logOut();
+            $location.path('/');
+        }
+
+        $scope.authentication = authService.authentication;
+
     }
-
-    $scope.authentication = authService.authentication;
-
-}]);
+]);

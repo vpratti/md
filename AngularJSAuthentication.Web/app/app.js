@@ -1,5 +1,6 @@
 ﻿
 var app = angular.module('VirtualClarityApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap', 'ui.select', 'ngSanitize']);
+var serviceBase = 'http://localhost:8080/';
 
 app.config(function ($routeProvider) {
 
@@ -27,7 +28,7 @@ app.config(function ($routeProvider) {
 
 });
 
-var serviceBase = 'http://localhost:8080/';
+
 app.constant('ngAuthSettings', {
     apiServiceBaseUri: serviceBase,
 });

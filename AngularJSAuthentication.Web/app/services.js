@@ -46,3 +46,34 @@
         }
     }
 }(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .factory('utility', utility);
+
+    utility.$inject = ['$modal'];
+
+    function utility($modal) {
+        var factory = {
+            confirm: confirm
+        }
+
+        return factory;
+
+        function confirm(message) {
+            return $modal.open({
+                templateUrl: 'app/views/confirm.html',
+                controller: 'ConfirmCtrl as vm',
+                size: 'sm',
+                resolve: {
+                    message: function () {
+                        return message;
+                    }
+                }
+            });
+        }
+    }
+}(angular));
