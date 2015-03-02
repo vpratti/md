@@ -58,6 +58,12 @@ namespace AngularJSAuthentication.API
             identityUser.Email = updateUserModel.Email;
             identityUser.RemoveAllRoles();
 
+            if (!string.IsNullOrEmpty(updateUserModel.Password))
+            {
+                _userManager.RemovePassword(identityUser.Id);
+                _userManager.AddPassword(identityUser.Id, updateUserModel.Password);
+            }
+
             var result = await _userManager.UpdateAsync(identityUser);
 
             if (result.Succeeded)

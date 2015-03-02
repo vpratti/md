@@ -1,8 +1,6 @@
 ﻿'use strict';
 app.controller('indexController', [
-    '$scope', '$location', 'authService', 'ngAuthSettings', function($scope, $location, authService, ngAuthSettings) {
-
-        console.log($location);
+    '$scope', '$location', 'authService', function($scope, $location, authService) {
 
         $scope.logOut = function() {
             authService.logOut();
