@@ -3,6 +3,37 @@
 
     angular
         .module('VirtualClarityApp')
+        .factory('userManagement', userManagement);
+
+    userManagement.$inject = ['$modal'];
+
+    function userManagement($modal) {
+        var factory = {
+            editUser: editUser
+        };
+
+        return factory;
+
+        function editUser(user) {
+            return $modal.open({
+                templateUrl: 'app/views/editUser.html',
+                controller: 'editUserCtrl as vm',
+                size: 'lg',
+                resolve: {
+                    user: function () {
+                        return user;
+                    }
+                }
+            });
+        }
+    }
+}(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
         .factory('userManagementService', userManagementService);
 
     userManagementService.$inject = ['$http', 'ngAuthSettings'];
@@ -10,7 +41,8 @@
     function userManagementService($http, ngAuthSettings) {
         var factory = {
             getAllUsers: getAllUsers,
-            deleteUser: deleteUser
+            deleteUser: deleteUser,
+            updateUser: updateUser
         };
 
         return factory;
@@ -21,6 +53,10 @@
 
         function deleteUser(id) {
             return $http.delete(ngAuthSettings.apiServiceBaseUri + "api/Account/DeleteUser?userId=" + id);
+        }
+
+        function updateUser(user) {
+            return $http.put(ngAuthSettings.apiServiceBaseUri + "api/Account/UpdateUser", user);
         }
     }
 }(angular));

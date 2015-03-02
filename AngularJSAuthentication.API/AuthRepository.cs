@@ -1,4 +1,6 @@
-﻿using AngularJSAuthentication.API.Entities;
+﻿using System.Collections.ObjectModel;
+using AngularJSAuthentication.API.Entities;
+using AngularJSAuthentication.API.Extensions;
 using AngularJSAuthentication.API.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -47,7 +49,29 @@ namespace AngularJSAuthentication.API
             var identityUser = _context.Users.First(i => i.Id.Equals(userId));
             var result = await _userManager.DeleteAsync(identityUser);
             return result;
-        } 
+        }
+
+        public async Task<IdentityResult> UpdateUser(UpdateUserModel updateUserModel)
+        {
+            var identityUser = _context.Users.First(i => i.Id.Equals(updateUserModel.Id));
+            identityUser.UserName = updateUserModel.UserName;
+            identityUser.Email = updateUserModel.Email;
+            identityUser.RemoveAllRoles();
+
+            var result = await _userManager.UpdateAsync(identityUser);
+
+            if (result.Succeeded)
+            {
+                AddRoles(identityUser, updateUserModel);
+            }
+
+            return result;
+        }
+
+        public void AddRoles(IdentityUser identityUser, UpdateUserModel updateUserModel)
+        {
+            updateUserModel.Roles.ForEach(i => _userManager.AddToRole(identityUser.Id, i.Name));
+        }
 
         private void AddRolesToUser(UserModel userModel, IdentityUser user)
         {
@@ -59,6 +83,7 @@ namespace AngularJSAuthentication.API
                 }
             });
         }
+
 
         public async Task<IdentityUser> FindUser(string userName, string password)
         {

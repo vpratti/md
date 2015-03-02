@@ -3,9 +3,9 @@
 
     angular
        .module('VirtualClarityApp')
-       .factory('UserModel', function () { return UserModel; });
+       .factory('userModel', function () { return userModel; });
 
-    function UserModel() {
+    function userModel() {
         var model = {
             userName: '',
             roles: [],

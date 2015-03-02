@@ -69,7 +69,16 @@ namespace AngularJSAuthentication.API.Controllers
 
         }
 
-        // GET api/Account/ExternalLogin
+        [HttpPut]
+        [Authorize(Users = "admin")]
+        [Route("UpdateUser")]
+        public async Task<IHttpActionResult> UpdateUser(UpdateUserModel updateUserModel)
+        {
+            await _repo.UpdateUser(updateUserModel);
+            return Ok();
+        }
+
+            // GET api/Account/ExternalLogin
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]
