@@ -9,11 +9,6 @@ app.config(function ($routeProvider) {
         templateUrl: "app/views/login.html"
     });
 
-    $routeProvider.when("/signup", {
-        controller: "signupController",
-        templateUrl: "/app/views/signup.html"
-    });
-
     $routeProvider.when("/dashboard", {
         controller: "dashboardCtrl as vm",
         templateUrl: "/app/views/dashboard.html"
