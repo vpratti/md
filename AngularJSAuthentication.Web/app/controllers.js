@@ -95,10 +95,12 @@
             });
         }
 
-        vm.createRole = function() {
-            rolesService.createRole(vm.newRole).then(function (result) {
-                vm.newRole = "";
-                vm.roles = result.data;
+        vm.createRole = function () {
+            utility.confirm("Are you sure you want to create this role?").result.then(function() {
+                rolesService.createRole(vm.newRole).then(function (result) {
+                    vm.newRole = "";
+                    vm.roles = result.data;
+                });
             });
         }
 
