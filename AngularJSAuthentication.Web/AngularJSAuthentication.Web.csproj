@@ -2442,7 +2442,7 @@
     <Content Include="js\ui-toggle.js" />
     <Content Include="scripts\angular-local-storage.min.js" />
     <Content Include="scripts\authComplete.js" />
-    <Content Include="scripts\loading-bar.min.js" />
+    <Content Include="scripts\loading-bar.js" />
     <Content Include="scripts\lodash.min.js" />
     <Content Include="scripts\select.js" />
     <Content Include="scripts\ui-bootstrap-tpls-0.12.1.min.js" />
