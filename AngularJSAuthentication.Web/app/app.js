@@ -10,19 +10,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: "/",
             templateUrl: "app/views/login.html",
             controller: "loginController as vm",
-            onEnter: function ($state, $stateParams, authService) {
+            onEnter: ['$window', 'authService', function ($window, authService) {
                 if (authService.authentication.isAuth) {
-                    $state.transitionTo(
-                        'dashboard',
-                        $stateParams,
-                        {
-                            reload: true,
-                            inherit: false,
-                            notify: true,
-                            location: "replace"
-                        });
+                    $window.location.href = "#/dashboard";
                 }
-            }
+            }]
         })
         .state('dashboard', {
             url: "/dashboard",
