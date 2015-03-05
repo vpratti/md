@@ -78,7 +78,7 @@ namespace AngularJSAuthentication.API.Controllers
             return Ok();
         }
 
-            // GET api/Account/ExternalLogin
+        // GET api/Account/ExternalLogin
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
         [AllowAnonymous]

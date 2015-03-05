@@ -166,3 +166,18 @@
         vm.init();
     }
 }(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('passwordRecoveryCtrl', passwordRecoveryCtrl);
+
+    passwordRecoveryCtrl.$inject = ['$modalInstance'];
+
+    function passwordRecoveryCtrl($modalInstance) {
+        var vm = this;
+        vm.$modalInstance = $modalInstance;
+    }
+}(angular));

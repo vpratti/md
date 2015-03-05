@@ -2,6 +2,50 @@
     'use strict';
 
     angular
+    .module('VirtualClarityApp')
+    .factory('passwordRecovery', passwordRecovery);
+
+    passwordRecovery.$inject = ['$modal'];
+
+    function passwordRecovery($modal) {
+        var factory = {
+            recoverPassword: recoverPassword
+        };
+
+        return factory;
+
+        function recoverPassword() {
+            return $modal.open({
+                templateUrl: 'app/views/passwordRecovery.html',
+                controller: 'passwordRecoveryCtrl as vm',
+                size: 'sm'
+            });
+        }
+    }
+}(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
+    .module('VirtualClarityApp')
+    .factory('passwordRecoveryService', passwordRecoveryService);
+
+    passwordRecoveryService.$inject = ['$http'];
+
+    function passwordRecoveryService($http) {
+        var factory = {
+
+        };
+
+        return factory;
+    }
+}(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
         .module('VirtualClarityApp')
         .factory('userManagement', userManagement);
 
