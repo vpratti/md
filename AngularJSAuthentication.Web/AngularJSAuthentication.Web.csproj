@@ -65,7 +65,6 @@
     <Content Include="app\services.js" />
     <Content Include="app\services\authInterceptorService.js" />
     <Content Include="app\services\authService.js" />
-    <Content Include="app\services\ordersService.js" />
     <Content Include="app\services\tokensManagerService.js" />
     <Content Include="app\views\confirm.html" />
     <Content Include="app\views\editUser.html" />
@@ -2439,6 +2438,7 @@
     <Content Include="js\ui-nav.js" />
     <Content Include="js\ui-toggle.js" />
     <Content Include="scripts\angular-local-storage.min.js" />
+    <Content Include="scripts\angular-ui-router.min.js" />
     <Content Include="scripts\authComplete.js" />
     <Content Include="scripts\loading-bar.js" />
     <Content Include="scripts\lodash.min.js" />

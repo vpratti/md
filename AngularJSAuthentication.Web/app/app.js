@@ -1,31 +1,33 @@
 ﻿
-var app = angular.module('VirtualClarityApp', ['ngRoute', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap', 'ui.select', 'ngSanitize']);
+var app = angular.module('VirtualClarityApp', ['ui.router', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap',
+    'ui.select', 'ngSanitize']);
 var serviceBase = 'http://localhost:8080/';
 
-app.config(function ($routeProvider) {
+app.config(function($stateProvider, $urlRouterProvider) {
 
-    $routeProvider.when("/login", {
-        controller: "loginController as vm",
-        templateUrl: "app/views/login.html"
-    });
+    $stateProvider
+        .state('login', {
+            url: "/",
+            templateUrl: "app/views/login.html",
+            controller: "loginController as vm"
+        })
+        .state('dashboard', {
+            url: "/dashboard",
+            templateUrl: "app/views/dashboard.html",
+            controller: "dashboardCtrl as vm"
+        })
+        .state('usermanagement', {
+            url: "/usermanagement",
+            templateUrl: "app/views/usermanagement.html",
+            controller: "usermanagementCtrl as vm"
+        })
+        .state('rolemanagement', {
+            url: "/rolemanagement",
+            templateUrl: "app/views/rolemanagement.html",
+            controller: "rolemanagementCtrl as vm"
+        });
 
-    $routeProvider.when("/dashboard", {
-        controller: "dashboardCtrl as vm",
-        templateUrl: "/app/views/dashboard.html"
-    });
-
-    $routeProvider.when("/usermanagement", {
-        controller: "usermanagementCtrl as vm",
-        templateUrl: "/app/views/usermanagement.html"
-    });
-
-    $routeProvider.when("/rolemanagement", {
-        controller: "rolemanagementCtrl as vm", //todo
-        templateUrl: "/app/views/rolemanagement.html"
-    });
-
-    $routeProvider.otherwise({ redirectTo: "/login" });
-
+    $urlRouterProvider.otherwise('/');
 });
 
 
