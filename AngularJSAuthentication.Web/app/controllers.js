@@ -39,11 +39,13 @@
             });
         }
 
-        vm.createUser = function() {
-            authService.saveRegistration(vm.newUser).then(function() {
-                //todo consider sending back in payload so we dont have to do another call to refresh the screen
-                vm.getAllUsers();
-                vm.newUser = new userModel();
+        vm.createUser = function () {
+            utility.confirm("Are you sure you want to create this user?").result.then(function() {
+                authService.saveRegistration(vm.newUser).then(function () {
+                    //todo consider sending back in payload so we dont have to do another call to refresh the screen
+                    vm.getAllUsers();
+                    vm.newUser = new userModel();
+                });
             });
         }
 
