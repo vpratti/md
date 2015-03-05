@@ -9,7 +9,20 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('login', {
             url: "/",
             templateUrl: "app/views/login.html",
-            controller: "loginController as vm"
+            controller: "loginController as vm",
+            onEnter: function ($state, $stateParams, authService) {
+                if (authService.authentication.isAuth) {
+                    $state.transitionTo(
+                        'dashboard',
+                        $stateParams,
+                        {
+                            reload: true,
+                            inherit: false,
+                            notify: true,
+                            location: "replace"
+                        });
+                }
+            }
         })
         .state('dashboard', {
             url: "/dashboard",
