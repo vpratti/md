@@ -1,6 +1,6 @@
 ﻿
 var app = angular.module('VirtualClarityApp', ['ui.router', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap',
-    'ui.select', 'ngSanitize']);
+    'ui.select', 'ngSanitize', 'angularUtils.directives.uiBreadcrumbs']);
 var serviceBase = 'http://localhost:8080/';
 
 app.config(function($stateProvider, $urlRouterProvider) {
@@ -19,17 +19,26 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('dashboard', {
             url: "/dashboard",
             templateUrl: "app/views/dashboard.html",
-            controller: "dashboardCtrl as vm"
+            controller: "dashboardCtrl as vm",
+            data: {
+                displayName: 'Home'
+            }
         })
         .state('usermanagement', {
             url: "/usermanagement",
             templateUrl: "app/views/usermanagement.html",
-            controller: "usermanagementCtrl as vm"
+            controller: "usermanagementCtrl as vm",
+            data: {
+                displayName: 'Manage Users'
+            }
         })
         .state('rolemanagement', {
             url: "/rolemanagement",
             templateUrl: "app/views/rolemanagement.html",
-            controller: "rolemanagementCtrl as vm"
+            controller: "rolemanagementCtrl as vm",
+            data: {
+                displayName: 'Manage Roles'
+            }
         });
 
     $urlRouterProvider.otherwise('/');

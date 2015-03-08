@@ -73,6 +73,7 @@
     <Content Include="app\views\passwordRecovery.html" />
     <Content Include="app\views\rolemanagement.html" />
     <Content Include="app\views\signup.html" />
+    <Content Include="app\views\uiBreadcrumbs.html" />
     <Content Include="app\views\usermanagement.html" />
     <Content Include="authComplete.html" />
     <Content Include="bower_components\angular-animate\angular-animate.js" />
@@ -2445,6 +2446,7 @@
     <Content Include="scripts\lodash.min.js" />
     <Content Include="scripts\select.js" />
     <Content Include="scripts\ui-bootstrap-tpls-0.12.1.min.js" />
+    <Content Include="scripts\uiBreadcrumbs.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
