@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\constants.js" />
     <Content Include="app\controllers.js" />
     <Content Include="app\controllers\indexController.js" />
     <Content Include="app\controllers\loginController.js" />
@@ -68,6 +69,7 @@
     <Content Include="app\services\tokensManagerService.js" />
     <Content Include="app\views\confirm.html" />
     <Content Include="app\views\editUser.html" />
+    <Content Include="app\views\errorNotification.html" />
     <Content Include="app\views\login.html" />
     <Content Include="app\views\dashboard.html" />
     <Content Include="app\views\passwordRecovery.html" />

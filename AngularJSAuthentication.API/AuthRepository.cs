@@ -32,10 +32,9 @@ namespace AngularJSAuthentication.API
 
         public async Task<string> ResetPassword(IdentityUser user)
         {
-            var provider = new DpapiDataProtectionProvider("VirtualClarityPNC");
+            var provider = new DpapiDataProtectionProvider("VirtualClarityPNC"); //todo make configurable
             _userManager.UserTokenProvider =
-                new DataProtectorTokenProvider<IdentityUser, string>(provider.Create("UserToken")) as
-                    IUserTokenProvider<IdentityUser, string>;
+                new DataProtectorTokenProvider<IdentityUser, string>(provider.Create("UserToken"));
 
             var resetToken = _userManager.GeneratePasswordResetToken(user.Id); //todo can send this token as part of initial email that user clicks and that then makes this call
             var temporaryPassword = Membership.GeneratePassword(10, 1);

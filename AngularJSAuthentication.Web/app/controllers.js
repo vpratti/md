@@ -174,16 +174,18 @@
         .module('VirtualClarityApp')
         .controller('passwordRecoveryCtrl', passwordRecoveryCtrl);
 
-    passwordRecoveryCtrl.$inject = ['$modalInstance', 'passwordRecoveryService', 'utility'];
+    passwordRecoveryCtrl.$inject = ['$modalInstance', 'passwordRecoveryService', 'utility', 'messaging', 'vcAppConstants'];
 
-    function passwordRecoveryCtrl($modalInstance, passwordRecoveryService, utility) {
+    function passwordRecoveryCtrl($modalInstance, passwordRecoveryService, utility, messaging, vcAppConstants) {
         var vm = this;
         vm.$modalInstance = $modalInstance;
         vm.email = "";
 
         vm.resetPassword = function() {
             passwordRecoveryService.resetPassword(vm.email).then(function() {
-                utility.confirm("Temporary password has been sent to " + vm.email);
+                utility.confirm('Temporary password has been sent to ' + vm.email);
+            }, function() {
+                messaging.publish(vcAppConstants.vcErrorNotificationEvt, { message: 'Failed to reset password' }); //todo add interceptor to catch all errors
             });
         }
     }

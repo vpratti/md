@@ -171,3 +171,30 @@
         }
     }
 }(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .factory('messaging', messaging);
+
+    messaging.$inject = ['$rootScope'];
+
+    function messaging($rootScope) {
+        var factory = {
+            publish: publish,
+            subscribe: subscribe
+        };
+
+        return factory;
+
+        function publish(name, params) {
+            $rootScope.$emit(name, params);
+        }
+
+        function subscribe(name, listener) {
+            $rootScope.$on(name, listener);
+        }
+    }
+}(angular));
