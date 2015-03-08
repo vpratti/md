@@ -174,10 +174,17 @@
         .module('VirtualClarityApp')
         .controller('passwordRecoveryCtrl', passwordRecoveryCtrl);
 
-    passwordRecoveryCtrl.$inject = ['$modalInstance'];
+    passwordRecoveryCtrl.$inject = ['$modalInstance', 'passwordRecoveryService', 'utility'];
 
-    function passwordRecoveryCtrl($modalInstance) {
+    function passwordRecoveryCtrl($modalInstance, passwordRecoveryService, utility) {
         var vm = this;
         vm.$modalInstance = $modalInstance;
+        vm.email = "";
+
+        vm.resetPassword = function() {
+            passwordRecoveryService.resetPassword(vm.email).then(function() {
+                utility.confirm("Temporary password has been sent to " + vm.email);
+            });
+        }
     }
 }(angular));

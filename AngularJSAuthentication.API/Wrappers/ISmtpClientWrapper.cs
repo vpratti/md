@@ -1,6 +1,6 @@
 ﻿using System.Net.Mail;
 
-namespace AngularJSAuthentication.API
+namespace AngularJSAuthentication.API.Wrappers
 {
     public interface ISmtpClientWrapper
     {

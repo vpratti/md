@@ -208,17 +208,19 @@
     <Compile Include="Controllers\PasswordRecoveryController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
-    <Compile Include="EmailService.cs" />
+    <Compile Include="Exceptions\FailedResetPasswordException.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Extensions\AutoMapperExtensions.cs" />
     <Compile Include="Extensions\IdentityUserExtensions.cs" />
+    <Compile Include="Extensions\UserManagerExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper.cs" />
-    <Compile Include="IEmailService.cs" />
-    <Compile Include="ISmtpClientWrapper.cs" />
+    <Compile Include="Services\IEmailService.cs" />
+    <Compile Include="Wrappers\ISmtpClientWrapper.cs" />
     <Compile Include="Migrations\201407121205456_AddClientsAndRefreshTokenTables.cs" />
     <Compile Include="Migrations\201407121205456_AddClientsAndRefreshTokenTables.Designer.cs">
       <DependentUpon>201407121205456_AddClientsAndRefreshTokenTables.cs</DependentUpon>
@@ -236,7 +238,7 @@
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
-    <Compile Include="SmtpClientWrapper.cs" />
+    <Compile Include="Wrappers\SmtpClientWrapper.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

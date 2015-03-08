@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Web.Security;
 using AngularJSAuthentication.API.Entities;
+using AngularJSAuthentication.API.Exceptions;
 using AngularJSAuthentication.API.Extensions;
 using AngularJSAuthentication.API.Models;
 using Microsoft.AspNet.Identity;
@@ -8,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security.DataProtection;
 using WebGrease.Css.Extensions;
 
 namespace AngularJSAuthentication.API
@@ -24,6 +28,25 @@ namespace AngularJSAuthentication.API
             _context = new AuthContext();
             _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_context));
             _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
+        }
+
+        public async Task<string> ResetPassword(IdentityUser user)
+        {
+            var provider = new DpapiDataProtectionProvider("VirtualClarityPNC");
+            _userManager.UserTokenProvider =
+                new DataProtectorTokenProvider<IdentityUser, string>(provider.Create("UserToken")) as
+                    IUserTokenProvider<IdentityUser, string>;
+
+            var resetToken = _userManager.GeneratePasswordResetToken(user.Id); //todo can send this token as part of initial email that user clicks and that then makes this call
+            var temporaryPassword = Membership.GeneratePassword(10, 1);
+            var result = await _userManager.ResetPasswordAsync(user.Id, resetToken, temporaryPassword);
+
+            if (result.Succeeded)
+            {
+                return temporaryPassword;
+            }
+
+            throw new FailedResetPasswordException();
         }
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)

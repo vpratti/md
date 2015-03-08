@@ -31,14 +31,18 @@
     .module('VirtualClarityApp')
     .factory('passwordRecoveryService', passwordRecoveryService);
 
-    passwordRecoveryService.$inject = ['$http'];
+    passwordRecoveryService.$inject = ['$http', 'ngAuthSettings'];
 
-    function passwordRecoveryService($http) {
+    function passwordRecoveryService($http, ngAuthSettings) {
         var factory = {
-
+            resetPassword: resetPassword
         };
 
         return factory;
+
+        function resetPassword(email) {
+            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/PasswordRecovery/ResetPassword?email=' + email);
+        }
     }
 }(angular));
 
