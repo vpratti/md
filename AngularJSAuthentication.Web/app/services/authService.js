@@ -1,5 +1,6 @@
 ﻿'use strict';
-app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', function ($http, $q, localStorageService, ngAuthSettings) {
+app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', 'messaging', 'vcAppConstants',
+    function ($http, $q, localStorageService, ngAuthSettings, messaging, vcAppConstants) {
 
     var serviceBase = ngAuthSettings.apiServiceBaseUri;
     var authServiceFactory = {};
@@ -49,6 +50,7 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
 
         }).error(function (err) {
             logOut();
+            messaging.publish(vcAppConstants.vcErrorNotificationEvt, { message: 'Your username or password is incorrect' }); //todo add interceptor to catch all errors
             deferred.reject(err);
         });
 

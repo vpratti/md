@@ -3,7 +3,7 @@
         <div class="wrapper text-center">
             <strong>Login to access content</strong>
         </div>
-        <form name="form" class="form-validation">
+        <div ng-form="loginForm">
             <div class="text-danger wrapper text-center">
 
             </div>
@@ -15,10 +15,11 @@
                     <input type="password" placeholder="Password" class="form-control no-border" ng-model="loginData.password" required>
                 </div>
             </div>
-            <button class="btn btn-lg btn-info btn-block" ng-click="login()">Log in</button>
+            <vc-error-notification></vc-error-notification>
+            <button class="btn btn-lg btn-info btn-block" ng-click="login()" ng-disabled="loginForm.$invalid">Log in</button>
             <div class="list-group list-group-sm">
                 <a ng-click="forgotPassword();" class="text-info">Forgot your password?</a>
             </div>
-        </form>
+        </div>
     </div>
 </div>
