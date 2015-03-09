@@ -41,7 +41,7 @@ namespace AngularJSAuthentication.API.Controllers
             var mailMessage = new MailMessage("donotreply@virtualclarity.com", user.Email, "VirtualClarity-Passwor Reset", temporaryPassword);
 
             _emailService.SendEmail(user.Email, mailMessage);
-
+            
             return Ok();
         } 
     }

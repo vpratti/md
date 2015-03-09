@@ -46,7 +46,16 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             authentication.userName = loginData.userName;
             authentication.useRefreshTokens = loginData.useRefreshTokens;
 
-            deferred.resolve(response);
+            //todo optimize logic for retreiving user roles
+            $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Roles/GetUserRoles?username=' + loginData.userName).success(function (result) {
+                authentication.userRoles = result;
+                authentication.isAdmin = _.findIndex(authentication.userRoles, { name: 'admin' }) > -1;
+                deferred.resolve(response);
+            }).error(function(err) {
+                logOut();
+                messaging.publish(vcAppConstants.vcErrorNotificationEvt, { message: 'There was a problem logging in' }); //todo add interceptor to catch all errors
+                deferred.reject(err);
+            });
 
         }).error(function (err) {
             logOut();
