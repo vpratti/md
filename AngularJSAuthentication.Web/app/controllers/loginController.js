@@ -68,7 +68,7 @@ app.controller('loginController', [
         };
 
         $scope.forgotPassword = function() {
-            utility.confirm("Did you want a new password to be sent to your registered e-mail?")
+            utility.confirm("D0 you want a new password to be sent to your registered e-mail?")
                 .result.then(function() {
                     passwordRecovery.recoverPassword();
                 });

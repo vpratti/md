@@ -75,6 +75,7 @@
     <Content Include="app\views\passwordRecovery.html" />
     <Content Include="app\views\rolemanagement.html" />
     <Content Include="app\views\signup.html" />
+    <Content Include="app\views\temp.html" />
     <Content Include="app\views\uiBreadcrumbs.html" />
     <Content Include="app\views\usermanagement.html" />
     <Content Include="authComplete.html" />
@@ -2431,6 +2432,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\Simple-Line-Icons.svg" />
+    <Content Include="img\a0.jpg" />
     <Content Include="img\bg.jpg" />
     <Content Include="img\virtual-clarity-logo.png" />
     <Content Include="index.html" />
