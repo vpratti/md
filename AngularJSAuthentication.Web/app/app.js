@@ -30,7 +30,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: "usermanagementCtrl as vm",
             data: {
                 displayName: 'Manage Users'
-            }
+            },
+            onEnter: ['$window', 'authService', function ($window, authService) {
+                if (!authService.authentication.isAdmin) {
+                    $window.location.href = "#/dashboard";
+                }
+            }]
         })
         .state('rolemanagement', {
             url: "/rolemanagement",
