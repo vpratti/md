@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Web.Http.Results;
-using System.Web.Security;
+﻿using System.Web.Security;
 using AngularJSAuthentication.API.Entities;
 using AngularJSAuthentication.API.Exceptions;
 using AngularJSAuthentication.API.Extensions;
@@ -70,7 +68,8 @@ namespace AngularJSAuthentication.API
                     UserName = "admin",
                     Email = string.Empty,
                     FirstName = "admin",
-                    LastName = "admin"
+                    LastName = "admin",
+                    LockoutEnabled = false /*admin can never be locked out*/
                 };
 
                 var adminResult = _userManager.Create(user, "password");
@@ -90,7 +89,7 @@ namespace AngularJSAuthentication.API
                 Email = userModel.Email,
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
-                PhoneNumber = userModel.PhoneNumber.ToString()
+                PhoneNumber = userModel.PhoneNumber.ToString(),
             };
 
             var result = await _userManager.CreateAsync(user, userModel.Password);
@@ -177,7 +176,7 @@ namespace AngularJSAuthentication.API
 
            if (existingToken != null)
            {
-             var result = await RemoveRefreshToken(existingToken);
+             await RemoveRefreshToken(existingToken);
            }
           
             _context.RefreshTokens.Add(token);
