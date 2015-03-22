@@ -79,10 +79,13 @@ namespace AngularJSAuthentication.API
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {
-            var user = new IdentityUser
+            var user = new VirtualClarityUser
             {
                 UserName = userModel.UserName,
-                Email = userModel.Email
+                Email = userModel.Email,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                PhoneNumber = userModel.PhoneNumber.ToString()
             };
 
             var result = await _userManager.CreateAsync(user, userModel.Password);

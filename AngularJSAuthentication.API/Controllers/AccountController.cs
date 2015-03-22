@@ -186,7 +186,7 @@ namespace AngularJSAuthentication.API.Controllers
             users.ForEach(i =>
             {
                 var roles = GetRole(i.Roles);
-                var userDto = new UserDto(i.Id, i.UserName, roles, i.Email);
+                var userDto = new UserDto(i.Id, i.UserName, roles, i.Email, i.FirstName, i.LastName, i.PhoneNumber);
                 userDtos.Add(userDto);
             });
 
