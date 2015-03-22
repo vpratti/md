@@ -10,8 +10,6 @@ namespace AngularJSAuthentication.API
         public AuthContext()
             : base("AuthContext")
         {
-            //todo will have to move to api call due to migration
-            //Database.SetInitializer(new AuthContextInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

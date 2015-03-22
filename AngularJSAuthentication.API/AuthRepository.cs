@@ -60,10 +60,10 @@ namespace AngularJSAuthentication.API
                     _roleManager.Create(new IdentityRole("admin"));
                 }
 
-                var user = new VirtualClarityUser
+                var user = new VirtualClarityUser /* todo make configurable later*/
                 {
                     UserName = "admin",
-                    Email = string.Empty /*make configurable later*/,
+                    Email = string.Empty,
                     FirstName = "admin",
                     LastName = "admin"
                 };
