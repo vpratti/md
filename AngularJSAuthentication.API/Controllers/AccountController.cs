@@ -36,6 +36,17 @@ namespace AngularJSAuthentication.API.Controllers
             _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
         }
 
+        [HttpGet]
+        [OverrideAuthentication]
+        [AllowAnonymous]
+        [Route("RegisterAdmin")]
+        public async Task<IHttpActionResult> RegisterAdmin()
+        {
+            await _repo.RegisterAdmin();
+
+            return Ok();
+        }
+
         // POST api/Account/Register
         [HttpPost]
         [Authorize(Users = "admin")]

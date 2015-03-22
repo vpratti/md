@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Web.Http.Results;
 using System.Web.Security;
 using AngularJSAuthentication.API.Entities;
 using AngularJSAuthentication.API.Exceptions;
@@ -46,6 +47,34 @@ namespace AngularJSAuthentication.API
             }
 
             throw new FailedResetPasswordException();
+        }
+
+        public async Task RegisterAdmin()
+        {
+            IdentityUser admin = await _userManager.FindByNameAsync("admin");
+
+            if (admin == null)
+            {
+                if (!_roleManager.RoleExists("admin"))
+                {
+                    _roleManager.Create(new IdentityRole("admin"));
+                }
+
+                var user = new VirtualClarityUser
+                {
+                    UserName = "admin",
+                    Email = string.Empty /*make configurable later*/,
+                    FirstName = "admin",
+                    LastName = "admin"
+                };
+
+                var adminResult = _userManager.Create(user, "password");
+
+                if (adminResult.Succeeded)
+                {
+                    _userManager.AddToRole(user.Id, "admin");
+                }   
+            }
         }
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)

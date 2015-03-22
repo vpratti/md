@@ -208,6 +208,7 @@
     <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Exceptions\FailedResetPasswordException.cs" />
+    <Compile Include="Models\VirtualClarityUser.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\RefreshToken.cs" />
