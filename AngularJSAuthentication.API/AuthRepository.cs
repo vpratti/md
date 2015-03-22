@@ -60,6 +60,11 @@ namespace AngularJSAuthentication.API
                     _roleManager.Create(new IdentityRole("admin"));
                 }
 
+                if (!_roleManager.RoleExists("guest"))
+                {
+                    _roleManager.Create(new IdentityRole("guest"));
+                }
+
                 var user = new VirtualClarityUser /* todo make configurable later*/
                 {
                     UserName = "admin",
@@ -134,13 +139,20 @@ namespace AngularJSAuthentication.API
 
         private void AddRolesToUser(UserModel userModel, IdentityUser user)
         {
-            userModel.Roles.ForEach(i =>
+            if (userModel.Roles != null && userModel.Roles.Any())
             {
-                if (_roleManager.Roles.Any(j => j.Id.Equals(i.Id)))
+                userModel.Roles.ForEach(i =>
                 {
-                    _userManager.AddToRole(user.Id, i.Name);
-                }
-            });
+                    if (_roleManager.Roles.Any(j => j.Id.Equals(i.Id)))
+                    {
+                        _userManager.AddToRole(user.Id, i.Name);
+                    }
+                });
+            }
+            else
+            {
+                _userManager.AddToRole(user.Id, "guest");
+            }
         }
 
 
