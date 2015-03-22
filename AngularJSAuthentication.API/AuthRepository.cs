@@ -21,13 +21,13 @@ namespace AngularJSAuthentication.API
     public class AuthRepository : IDisposable
     {
         private readonly AuthContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<VirtualClarityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public AuthRepository()
         {
             _context = new AuthContext();
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_context));
+            _userManager = new UserManager<VirtualClarityUser>(new UserStore<VirtualClarityUser>(_context));
             _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
         }
 
@@ -35,7 +35,7 @@ namespace AngularJSAuthentication.API
         {
             var provider = new DpapiDataProtectionProvider("VirtualClarityPNC"); //todo make configurable
             _userManager.UserTokenProvider =
-                new DataProtectorTokenProvider<IdentityUser, string>(provider.Create("UserToken"));
+                new DataProtectorTokenProvider<VirtualClarityUser, string>(provider.Create("UserToken"));
 
             var resetToken = _userManager.GeneratePasswordResetToken(user.Id); //todo can send this token as part of initial email that user clicks and that then makes this call
             var temporaryPassword = Membership.GeneratePassword(10, 1);
@@ -108,8 +108,7 @@ namespace AngularJSAuthentication.API
         public async Task<IdentityResult> UpdateUser(UpdateUserModel updateUserModel)
         {
             var identityUser = _context.Users.First(i => i.Id.Equals(updateUserModel.Id));
-            identityUser.UserName = updateUserModel.UserName;
-            identityUser.Email = updateUserModel.Email;
+            identityUser.Email = !string.IsNullOrEmpty(updateUserModel.Email) ? updateUserModel.Email : identityUser.Email;
             identityUser.RemoveAllRoles();
 
             if (!string.IsNullOrEmpty(updateUserModel.Password))
@@ -128,7 +127,7 @@ namespace AngularJSAuthentication.API
             return result;
         }
 
-        public void AddRoles(IdentityUser identityUser, UpdateUserModel updateUserModel)
+        public void AddRoles(VirtualClarityUser identityUser, UpdateUserModel updateUserModel)
         {
             updateUserModel.Roles.ForEach(i => _userManager.AddToRole(identityUser.Id, i.Name));
         }
@@ -211,7 +210,7 @@ namespace AngularJSAuthentication.API
             return user;
         }
 
-        public async Task<IdentityResult> CreateAsync(IdentityUser user)
+        public async Task<IdentityResult> CreateAsync(VirtualClarityUser user)
         {
             var result = await _userManager.CreateAsync(user);
 
