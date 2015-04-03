@@ -1,20 +1,18 @@
 namespace AngularJSAuthentication.API.Migrations
 {
-    using AngularJSAuthentication.API.Entities;
-    using System;
+    using Entities;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AngularJSAuthentication.API.AuthContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<AuthContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(AngularJSAuthentication.API.AuthContext context)
+        protected override void Seed(AuthContext context)
         {
             if (context.Clients.Count() > 0)
             {

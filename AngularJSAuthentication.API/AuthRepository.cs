@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Web.Security;
+﻿using System.Web.Security;
 using AngularJSAuthentication.API.Entities;
 using AngularJSAuthentication.API.Exceptions;
 using AngularJSAuthentication.API.Extensions;
@@ -20,13 +19,13 @@ namespace AngularJSAuthentication.API
     public class AuthRepository : IDisposable
     {
         private readonly AuthContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<VirtualClarityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public AuthRepository()
         {
             _context = new AuthContext();
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_context));
+            _userManager = new UserManager<VirtualClarityUser>(new UserStore<VirtualClarityUser>(_context));
             _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
         }
 
@@ -34,7 +33,7 @@ namespace AngularJSAuthentication.API
         {
             var provider = new DpapiDataProtectionProvider("VirtualClarityPNC"); //todo make configurable
             _userManager.UserTokenProvider =
-                new DataProtectorTokenProvider<IdentityUser, string>(provider.Create("UserToken"));
+                new DataProtectorTokenProvider<VirtualClarityUser, string>(provider.Create("UserToken"));
 
             var resetToken = _userManager.GeneratePasswordResetToken(user.Id); //todo can send this token as part of initial email that user clicks and that then makes this call
             var temporaryPassword = Membership.GeneratePassword(10, 1);
@@ -48,12 +47,49 @@ namespace AngularJSAuthentication.API
             throw new FailedResetPasswordException();
         }
 
+        public async Task RegisterAdmin()
+        {
+            IdentityUser admin = await _userManager.FindByNameAsync("admin");
+
+            if (admin == null)
+            {
+                if (!_roleManager.RoleExists("admin"))
+                {
+                    _roleManager.Create(new IdentityRole("admin"));
+                }
+
+                if (!_roleManager.RoleExists("guest"))
+                {
+                    _roleManager.Create(new IdentityRole("guest"));
+                }
+
+                var user = new VirtualClarityUser /* todo make configurable later*/
+                {
+                    UserName = "admin",
+                    Email = string.Empty,
+                    FirstName = "admin",
+                    LastName = "admin",
+                    LockoutEnabled = false /*admin can never be locked out*/
+                };
+
+                var adminResult = _userManager.Create(user, "password");
+
+                if (adminResult.Succeeded)
+                {
+                    _userManager.AddToRole(user.Id, "admin");
+                }   
+            }
+        }
+
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {
-            var user = new IdentityUser
+            var user = new VirtualClarityUser
             {
                 UserName = userModel.UserName,
-                Email = userModel.Email
+                Email = userModel.Email,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                PhoneNumber = userModel.PhoneNumber.ToString(),
             };
 
             var result = await _userManager.CreateAsync(user, userModel.Password);
@@ -76,8 +112,7 @@ namespace AngularJSAuthentication.API
         public async Task<IdentityResult> UpdateUser(UpdateUserModel updateUserModel)
         {
             var identityUser = _context.Users.First(i => i.Id.Equals(updateUserModel.Id));
-            identityUser.UserName = updateUserModel.UserName;
-            identityUser.Email = updateUserModel.Email;
+            identityUser.Email = !string.IsNullOrEmpty(updateUserModel.Email) ? updateUserModel.Email : identityUser.Email;
             identityUser.RemoveAllRoles();
 
             if (!string.IsNullOrEmpty(updateUserModel.Password))
@@ -96,20 +131,27 @@ namespace AngularJSAuthentication.API
             return result;
         }
 
-        public void AddRoles(IdentityUser identityUser, UpdateUserModel updateUserModel)
+        public void AddRoles(VirtualClarityUser identityUser, UpdateUserModel updateUserModel)
         {
             updateUserModel.Roles.ForEach(i => _userManager.AddToRole(identityUser.Id, i.Name));
         }
 
         private void AddRolesToUser(UserModel userModel, IdentityUser user)
         {
-            userModel.Roles.ForEach(i =>
+            if (userModel.Roles != null && userModel.Roles.Any())
             {
-                if (_roleManager.Roles.Any(j => j.Id.Equals(i.Id)))
+                userModel.Roles.ForEach(i =>
                 {
-                    _userManager.AddToRole(user.Id, i.Name);
-                }
-            });
+                    if (_roleManager.Roles.Any(j => j.Id.Equals(i.Id)))
+                    {
+                        _userManager.AddToRole(user.Id, i.Name);
+                    }
+                });
+            }
+            else
+            {
+                _userManager.AddToRole(user.Id, "guest");
+            }
         }
 
 
@@ -134,7 +176,7 @@ namespace AngularJSAuthentication.API
 
            if (existingToken != null)
            {
-             var result = await RemoveRefreshToken(existingToken);
+             await RemoveRefreshToken(existingToken);
            }
           
             _context.RefreshTokens.Add(token);
@@ -179,7 +221,7 @@ namespace AngularJSAuthentication.API
             return user;
         }
 
-        public async Task<IdentityResult> CreateAsync(IdentityUser user)
+        public async Task<IdentityResult> CreateAsync(VirtualClarityUser user)
         {
             var result = await _userManager.CreateAsync(user);
 

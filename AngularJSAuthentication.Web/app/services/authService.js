@@ -42,14 +42,13 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             else {
                 localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, refreshToken: "", useRefreshTokens: false });
             }
-            authentication.isAuth = true;
-            authentication.userName = loginData.userName;
-            authentication.useRefreshTokens = loginData.useRefreshTokens;
 
             //todo optimize logic for retreiving user roles
             $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Roles/GetUserRoles?username=' + loginData.userName).success(function (result) {
-                authentication.userRoles = result;
-                authentication.isAdmin = _.findIndex(authentication.userRoles, { name: 'admin' }) > -1;
+                var authorizationData = localStorageService.get('authorizationData');
+                authorizationData.userRoles = result;
+                localStorageService.set('authorizationData', authorizationData);
+                fillAuthData();
                 deferred.resolve(response);
             }).error(function(err) {
                 logOut();
@@ -74,7 +73,8 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
         authentication.isAuth = false;
         authentication.userName = "";
         authentication.useRefreshTokens = false;
-
+        authentication.userRoles = [];
+        authentication.isAdmin = false;
     };
 
     var fillAuthData = function () {
@@ -84,6 +84,8 @@ app.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSetting
             authentication.isAuth = true;
             authentication.userName = authData.userName;
             authentication.useRefreshTokens = authData.useRefreshTokens;
+            authentication.userRoles = authData.userRoles;
+            authentication.isAdmin = _.findIndex(authData.userRoles, { name: 'admin' }) > -1;
         }
 
     };
