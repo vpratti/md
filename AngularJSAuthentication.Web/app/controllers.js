@@ -182,8 +182,8 @@
         vm.email = "";
 
         vm.resetPassword = function() {
-            passwordRecoveryService.resetPassword(vm.email).then(function() {
-                utility.confirm('Temporary password has been sent to ' + vm.email);
+            passwordRecoveryService.resetPassword(vm.email).then(function () {
+                $modalInstance.close('Temporary password has been sent to ' + vm.email);
             }, function() {
                 messaging.publish(vcAppConstants.vcErrorNotificationEvt, { message: 'Failed to reset password' }); //todo add interceptor to catch all errors
             });

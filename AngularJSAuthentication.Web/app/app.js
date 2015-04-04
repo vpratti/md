@@ -1,7 +1,7 @@
 ﻿
 var app = angular.module('VirtualClarityApp', ['ui.router', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap',
     'ui.select', 'ngSanitize', 'angularUtils.directives.uiBreadcrumbs']);
-var serviceBase = 'http://localhost:1001/';
+var serviceBase = 'http://localhost:8080/';
 
 app.config(function($stateProvider, $urlRouterProvider) {
 

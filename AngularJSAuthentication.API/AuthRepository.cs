@@ -9,8 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security.DataProtection;
 using WebGrease.Css.Extensions;
 
 namespace AngularJSAuthentication.API
@@ -30,14 +28,10 @@ namespace AngularJSAuthentication.API
         }
 
         public async Task<string> ResetPassword(IdentityUser user)
-        {
-            var provider = new DpapiDataProtectionProvider("VirtualClarityPNC"); //todo make configurable
-            _userManager.UserTokenProvider =
-                new DataProtectorTokenProvider<VirtualClarityUser, string>(provider.Create("UserToken"));
-
-            var resetToken = _userManager.GeneratePasswordResetToken(user.Id); //todo can send this token as part of initial email that user clicks and that then makes this call
+        {            
             var temporaryPassword = Membership.GeneratePassword(10, 1);
-            var result = await _userManager.ResetPasswordAsync(user.Id, resetToken, temporaryPassword);
+            await _userManager.RemovePasswordAsync(user.Id);
+            var result = await _userManager.AddPasswordAsync(user.Id, temporaryPassword);
 
             if (result.Succeeded)
             {

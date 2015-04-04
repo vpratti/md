@@ -38,11 +38,11 @@ namespace AngularJSAuthentication.API.Controllers
 
             var temporaryPassword = await _authRepository.ResetPassword(user);
 
-            var mailMessage = new MailMessage("donotreply@virtualclarity.com", user.Email, "VirtualClarity-Passwor Reset", temporaryPassword);
+            var mailMessage = new MailMessage("donotreply@virtualclarity.com", user.Email, "VirtualClarity-Password Reset", temporaryPassword);
 
             _emailService.SendEmail(user.Email, mailMessage);
             
             return Ok();
-        } 
+        }
     }
 }
