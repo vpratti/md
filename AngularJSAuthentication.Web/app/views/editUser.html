@@ -19,7 +19,7 @@
         <input type="password" class="form-control" placeholder="Confirm New Password" data-ng-model="vm.user.confirmPassword"><br />
     </div>
     <div class="modal-footer">
-        <button class="btn btn-info" ng-click="vm.updateUser();" ng-disabled="editUserForm.$invalid || !editUserForm.$dirty">Update</button>
+        <button class="btn btn-primary" ng-click="vm.updateUser();" ng-disabled="editUserForm.$invalid || !editUserForm.$dirty">Update</button>
         <button class="btn btn-danger" ng-click="vm.$modalInstance.dismiss();">Cancel</button>
     </div>
 </div>

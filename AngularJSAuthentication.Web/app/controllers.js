@@ -21,11 +21,11 @@
 
     usermanagementCtrl.$inject = [
         'userManagementService', 'rolesService', 'userModel', 'authService', 'utility',
-        'userManagement', '$rootScope'
+        'userManagement'
     ];
 
     function usermanagementCtrl(userManagementService, rolesService, userModel, authService, utility,
-        userManagement, $rootScope) {
+        userManagement) {
         var vm = this;
         vm.name = 'usermanagementCtrl';
 
