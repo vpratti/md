@@ -3,6 +3,7 @@ using AngularJSAuthentication.API.Entities;
 using AngularJSAuthentication.API.Exceptions;
 using AngularJSAuthentication.API.Extensions;
 using AngularJSAuthentication.API.Models;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -43,6 +44,7 @@ namespace AngularJSAuthentication.API
 
         public async Task RegisterAdmin()
         {
+            //todo make admin metadata configurable from web.config
             IdentityUser admin = await _userManager.FindByNameAsync("admin");
 
             if (admin == null)
@@ -98,16 +100,18 @@ namespace AngularJSAuthentication.API
 
         public async Task<IdentityResult> DeleteUser(string userId)
         {
-            var identityUser = _context.Users.First(i => i.Id.Equals(userId));
+            var identityUser = _userManager.FindById(userId);
             var result = await _userManager.DeleteAsync(identityUser);
             return result;
         }
 
         public async Task<IdentityResult> UpdateUser(UpdateUserModel updateUserModel)
         {
-            var identityUser = _context.Users.First(i => i.Id.Equals(updateUserModel.Id));
-            identityUser.Email = !string.IsNullOrEmpty(updateUserModel.Email) ? updateUserModel.Email : identityUser.Email;
-            identityUser.RemoveAllRoles();
+            var identityUser = _userManager.FindByEmail(updateUserModel.Email);
+            identityUser.FirstName = updateUserModel.FirstName;
+            identityUser.LastName = updateUserModel.LastName;
+            RemoveRoles(identityUser);
+            AddRoles(identityUser, updateUserModel);
 
             if (!string.IsNullOrEmpty(updateUserModel.Password))
             {
@@ -117,19 +121,23 @@ namespace AngularJSAuthentication.API
 
             var result = await _userManager.UpdateAsync(identityUser);
 
-            if (result.Succeeded)
-            {
-                AddRoles(identityUser, updateUserModel);
-            }
-
             return result;
         }
 
+        public void RemoveRoles(VirtualClarityUser user)
+        {
+            var roleNames = new List<string>();
+            user.Roles.ForEach(i => roleNames.Add(_roleManager.FindById(i.RoleId).Name));
+            roleNames.ForEach(i => _userManager.RemoveFromRole(user.Id, i));
+        }
+
+        //todo refactor for duplication
         public void AddRoles(VirtualClarityUser identityUser, UpdateUserModel updateUserModel)
         {
             updateUserModel.Roles.ForEach(i => _userManager.AddToRole(identityUser.Id, i.Name));
         }
 
+        //todo refactor for duplication
         private void AddRolesToUser(UserModel userModel, IdentityUser user)
         {
             if (userModel.Roles != null && userModel.Roles.Any())

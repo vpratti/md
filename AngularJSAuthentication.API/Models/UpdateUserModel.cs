@@ -6,8 +6,7 @@ namespace AngularJSAuthentication.API.Models
     public class UpdateUserModel
     {
         [Required]
-        [Display(Name = "User name")]
-        public string UserName { get; set; }
+        public string Id { get; set; }
 
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -27,6 +26,11 @@ namespace AngularJSAuthentication.API.Models
         public string Email { get; set; }
 
         [Required]
-        public string Id { get; set; }
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
     }
 }

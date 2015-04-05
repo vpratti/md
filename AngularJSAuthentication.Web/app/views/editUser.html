@@ -1,21 +1,25 @@
-﻿<div class="modal-header">
-    <h3 class="modal-title">Edit User</h3>
-</div>
-<div class="modal-body">
-    <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.user.userName" required autofocus><br />
-    <input type="email" class="form-control" placeholder="Email" data-ng-model="vm.user.email" required><br />
+﻿<div ng-form="editUserForm">
+    <div class="modal-header">
+        <h3 class="modal-title">Edit User</h3>
+    </div>
+    <div class="modal-body">
+        <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.user.userName" ng-disabled="true" required autofocus><br />
+        <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.user.firstName" required autofocus><br />
+        <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.user.lastName" required autofocus><br />
+        <input type="email" class="form-control" placeholder="Email" data-ng-model="vm.user.email" ng-disabled="true" required><br />
 
-    <ui-select multiple ng-model="vm.user.roles" vc-roles-unique theme="select2" style="width: 100%; margin-bottom: 20px;">
-        <ui-select-match placeholder="Select Roles">{{$item.name}}</ui-select-match>
-        <ui-select-choices repeat="role in vm.availableRoles | filter:$select.search">
-            {{role.name}}
-        </ui-select-choices>
-    </ui-select>
+        <ui-select multiple ng-model="vm.user.roles" vc-roles-unique theme="select2" style="width: 100%; margin-bottom: 20px;">
+            <ui-select-match placeholder="Select Roles">{{$item.name}}</ui-select-match>
+            <ui-select-choices repeat="role in vm.availableRoles | filter:$select.search">
+                {{role.name}}
+            </ui-select-choices>
+        </ui-select>
 
-    <input type="password" class="form-control" placeholder="New Password" data-ng-model="vm.user.password" required><br />
-    <input type="password" class="form-control" placeholder="Confirm New Password" data-ng-model="vm.user.confirmPassword" required><br />
-</div>
-<div class="modal-footer">
-    <button class="btn btn-info" ng-click="vm.updateUser();">Update</button>
-    <button class="btn btn-danger" ng-click="vm.$modalInstance.dismiss();">Cancel</button>
+        <input type="password" class="form-control" placeholder="New Password" data-ng-model="vm.user.password"><br />
+        <input type="password" class="form-control" placeholder="Confirm New Password" data-ng-model="vm.user.confirmPassword"><br />
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" ng-click="vm.updateUser();" ng-disabled="editUserForm.$invalid || !editUserForm.$dirty">Update</button>
+        <button class="btn btn-danger" ng-click="vm.$modalInstance.dismiss();">Cancel</button>
+    </div>
 </div>
