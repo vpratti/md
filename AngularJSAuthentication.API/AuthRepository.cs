@@ -1,9 +1,8 @@
 ﻿using System.Web.Security;
+using AngularJSAuthentication.API.Constants;
 using AngularJSAuthentication.API.Entities;
 using AngularJSAuthentication.API.Exceptions;
-using AngularJSAuthentication.API.Extensions;
 using AngularJSAuthentication.API.Models;
-using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -44,49 +43,35 @@ namespace AngularJSAuthentication.API
 
         public async Task RegisterAdmin()
         {
-            //todo make admin metadata configurable from web.config
-            IdentityUser admin = await _userManager.FindByNameAsync("admin");
+            IdentityUser admin = await _userManager.FindByNameAsync(UserConstants.Admin);
 
             if (admin == null)
             {
-                if (!_roleManager.RoleExists("admin"))
+                if (!_roleManager.RoleExists(UserConstants.Admin))
                 {
-                    _roleManager.Create(new IdentityRole("admin"));
+                    _roleManager.Create(new IdentityRole(UserConstants.Admin));
                 }
 
-                if (!_roleManager.RoleExists("guest"))
+                if (!_roleManager.RoleExists(UserConstants.Guest))
                 {
-                    _roleManager.Create(new IdentityRole("guest"));
+                    _roleManager.Create(new IdentityRole(UserConstants.Guest));
                 }
 
-                var user = new VirtualClarityUser /* todo make configurable later*/
-                {
-                    UserName = "admin",
-                    Email = string.Empty,
-                    FirstName = "admin",
-                    LastName = "admin",
-                    LockoutEnabled = false /*admin can never be locked out*/
-                };
+                var user = new VirtualClarityUser(UserConstants.Admin, string.Empty, UserConstants.Admin,
+                    UserConstants.Admin, false);
 
-                var adminResult = _userManager.Create(user, "password");
+                var adminResult = _userManager.Create(user, UserConstants.Password);
 
                 if (adminResult.Succeeded)
                 {
-                    _userManager.AddToRole(user.Id, "admin");
+                    _userManager.AddToRole(user.Id, UserConstants.Admin);
                 }   
             }
         }
 
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {
-            var user = new VirtualClarityUser
-            {
-                UserName = userModel.UserName,
-                Email = userModel.Email,
-                FirstName = userModel.FirstName,
-                LastName = userModel.LastName,
-                PhoneNumber = userModel.PhoneNumber.ToString(),
-            };
+            var user = new VirtualClarityUser(userModel);
 
             var result = await _userManager.CreateAsync(user, userModel.Password);
 

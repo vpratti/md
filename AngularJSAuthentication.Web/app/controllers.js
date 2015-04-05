@@ -190,3 +190,23 @@
         }
     }
 }(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('signupCtrl', signupCtrl);
+
+    function signupCtrl() {
+        var vm = this;
+        vm.init = init();
+
+
+        function init() {
+            vm.newUser = {};
+        }
+
+        init();
+    }
+}(angular));

@@ -16,6 +16,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 }
             }]
         })
+        .state('signup', {
+            url: "/signup",
+            templateUrl: "app/views/signup.html",
+            controller: "signupCtrl as vm"
+        })
         .state('dashboard', {
             url: "/dashboard",
             templateUrl: "app/views/dashboard.html",

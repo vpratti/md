@@ -75,7 +75,6 @@
     <Content Include="app\views\passwordRecovery.html" />
     <Content Include="app\views\rolemanagement.html" />
     <Content Include="app\views\signup.html" />
-    <Content Include="app\views\temp.html" />
     <Content Include="app\views\uiBreadcrumbs.html" />
     <Content Include="app\views\usermanagement.html" />
     <Content Include="authComplete.html" />

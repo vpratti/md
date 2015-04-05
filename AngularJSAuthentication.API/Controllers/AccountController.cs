@@ -53,11 +53,6 @@ namespace AngularJSAuthentication.API.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(UserModel userModel)
         {
-             if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
              IdentityResult result = await _repo.RegisterUser(userModel);
 
              IHttpActionResult errorResult = GetErrorResult(result);
@@ -68,6 +63,21 @@ namespace AngularJSAuthentication.API.Controllers
              }
 
              return Ok();
+        }
+
+        [HttpPost]
+        [OverrideAuthentication]
+        [AllowAnonymous]
+        [Route("RegisterAnonymous")]
+        public async Task<IHttpActionResult> RegisterAnonymous(UserModel userModel)
+        {
+            userModel.Roles = new List<RoleDto>();
+
+            //register user and disable account by default
+            //send confirmation email allowing to enable account
+            //IdentityResult result = await _repo.RegisterUser(userModel);
+
+            return Ok();
         }
 
         [HttpDelete]
@@ -185,7 +195,7 @@ namespace AngularJSAuthentication.API.Controllers
             var userDtos = new List<UserDto>();
             users.ForEach(i =>
             {
-                var roles = GetRole(i.Roles);
+                var roles = GetRoles(i.Roles);
                 var userDto = new UserDto(i.Id, i.UserName, roles, i.Email, i.FirstName, i.LastName, i.PhoneNumber);
                 userDtos.Add(userDto);
             });
@@ -193,7 +203,7 @@ namespace AngularJSAuthentication.API.Controllers
             return Ok(userDtos);
         }
 
-        private IEnumerable<RoleDto> GetRole(IEnumerable<IdentityUserRole> identityUserRoles)
+        private IEnumerable<RoleDto> GetRoles(IEnumerable<IdentityUserRole> identityUserRoles)
         {
             var roles = new List<RoleDto>();
             var rolesMetadata = _roleManager.Roles;
