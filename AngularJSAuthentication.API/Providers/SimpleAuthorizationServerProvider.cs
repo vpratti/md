@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using WebGrease.Css.Extensions;
 
 namespace AngularJSAuthentication.API.Providers
 {
@@ -15,11 +16,13 @@ namespace AngularJSAuthentication.API.Providers
     {
         private readonly AuthContext _context;
         private readonly UserManager<VirtualClarityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public SimpleAuthorizationServerProvider()
         {
             _context = new AuthContext();
             _userManager = new UserManager<VirtualClarityUser>(new UserStore<VirtualClarityUser>(_context));
+            _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
         }
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
@@ -93,9 +96,11 @@ namespace AngularJSAuthentication.API.Providers
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
+            IdentityUser user = null;
+
             using (AuthRepository _repo = new AuthRepository())
             {
-                IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
+                user = await _repo.FindUser(context.UserName, context.Password);
 
                 if (user == null)
                 {
@@ -114,6 +119,12 @@ namespace AngularJSAuthentication.API.Providers
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
             identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
             identity.AddClaim(new Claim("sub", context.UserName));
+            
+            user.Roles.ForEach(i =>
+            {
+                var roleName = _roleManager.FindById(i.RoleId).Name;
+                identity.AddClaim(new Claim(ClaimTypes.Role, roleName));
+            });
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
                 {

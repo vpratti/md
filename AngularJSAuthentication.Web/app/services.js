@@ -198,3 +198,30 @@
         }
     }
 }(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .factory('accountLocksService', accountLocksService);
+
+    accountLocksService.$inject = ['$http', 'ngAuthSettings'];
+
+    function accountLocksService($http, ngAuthSettings) {
+        var factory = {
+            unlock: unlock,
+            lock: lock
+        }
+
+        return factory;
+
+        function unlock(userId) {
+            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/AccountLocks/Unlock?userId=' + userId);
+        }
+
+        function lock(userId) {
+            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/AccountLocks/Lock?userId=' + userId);
+        }
+    }
+}(angular));

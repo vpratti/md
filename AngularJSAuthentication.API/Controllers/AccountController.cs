@@ -205,8 +205,10 @@ namespace AngularJSAuthentication.API.Controllers
             var userDtos = new List<UserDto>();
             users.ForEach(i =>
             {
-                var roles = GetRoles(_userManager.FindById(i.Id).Roles);
-                var userDto = new UserDto(i.Id, i.UserName, roles, i.Email, i.FirstName, i.LastName, i.PhoneNumber);
+                var user = _userManager.FindById(i.Id);
+                var roles = GetRoles(user.Roles);
+                var isLocked = user.LockoutEndDateUtc != null;
+                var userDto = new UserDto(i.Id, i.UserName, roles, i.Email, i.FirstName, i.LastName, i.PhoneNumber, isLocked);
                 userDtos.Add(userDto);
             });
 

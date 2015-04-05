@@ -21,11 +21,11 @@
 
     usermanagementCtrl.$inject = [
         'userManagementService', 'rolesService', 'userModel', 'authService', 'utility',
-        'userManagement'
+        'userManagement', 'accountLocksService'
     ];
 
     function usermanagementCtrl(userManagementService, rolesService, userModel, authService, utility,
-        userManagement) {
+        userManagement, accountLocksService) {
         var vm = this;
         vm.name = 'usermanagementCtrl';
 
@@ -68,6 +68,22 @@
         vm.getAllUsers = function() {
             userManagementService.getAllUsers().then(function(result) {
                 vm.users = result.data;
+            });
+        }
+
+        vm.unlock = function (user) {
+            utility.confirm("Are you sure you want to unlock this user?").result.then(function() {
+                accountLocksService.unlock(user.id).then(function () {
+                    user.isLocked = false;
+                });
+            });
+        }
+
+        vm.lock = function (user) {
+            utility.confirm("Are you sure you want to lock this user?").result.then(function () {
+                accountLocksService.lock(user.id).then(function () {
+                    user.isLocked = true;
+                });
             });
         }
 

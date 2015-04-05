@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace AngularJSAuthentication.API.Models
@@ -8,7 +9,8 @@ namespace AngularJSAuthentication.API.Models
     {
         public UserDto() { }
 
-        public UserDto(string id, string username, IEnumerable<RoleDto> roles, string email, string firstName, string lastName, string phoneNumber)
+        public UserDto(string id, string username, IEnumerable<RoleDto> roles, string email, string firstName, string lastName, 
+            string phoneNumber, Boolean isLocked)
         {
             Id = id;
             UserName = username;
@@ -17,6 +19,7 @@ namespace AngularJSAuthentication.API.Models
             FirstName = firstName;
             LastName = lastName;
             PhoneNumber = phoneNumber;
+            IsLocked = isLocked;
         }
 
         [DataMember]
@@ -39,5 +42,8 @@ namespace AngularJSAuthentication.API.Models
 
         [DataMember]
         public string Email { get; set; } 
+
+        [DataMember]
+        public Boolean IsLocked { get; set; }
     }
 }
