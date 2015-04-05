@@ -6,7 +6,7 @@
         <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.user.userName" ng-disabled="true" required autofocus><br />
         <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.user.firstName" required autofocus><br />
         <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.user.lastName" required autofocus><br />
-        <input type="email" class="form-control" placeholder="Email" data-ng-model="vm.user.email" ng-disabled="true" required><br />
+        <input type="email" class="form-control" placeholder="Email" data-ng-model="vm.user.email" ng-disabled="true"><br />
 
         <ui-select multiple ng-model="vm.user.roles" vc-roles-unique theme="select2" style="width: 100%; margin-bottom: 20px;">
             <ui-select-match placeholder="Select Roles">{{$item.name}}</ui-select-match>

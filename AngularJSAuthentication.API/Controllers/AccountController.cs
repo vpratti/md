@@ -22,7 +22,8 @@ namespace AngularJSAuthentication.API.Controllers
     {
         private readonly AuthRepository _repo;
         private readonly AuthContext _context;
-        private readonly RoleManager<IdentityRole> _roleManager; 
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
         private IAuthenticationManager Authentication
         {
@@ -34,6 +35,7 @@ namespace AngularJSAuthentication.API.Controllers
             _repo = new AuthRepository();
             _context = new AuthContext();
             _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_context));
+            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_context));
         }
 
         [HttpGet]
@@ -203,7 +205,7 @@ namespace AngularJSAuthentication.API.Controllers
             var userDtos = new List<UserDto>();
             users.ForEach(i =>
             {
-                var roles = GetRoles(i.Roles);
+                var roles = GetRoles(_userManager.FindById(i.Id).Roles);
                 var userDto = new UserDto(i.Id, i.UserName, roles, i.Email, i.FirstName, i.LastName, i.PhoneNumber);
                 userDtos.Add(userDto);
             });

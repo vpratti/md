@@ -117,12 +117,9 @@ namespace AngularJSAuthentication.API.Providers
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
                 {
-                    { 
-                        "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId
-                    },
-                    { 
-                        "userName", context.UserName
-                    }
+                    { "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId },
+                    { "userName", context.UserName },
+                    //todo add roles to payload when token gets sent down
                 });
 
             var ticket = new AuthenticationTicket(identity, props);
