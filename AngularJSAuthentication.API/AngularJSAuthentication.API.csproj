@@ -203,6 +203,7 @@
     <Compile Include="AuthContext.cs" />
     <Compile Include="AuthRepository.cs" />
     <Compile Include="Constants\EmailConstants.cs" />
+    <Compile Include="Constants\UserConstants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PasswordRecoveryController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />

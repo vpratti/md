@@ -1,18 +1,27 @@
 ﻿using AngularJSAuthentication.API.Entities;
+using AngularJSAuthentication.API.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace AngularJSAuthentication.API.Providers
 {
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+        private readonly AuthContext _context;
+        private readonly UserManager<VirtualClarityUser> _userManager;
+
+        public SimpleAuthorizationServerProvider()
+        {
+            _context = new AuthContext();
+            _userManager = new UserManager<VirtualClarityUser>(new UserStore<VirtualClarityUser>(_context));
+        }
+
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
 
@@ -93,6 +102,12 @@ namespace AngularJSAuthentication.API.Providers
                     context.SetError("invalid_grant", "The user name or password is incorrect.");
                     return;
                 }
+
+                if (_userManager.IsLockedOut(user.Id))
+                {
+                    context.SetError("locked_out", "The user is locked out.");
+                    return;
+                }
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
@@ -111,8 +126,8 @@ namespace AngularJSAuthentication.API.Providers
                 });
 
             var ticket = new AuthenticationTicket(identity, props);
-            context.Validated(ticket);
 
+            context.Validated(ticket);
         }
 
         public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)

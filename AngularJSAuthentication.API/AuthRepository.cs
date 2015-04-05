@@ -83,6 +83,21 @@ namespace AngularJSAuthentication.API
             return result;
         }
 
+        public async Task<IdentityResult> RegisterAnonymousUser(UserModel userModel)
+        {
+            var user = new VirtualClarityUser(userModel)
+            {
+                LockoutEnabled = true,
+                LockoutEndDateUtc = new DateTime(3000, 1, 1)
+            };
+            var result = await _userManager.CreateAsync(user, userModel.Password);
+            if (result.Succeeded)
+            {
+                AddRolesToUser(userModel, user);
+            }
+            return result;
+        }
+
         public async Task<IdentityResult> DeleteUser(string userId)
         {
             var identityUser = _userManager.FindById(userId);

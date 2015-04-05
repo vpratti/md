@@ -198,13 +198,23 @@
         .module('VirtualClarityApp')
         .controller('signupCtrl', signupCtrl);
 
-    function signupCtrl() {
-        var vm = this;
-        vm.init = init();
+    signupCtrl.$inject = ['utility', 'authService'];
 
+    function signupCtrl(utility, authService) {
+        var vm = this;
+        vm.init = init;
+        vm.createUser = createUser;
 
         function init() {
             vm.newUser = {};
+        }
+
+        function createUser() {
+            utility.confirm("Are you sure you want to create this user?").result.then(function () {
+                authService.saveAnonymousRegistration(vm.newUser).then(function () {
+                    console.log("success");
+                });
+            });
         }
 
         init();
