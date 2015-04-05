@@ -206,10 +206,14 @@
     <Compile Include="Constants\UserConstants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountLocksController.cs" />
+    <Compile Include="Controllers\LookupsController.cs" />
     <Compile Include="Controllers\PasswordRecoveryController.cs" />
     <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Exceptions\FailedResetPasswordException.cs" />
+    <Compile Include="LookupContext.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\LookupBase.cs" />
     <Compile Include="Models\VirtualClarityUser.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Entities\Client.cs" />
