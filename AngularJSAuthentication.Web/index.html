@@ -45,11 +45,12 @@
                     <li class="dropdown">
                         <a href data-toggle="dropdown" class="dropdown-toggle">
                             <i class="fa fa-fw fa-plus visible-xs-inline-block"></i>
-                            <span class="font-bold">User Management</span> <span class="caret"></span>
+                            <span class="font-bold">Manage</span> <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a ui-sref="usermanagement">Manage Users</a></li>
                             <li><a ui-sref="rolemanagement">Manage Roles</a></li>
+                            <li><a ui-sref="categoryLookupManagement">Manage Category Lookups</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -208,7 +209,7 @@
         <script src="scripts/lodash.min.js"></script>
         <script src="scripts/angular-ui-router.min.js"></script>
         <script src="scripts/uiBreadcrumbs.js"></script>
-
+        <script src="js/ui-utils.min.js"></script>
         <!-- Load app main script -->
         <script src="app/app.js?v=2"></script>
 

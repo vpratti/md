@@ -10,11 +10,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: "/",
             templateUrl: "app/views/login.html",
             controller: "loginController as vm",
-            onEnter: ['$window', 'authService', function ($window, authService) {
-                if (authService.authentication.isAuth) {
-                    $window.location.href = "#/dashboard";
+            onEnter: [
+                '$window', 'authService', function($window, authService) {
+                    if (authService.authentication.isAuth) {
+                        $window.location.href = "#/dashboard";
+                    }
                 }
-            }]
+            ]
         })
         .state('signup', {
             url: "/signup",
@@ -36,11 +38,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
             data: {
                 displayName: 'Manage Users'
             },
-            onEnter: ['$window', 'authService', function ($window, authService) {
-                if (!authService.authentication.isAdmin) {
-                    $window.location.href = "#/dashboard";
+            onEnter: [
+                '$window', 'authService', function($window, authService) {
+                    if (!authService.authentication.isAdmin) {
+                        $window.location.href = "#/dashboard";
+                    }
                 }
-            }]
+            ]
         })
         .state('rolemanagement', {
             url: "/rolemanagement",
@@ -48,6 +52,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: "rolemanagementCtrl as vm",
             data: {
                 displayName: 'Manage Roles'
+            }
+        })
+        .state('categoryLookupManagement', {
+            url: "/categoryLookupManagement",
+            templateUrl: "app/views/categoryLookupManagement.html",
+            controller: "categoryLookupManagementCtrl as vm",
+            data: {
+                displayName: 'Manage Category Lookups'
             }
         });
 

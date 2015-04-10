@@ -225,3 +225,109 @@
         }
     }
 }(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .factory('lookupsService', lookupsService);
+
+    lookupsService.$inject = ['$http', 'ngAuthSettings'];
+
+    function lookupsService($http, ngAuthSettings) {
+        var factory = {
+            getCategories: getCategories,
+            createCategory: createCategory,
+            editCategory: editCategory,
+            getCategoryTypes: getCategoryTypes,
+            createCategoryType: createCategoryType,
+            deleteCategory: deleteCategory
+        };
+
+        return factory;
+
+        function getCategories(id) {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetCategories?id=' + id);
+        }
+
+        function createCategory(newCategory) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/CreateCategory', newCategory);
+        }
+
+        function editCategory(category) {
+            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/EditCategory', category);
+        }
+
+        function getCategoryTypes() {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetCategoryTypes');
+        }
+
+        function createCategoryType(name) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/CreateCategoryType?name=' + name);
+        }
+
+        function deleteCategory(id) {
+            return $http.delete(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/DeleteCategory?id=' + id);
+        }
+    }
+}(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .factory('lookups', lookups);
+
+    lookups.$inject = ['$modal'];
+
+    function lookups($modal) {
+        var factory = {
+            editCategoryLookup: editCategoryLookup
+        };
+
+        return factory;
+
+        function editCategoryLookup(category, categoryTypes) {
+            return $modal.open({
+                templateUrl: 'app/views/editCategoryLookup.html',
+                controller: 'editCategoryLookupCtrl as vm',
+                resolve: {
+                    category: function() {
+                        return category;
+                    },
+                    categoryTypes: function() {
+                        return categoryTypes;
+                    }
+                }
+            });
+        }
+    }
+}(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .factory('categoryTypesFactory', categoryTypesFactory);
+
+    categoryTypesFactory.$inject = ['$modal'];
+
+    function categoryTypesFactory($modal) {
+        var factory = {
+            createCategoryType: createCategoryType
+        };
+
+        return factory;
+
+        function createCategoryType() {
+            return $modal.open({
+                templateUrl: 'app/views/createCategoryType.html',
+                controller: 'createCategoryTypeCtrl as vm',
+                size: 'sm'
+            });
+        }
+    }
+}(angular));

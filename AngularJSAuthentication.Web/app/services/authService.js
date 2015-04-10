@@ -43,7 +43,6 @@ app.factory('authService', [
             var deferred = $q.defer();
 
             $http.post(ngAuthSettings.apiServiceBaseUri + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function(response) {
-                console.log(response);
                 if (loginData.useRefreshTokens) {
                     localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, refreshToken: response.refresh_token, useRefreshTokens: true });
                 } else {

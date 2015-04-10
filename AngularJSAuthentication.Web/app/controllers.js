@@ -236,3 +236,131 @@
         init();
     }
 }(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('categoryLookupManagementCtrl', categoryLookupManagementCtrl);
+
+    categoryLookupManagementCtrl.$inject = ['lookups', 'lookupsService', 'categoryTypesFactory'];
+
+    function categoryLookupManagementCtrl(lookups, lookupsService, categoryTypesFactory) {
+        var vm = this;
+
+        vm.init = init;
+        vm.populateCategoryTypes = populateCategoryTypes;
+        vm.createCategoryType = createCategoryType;
+        vm.createCategory = createCategory;
+        vm.populateCategories = populateCategories;
+        vm.deleteCategory = deleteCategory;
+        vm.editCategory = editCategory;
+
+        function init() {
+            vm.populateCategoryTypes();
+            vm.populateCategories();
+        }
+
+        function editCategory(category) {
+            lookups.editCategoryLookup(category, vm.categoryTypes).result.then(function () {
+
+            });
+        }
+
+        function createCategoryType() {
+            categoryTypesFactory.createCategoryType().result.then(function() {
+                vm.populateCategoryTypes();
+            });
+        }
+
+        function deleteCategory(id) {
+            lookupsService.deleteCategory(id).then(function() {
+                vm.populateCategories();
+            });
+        }
+
+        function populateCategoryTypes() {
+            lookupsService.getCategoryTypes().then(function (result) {
+                vm.categoryTypes = result.data;
+            });
+        }
+
+        function populateCategories() {
+            if (vm.filter != null) {
+                lookupsService.getCategories(vm.filter).then(function(result) {
+                    vm.categories = result.data;
+                });
+            }
+        }
+
+        function createCategory() {
+            lookupsService.createCategory(vm.newCategory).then(function() {
+                vm.populateCategoryTypes();
+            });
+        }
+
+        vm.init();
+    }
+}(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('createCategoryTypeCtrl', createCategoryTypeCtrl);
+
+    createCategoryTypeCtrl.$inject = ['lookupsService', '$modalInstance'];
+
+    function createCategoryTypeCtrl(lookupsService, $modalInstance) {
+        var vm = this;
+        vm.init = init;
+        vm.createCategoryType = createCategoryType;
+        vm.$modalInstance = $modalInstance;
+
+        function init() {
+            vm.lookupsService = lookupsService;
+        }
+
+        function createCategoryType() {
+            vm.lookupsService.createCategoryType(vm.categoryTypeName).then(function() {
+                $modalInstance.close();
+            });
+        }
+
+        init();
+    }
+}(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('editCategoryLookupCtrl', editCategoryLookupCtrl);
+
+    editCategoryLookupCtrl.$inject = ['lookupsService', 'category', 'categoryTypes', '$modalInstance'];
+
+    function editCategoryLookupCtrl(lookupsService, category, categoryTypes, $modalInstance) {
+        var vm = this;
+        vm.init = init;
+        vm.editCategory = editCategory;
+
+        function init() {
+            vm.category = category;
+            vm.$modalInstance = $modalInstance;
+            vm.lookupsService = lookupsService;
+            vm.statuses = [true, false];
+            vm.categoryTypes = categoryTypes;
+        }
+
+        function editCategory() {
+            lookupsService.editCategory(vm.category).then(function() {
+                $modalInstance.close();
+            });
+        }
+
+        init();
+    }
+}(angular));

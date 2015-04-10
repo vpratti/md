@@ -1,0 +1,32 @@
+﻿<div ng-form="editCategoryLookupForm">
+    <div class="modal-header">
+        <h3 class="modal-title">Edit Category Lookup</h3>
+    </div>
+    <div class="modal-body">
+        <label class="font-bold">Code</label>
+        <input type="text" class="form-control" placeholder="Code" data-ng-model="vm.category.code" required><br />
+        
+        <label class="font-bold">Description</label>
+        <input type="text" class="form-control" placeholder="Description" data-ng-model="vm.category.description" required><br />
+        
+        <label class="font-bold">Type</label>
+        <ui-select ng-model="vm.category.type" theme="select2" style="width: 100%; margin-bottom: 20px;">
+            <ui-select-match placeholder="Select Category Type">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="type in vm.categoryTypes | filter:$select.search">
+                {{type.name}}
+            </ui-select-choices>
+        </ui-select>
+        
+        <label class="font-bold">Is Active</label>
+        <ui-select ng-model="vm.category.active" theme="select2" style="width: 100%; margin-bottom: 20px;">
+            <ui-select-match placeholder="Select Category Type">{{$select.selected}}</ui-select-match>
+            <ui-select-choices repeat="status in vm.statuses | filter:$select.search">
+                {{status}}
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="vm.editCategory();" ng-disabled="editCategoryLookupForm.$invalid || !editCategoryLookupForm.$dirty">Update</button>
+        <button class="btn btn-danger" ng-click="vm.$modalInstance.dismiss();">Cancel</button>
+    </div>
+</div>

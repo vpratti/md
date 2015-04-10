@@ -241,7 +241,7 @@ namespace AngularJSAuthentication.API
         {
             _context.Dispose();
             _userManager.Dispose();
-
+            _roleManager.Dispose();
         }
     }
 }
