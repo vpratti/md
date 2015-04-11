@@ -8,7 +8,7 @@
     <div class="modal-footer">
         <button class="btn btn-primary"
                 ng-click="vm.createCategoryType()"
-                ng-disabled="createCategoryTypeForm.$invalid || !createCategoryTypeForm.$dirty">
+                ng-disabled="createCategoryTypeForm.$invalid || !createCategoryTypeForm.$dirty || vm.inProgress">
             Create
         </button>
         <button class="btn btn-danger" ng-click="vm.$modalInstance.dismiss();">Cancel</button>

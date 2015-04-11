@@ -241,7 +241,8 @@
             editCategory: editCategory,
             getCategoryTypes: getCategoryTypes,
             createCategoryType: createCategoryType,
-            deleteCategory: deleteCategory
+            deleteCategory: deleteCategory,
+            editCategoryType: editCategoryType
         };
 
         return factory;
@@ -256,6 +257,10 @@
 
         function editCategory(category) {
             return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/EditCategory', category);
+        }
+
+        function editCategoryType(category) {
+            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/EditCategoryType', category);
         }
 
         function getCategoryTypes() {

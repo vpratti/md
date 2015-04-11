@@ -17,5 +17,7 @@ namespace AngularJSAuthentication.API
         void DeleteCategory(long id);
 
         void EditCategory(Category category);
+
+        void EditCategoryType(long id, string name);
     }
 }

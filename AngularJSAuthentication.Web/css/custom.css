@@ -1,0 +1,7 @@
+﻿.hover-active:hover {
+    color: #27c24c;
+}
+
+.hover-danger:hover {
+    color: #f05050;
+}

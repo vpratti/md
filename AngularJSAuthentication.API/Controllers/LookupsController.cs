@@ -4,7 +4,6 @@ using System.Web.Http;
 using AngularJSAuthentication.API.Constants;
 using AngularJSAuthentication.API.Models;
 using AutoMapper;
-using Microsoft.Ajax.Utilities;
 using Seterlund.CodeGuard;
 
 namespace AngularJSAuthentication.API.Controllers
@@ -63,6 +62,18 @@ namespace AngularJSAuthentication.API.Controllers
             var mappedCategory = new Category(category.Code, category.Description, category.Type.Id, category.Id);
 
             _lookupRepository.EditCategory(mappedCategory);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Authorize(Roles = UserConstants.Admin)]
+        [Route("EditCategoryType")]
+        public async Task<IHttpActionResult> EditCategoryType(CategoryTypeDto categoryType)
+        {
+            Guard.That(categoryType.Name).IsNotNull();
+
+            _lookupRepository.EditCategoryType(categoryType.Id, categoryType.Name);
 
             return Ok();
         }

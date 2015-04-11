@@ -2399,6 +2399,7 @@
     <Content Include="bower_components\videogular\LICENSE" />
     <Content Include="bower_components\videogular\package.json" />
     <Content Include="bower_components\videogular\README.md" />
+    <Content Include="css\custom.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />

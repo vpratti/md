@@ -17,12 +17,14 @@
 
         $scope.message = "";
 
-        $scope.login = function() {
+        $scope.login = function () {
+            $scope.inProgress = true;
             authService.login($scope.loginData).then(function() {
                     $location.path('/dashboard');
                 },
                 function(err) {
                     $scope.message = err.error_description;
+                    $scope.inProgress = false;
                 });
         };
 
@@ -52,7 +54,7 @@
                 } else {
                     //Obtain access token and redirect to orders
                     var externalData = { provider: fragment.provider, externalAccessToken: fragment.external_access_token };
-                    authService.obtainAccessToken(externalData).then(function(response) {
+                    authService.obtainAccessToken(externalData).then(function() {
                             $location.path('/dashboard');
                         },
                         function(err) {
@@ -321,11 +323,23 @@
         }
 
         function createUser() {
-            utility.confirm("Are you sure you want to create this user?").result.then(function () {
-                authService.saveAnonymousRegistration(vm.newUser).then(function () {
-                    $state.transitionTo('login', {}, { reload: true, inherit: false, notify: true, location: "replace" });
-                });
-            });
+            vm.inProgress = true;
+
+            utility.confirm("Are you sure you want to create this user?")
+                .result.then(
+                    function onConfirm() {
+                        authService.saveAnonymousRegistration(vm.newUser)
+                            .then(
+                            function onSuccess() {
+                                $state.transitionTo('login', {}, { reload: true, inherit: false, notify: true, location: "replace" });
+                            },
+                            function onError() {
+                                vm.inProgress = false;
+                            });
+                    },
+                    function onReject() {
+                        vm.inProgress = false;
+                    });
         }
 
         init();
@@ -351,6 +365,8 @@
         vm.populateCategories = populateCategories;
         vm.deleteCategory = deleteCategory;
         vm.editCategory = editCategory;
+        vm.selectCategoryType = selectCategoryType;
+        vm.editCategoryType = editCategoryType;
 
         function init() {
             vm.populateCategoryTypes();
@@ -396,6 +412,28 @@
             });
         }
 
+        function selectCategoryType(type) {
+            if (angular.isUndefined(type.originalName)) {
+                type.originalName = type.name;
+            }
+
+            if (!type.isEdit) {
+                type.isEdit = true;
+            }
+        }
+
+        function editCategoryType(type) {
+            type.isEdit = false;
+            if (type.originalName != type.name) {
+                lookupsService.editCategoryType(type)
+                    .then(function onSuccess() {
+                        type.originalName = type.name;
+                    }, function onError() {
+                        type.isEdit = true;
+                    });
+            }
+        }
+
         vm.init();
     }
 }(angular));
@@ -420,9 +458,15 @@
         }
 
         function createCategoryType() {
-            vm.lookupsService.createCategoryType(vm.categoryTypeName).then(function() {
-                $modalInstance.close();
-            });
+            vm.inProgress = true;
+            vm.lookupsService.createCategoryType(vm.categoryTypeName)
+                .then(
+                    function onSuccess() {
+                        $modalInstance.close();
+                    },
+                    function onError() {
+                        vm.inProgress = false;
+                    });
         }
 
         init();

@@ -17,7 +17,7 @@
                 </div>
             </div>
             <vc-error-notification></vc-error-notification>
-            <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid'>Log in</button>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid || inProgress'>Log in</button>
             <div class="text-center m-t m-b">
                 <a ng-click="forgotPassword();" class="text-info">Forgot your password?</a>
             </div>

@@ -1,67 +1,111 @@
-﻿<div ng-form="categoryLookupManagementForm">
-    <div class="row">
-        <div class="col-md-12">
-            <accordion close-others="oneAtATime">
-                <accordion-group heading="Add Category Lookup" ng-form="newCategoryLookupForm">
-                    <div class="col-sm-12">
-                        <input type="text" class="form-control" placeholder="Code" data-ng-model="vm.newCategory.code" required><br />
+﻿<div class="app-content-body  app-content-full" style="overflow: hidden">
+    <div class="hbox hbox-auto-xs bg-light " ng-init="app.settings.asideFolded = true; app.settings.asideFixed = true; app.settings.asideDock = false; app.settings.container = false; app.hideAside = false">
+        <div class="col">
+            <ui-breadcrumbs ng-if="authentication.isAuth" displayname-property="data.displayName"
+                            template-url="/app/views/uiBreadcrumbs.html">
+            </ui-breadcrumbs>
+            <div class="vbox">
+                <div class="row-row">
+                    <div class="cell">
+                        <div class="cell-inner">
+                            <div class="wrapper-md">
+                                <accordion close-others="oneAtATime">
+                                    <accordion-group heading="Add Category Lookup" ng-form="newCategoryLookupForm">
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Code" data-ng-model="vm.newCategory.code" required><br />
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="text" class="form-control" placeholder="Description" data-ng-model="vm.newCategory.description" required><br />
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <ui-select ng-model="vm.newCategory.type" theme="select2" style="width: 100%; margin-bottom: 20px;" required>
+                                                <ui-select-match placeholder="Select Category Type">{{$select.selected.name}}</ui-select-match>
+                                                <ui-select-choices repeat="type in vm.categoryTypes | filter:$select.search">
+                                                    {{type.name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <button class="btn btn-sm btn-primary" type="submit" ng-click="vm.createCategory()" ng-disabled="newCategoryLookupForm.$invalid">Create</button>
+                                        </div>
+                                    </accordion-group>
+                                </accordion>
+                                <div>
+                                    <ui-select on-select="vm.populateCategories()" ng-model="vm.filter" theme="select2" style="width: 25%; margin-bottom: 20px;">
+                                        <ui-select-match placeholder="Filter By Category Type">{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="type.id as type in vm.categoryTypes | filter:$select.search">
+                                            {{type.name}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped b-t b-light">
+                                            <thead>
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Description</th>
+                                                    <th>Type</th>
+                                                    <th>Status</th>
+                                                    <th class="action-column">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="category in vm.categories">
+                                                    <td>{{category.code}}</td>
+                                                    <td>{{category.description}}</td>
+                                                    <td>{{category.type.name}}</td>
+                                                    <td>
+                                                        <span ng-if="category.active">Active</span>
+                                                        <span ng-if="!category.active">In Active</span>
+                                                    </td>
+                                                    <td class="center-x">
+                                                        <span class="glyphicon glyphicon-pencil cursor-pointer" ng-click="vm.editCategory(category)" aria-hidden="true"></span>&nbsp;
+                                                        <span class="glyphicon glyphicon-remove cursor-pointer" ng-click="vm.deleteCategory(category.id)" aria-hidden="true"></span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-12">
-                        <input type="text" class="form-control" placeholder="Description" data-ng-model="vm.newCategory.description" required><br />
-                    </div>
-                    <div class="col-sm-9">
-                        <ui-select ng-model="vm.newCategory.type" theme="select2" style="width: 100%; margin-bottom: 20px;" required>
-                            <ui-select-match placeholder="Select Category Type">{{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="type in vm.categoryTypes | filter:$select.search">
-                                {{type.name}}
-                            </ui-select-choices>
-                        </ui-select>
-                    </div>
-                    <div class="col-sm-3">
-                        <button class="btn btn-sm btn-primary pull-right" type="submit" ng-click="vm.createCategoryType()">Add New Category Type</button>
-                    </div>
-                    <div class="col-sm-12">
-                        <button class="btn btn-sm btn-primary" type="submit" ng-click="vm.createCategory()" ng-disabled="newCategoryLookupForm.$invalid">Create</button>
-                    </div>
-                </accordion-group>
-            </accordion>
-            <div>
-                &nbsp;
-                <ui-select on-select="vm.populateCategories()" ng-model="vm.filter" theme="select2" style="width: 25%; margin-bottom: 20px;">
-                    <ui-select-match placeholder="Filter By Category Type">{{$select.selected.name}}</ui-select-match>
-                    <ui-select-choices repeat="type.id as type in vm.categoryTypes | filter:$select.search">
-                        {{type.name}}
-                    </ui-select-choices>
-                </ui-select>
+                </div>
             </div>
-            <div class="panel panel-default">
-                <div class="table-responsive">
-                    <table class="table table-striped b-t b-light">
-                        <thead>
-                            <tr>
-                                <th>Code</th>
-                                <th>Description</th>
-                                <th>Type</th>
-                                <th>Status</th>
-                                <th class="action-column">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="category in vm.categories">
-                                <td>{{category.code}}</td>
-                                <td>{{category.description}}</td>
-                                <td>{{category.type.name}}</td>
-                                <td>
-                                    <span ng-if="category.active">Active</span>
-                                    <span ng-if="!category.active">In Active</span>
-                                </td>
-                                <td class="center-x">
-                                    <span class="glyphicon glyphicon-pencil cursor-pointer" ng-click="vm.editCategory(category)" aria-hidden="true"></span>&nbsp;
-                                    <span class="glyphicon glyphicon-remove cursor-pointer" ng-click="vm.deleteCategory(category.id)" aria-hidden="true"></span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+        </div>
+        <div class="col w-lg lt b-r">
+            <div class="vbox">
+                <div class="wrapper">
+                    <a href class="pull-right btn btn-sm btn-primary m-t-n-xs" ng-click="vm.createCategoryType()">New</a>
+                    <div class="h4">Category Types</div>
+                    <small class="text-muted">Management</small>
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <div class="input-group">
+                        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                        <input type="text" class="form-control input-sm" placeholder="search" ng-model="vm.categoryTypeQuery">
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="padder">
+                                <div class="list-group">
+                                    <a ng-repeat="type in vm.categoryTypes | filter: {name : vm.categoryTypeQuery}"
+                                       ng-class="{'b-l-success' : $index % 2 == 0, 'b-l-warning' : $index % 2 != 0}"
+                                       class="list-group-item b-l-3x hover-anchor">
+                                        <span ng-show="type.isEdit" class="pull-right text-muted">
+                                            <i ng-click="type.name=type.originalName;type.isEdit=false;" class="glyphicon glyphicon-remove hover-danger"></i>&nbsp;
+                                            <i ng-click="vm.editCategoryType(type)" class="fa fa-check hover-active"></i>
+                                        </span>
+                                        <span ng-click="vm.selectCategoryType(type)" class="block text-ellipsis" ng-show="!type.isEdit">{{type.name}}</span>
+                                        <span><input type="text" class="w-sm" ng-model="type.name" ng-show="type.isEdit" /></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

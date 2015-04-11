@@ -22,7 +22,7 @@ namespace AngularJSAuthentication.API
 
         public void CreateCategoryType(string name)
         {
-            if (_context.CategoryTypes.Any(i => i.Name.ToLower().Equals(name)))
+            if (_context.CategoryTypes.Any(i => i.Name.ToLower().Equals(name.ToLower())))
             {
                 throw new Exception("Category type already exists.");
             }
@@ -70,6 +70,25 @@ namespace AngularJSAuthentication.API
             originalCategory.Description = category.Description;
             originalCategory.CategoryTypeId = category.CategoryTypeId;
             originalCategory.Active = category.Active;
+
+            _context.SaveChanges();
+        }
+
+        public void EditCategoryType(long id, string name)
+        {
+            CategoryType category = _context.CategoryTypes.Find(id);
+
+            if (category == null)
+            {
+                throw new Exception("There was an error while trying to edit your category");
+            }
+
+            if (_context.CategoryTypes.Any(i => i.Name.ToLower().Equals(name.ToLower()) && i.Id != category.Id))
+            {
+                throw new Exception("There is already a Type with that name");
+            }
+
+            category.Name = name;
 
             _context.SaveChanges();
         }
