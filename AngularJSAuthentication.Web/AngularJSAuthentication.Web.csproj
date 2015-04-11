@@ -59,8 +59,6 @@
   <ItemGroup>
     <Content Include="app\constants.js" />
     <Content Include="app\controllers.js" />
-    <Content Include="app\controllers\indexController.js" />
-    <Content Include="app\controllers\loginController.js" />
     <Content Include="app\directives.js" />
     <Content Include="app\models.js" />
     <Content Include="app\services.js" />
@@ -2438,7 +2436,6 @@
     <Content Include="img\a0.jpg" />
     <Content Include="img\bg.jpg" />
     <Content Include="img\virtual-clarity-logo.png" />
-    <Content Include="index.html" />
     <Content Include="js\app.min.js" />
     <Content Include="js\app.src.js" />
     <Content Include="js\ui-jp.config.js" />
@@ -2447,14 +2444,14 @@
     <Content Include="js\ui-nav.js" />
     <Content Include="js\ui-toggle.js" />
     <Content Include="js\ui-utils.min.js" />
-    <Content Include="scripts\angular-local-storage.min.js" />
-    <Content Include="scripts\angular-ui-router.min.js" />
-    <Content Include="scripts\authComplete.js" />
-    <Content Include="scripts\loading-bar.js" />
-    <Content Include="scripts\lodash.min.js" />
-    <Content Include="scripts\select.js" />
-    <Content Include="scripts\ui-bootstrap-tpls-0.12.1.min.js" />
-    <Content Include="scripts\uiBreadcrumbs.js" />
+    <Content Include="js\angular-local-storage.min.js" />
+    <Content Include="js\angular-ui-router.min.js" />
+    <Content Include="js\authComplete.js" />
+    <Content Include="js\loading-bar.js" />
+    <Content Include="js\lodash.min.js" />
+    <Content Include="js\select.js" />
+    <Content Include="js\ui-bootstrap-tpls-0.12.1.min.js" />
+    <Content Include="js\uiBreadcrumbs.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

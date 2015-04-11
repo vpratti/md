@@ -8,7 +8,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('login', {
             url: "/",
             templateUrl: "app/views/login.html",
-            controller: "loginController as vm",
+            controller: "loginCtrl as vm",
             onEnter: [
                 '$window', 'authService', function($window, authService) {
                     if (authService.authentication.isAuth) {
