@@ -10,7 +10,7 @@
                         <input type="text" class="form-control" placeholder="Description" data-ng-model="vm.newCategory.description" required><br />
                     </div>
                     <div class="col-sm-9">
-                        <ui-select ng-model="vm.newCategory.type" theme="select2" style="width: 100%; margin-bottom: 20px;">
+                        <ui-select ng-model="vm.newCategory.type" theme="select2" style="width: 100%; margin-bottom: 20px;" required>
                             <ui-select-match placeholder="Select Category Type">{{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="type in vm.categoryTypes | filter:$select.search">
                                 {{type.name}}
@@ -26,6 +26,7 @@
                 </accordion-group>
             </accordion>
             <div>
+                &nbsp;
                 <ui-select on-select="vm.populateCategories()" ng-model="vm.filter" theme="select2" style="width: 25%; margin-bottom: 20px;">
                     <ui-select-match placeholder="Filter By Category Type">{{$select.selected.name}}</ui-select-match>
                     <ui-select-choices repeat="type.id as type in vm.categoryTypes | filter:$select.search">

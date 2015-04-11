@@ -66,7 +66,6 @@
             return $modal.open({
                 templateUrl: 'app/views/editUser.html',
                 controller: 'editUserCtrl as vm',
-                size: 'lg',
                 resolve: {
                     user: function () {
                         return user;

@@ -3,18 +3,26 @@
         <h3 class="modal-title">Edit User</h3>
     </div>
     <div class="modal-body">
+        <label class="font-bold">Username</label>
         <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.user.userName" ng-disabled="true" required autofocus><br />
+        
+        <label class="font-bold">First Name</label>
         <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.user.firstName" required autofocus><br />
+        
+        <label class="font-bold">Last Name</label>
         <input type="text" class="form-control" placeholder="Username" data-ng-model="vm.user.lastName" required autofocus><br />
+        
+        <label class="font-bold">Email</label>
         <input type="email" class="form-control" placeholder="Email" data-ng-model="vm.user.email" ng-disabled="true"><br />
-
+        
+        <label class="font-bold">Roles</label>
         <ui-select multiple ng-model="vm.user.roles" vc-roles-unique theme="select2" style="width: 100%; margin-bottom: 20px;">
             <ui-select-match placeholder="Select Roles">{{$item.name}}</ui-select-match>
             <ui-select-choices repeat="role in vm.availableRoles | filter:$select.search">
                 {{role.name}}
             </ui-select-choices>
         </ui-select>
-
+        
         <input type="password" class="form-control" placeholder="New Password" data-ng-model="vm.user.password"><br />
         <input type="password" class="form-control" placeholder="Confirm New Password" data-ng-model="vm.user.confirmPassword"><br />
     </div>

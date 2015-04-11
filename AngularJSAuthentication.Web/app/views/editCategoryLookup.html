@@ -10,7 +10,7 @@
         <input type="text" class="form-control" placeholder="Description" data-ng-model="vm.category.description" required><br />
         
         <label class="font-bold">Type</label>
-        <ui-select ng-model="vm.category.type" theme="select2" style="width: 100%; margin-bottom: 20px;">
+        <ui-select ng-model="vm.category.type" theme="select2" style="width: 100%; margin-bottom: 20px;" required>
             <ui-select-match placeholder="Select Category Type">{{$select.selected.name}}</ui-select-match>
             <ui-select-choices repeat="type in vm.categoryTypes | filter:$select.search">
                 {{type.name}}
@@ -18,7 +18,7 @@
         </ui-select>
         
         <label class="font-bold">Is Active</label>
-        <ui-select ng-model="vm.category.active" theme="select2" style="width: 100%; margin-bottom: 20px;">
+        <ui-select ng-model="vm.category.active" theme="select2" style="width: 100%; margin-bottom: 20px;" required>
             <ui-select-match placeholder="Select Category Type">{{$select.selected}}</ui-select-match>
             <ui-select-choices repeat="status in vm.statuses | filter:$select.search">
                 {{status}}

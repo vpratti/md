@@ -295,8 +295,9 @@
         }
 
         function createCategory() {
-            lookupsService.createCategory(vm.newCategory).then(function() {
-                vm.populateCategoryTypes();
+            lookupsService.createCategory(vm.newCategory).then(function () {
+                vm.newCategory = {};
+                vm.populateCategories();
             });
         }
 
