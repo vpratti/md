@@ -100,7 +100,13 @@
                                             <i ng-click="vm.editCategoryType(type)" class="fa fa-check hover-active"></i>
                                         </span>
                                         <span ng-click="vm.selectCategoryType(type)" class="block text-ellipsis" ng-show="!type.isEdit">{{type.name}}</span>
-                                        <span><input type="text" class="w-sm" ng-model="type.name" ng-show="type.isEdit" /></span>
+                                        <span>
+                                            <input type="text"
+                                                   class="w-sm"
+                                                   ng-model="type.name"
+                                                   ng-show="type.isEdit"
+                                                   ng-keypress="($event.which === 13 && type.originalName != type.name)?vm.editCategoryType(type):0"/>
+                                        </span>
                                     </a>
                                 </div>
                             </div>
