@@ -9,34 +9,14 @@
                     <div class="cell">
                         <div class="cell-inner">
                             <div class="wrapper-md">
-                                <accordion close-others="oneAtATime">
-                                    <accordion-group heading="Add Category Lookup" ng-form="newCategoryLookupForm">
-                                        <div class="col-sm-12">
-                                            <input type="text" class="form-control" placeholder="Code" data-ng-model="vm.newCategory.code" required><br />
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="input-group pull-left m-vertical w">
+                                            <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                                            <input type="text" class="form-control input-sm" placeholder="Search By Code">
                                         </div>
-                                        <div class="col-sm-12">
-                                            <input type="text" class="form-control" placeholder="Description" data-ng-model="vm.newCategory.description" required><br />
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <ui-select ng-model="vm.newCategory.type" theme="select2" style="width: 100%; margin-bottom: 20px;" required>
-                                                <ui-select-match placeholder="Select Category Type">{{$select.selected.name}}</ui-select-match>
-                                                <ui-select-choices repeat="type in vm.categoryTypes | filter:$select.search">
-                                                    {{type.name}}
-                                                </ui-select-choices>
-                                            </ui-select>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <button class="btn btn-sm btn-primary" type="submit" ng-click="vm.createCategory()" ng-disabled="newCategoryLookupForm.$invalid">Create</button>
-                                        </div>
-                                    </accordion-group>
-                                </accordion>
-                                <div>
-                                    <ui-select on-select="vm.populateCategories()" ng-model="vm.filter" theme="select2" style="width: 25%; margin-bottom: 20px;">
-                                        <ui-select-match placeholder="Filter By Category Type">{{$select.selected.name}}</ui-select-match>
-                                        <ui-select-choices repeat="type.id as type in vm.categoryTypes | filter:$select.search">
-                                            {{type.name}}
-                                        </ui-select-choices>
-                                    </ui-select>
+                                        <button class="btn btn-sm btn-primary pull-right m-vertical" ng-click="vm.addCategory();">Add Category</button>
+                                    </div>
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="table-responsive">
@@ -45,16 +25,14 @@
                                                 <tr>
                                                     <th>Code</th>
                                                     <th>Description</th>
-                                                    <th>Type</th>
                                                     <th>Status</th>
                                                     <th class="action-column">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="category in vm.categories">
+                                                <tr ng-repeat="category in vm.categories" ng-click="vm.selectedCategory=category;">
                                                     <td>{{category.code}}</td>
                                                     <td>{{category.description}}</td>
-                                                    <td>{{category.type.name}}</td>
                                                     <td>
                                                         <span ng-if="category.active">Active</span>
                                                         <span ng-if="!category.active">In Active</span>
@@ -74,17 +52,16 @@
                 </div>
             </div>
         </div>
-        <div class="col w-lg lt b-r">
+        <div class="col w-lg lt b-r" ng-if="vm.selectedCategory">
             <div class="vbox">
                 <div class="wrapper">
-                    <a href class="pull-right btn btn-sm btn-primary m-t-n-xs" ng-click="vm.createCategoryType()">New</a>
-                    <div class="h4">Category Types</div>
-                    <small class="text-muted">Management</small>
+                    <a href class="pull-right btn btn-sm btn-primary m-t-n-xs" ng-click="vm.createLookupValue()">New</a>
+                    <div class="h4">Lookup Values</div>
                 </div>
                 <div class="wrapper b-t m-t-xxs">
                     <div class="input-group">
                         <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
-                        <input type="text" class="form-control input-sm" placeholder="search" ng-model="vm.categoryTypeQuery">
+                        <input type="text" class="form-control input-sm" placeholder="search" ng-model="vm.lookupValueQuery">
                     </div>
                 </div>
                 <div class="row-row">
@@ -92,20 +69,20 @@
                         <div class="cell-inner">
                             <div class="padder">
                                 <div class="list-group">
-                                    <a ng-repeat="type in vm.categoryTypes | filter: {name : vm.categoryTypeQuery}"
+                                    <a ng-repeat="value in vm.selectedCategory.values | filter: {name : vm.lookupValueQuery}"
                                        ng-class="{'b-l-success' : $index % 2 == 0, 'b-l-warning' : $index % 2 != 0}"
                                        class="list-group-item b-l-3x hover-anchor">
-                                        <span ng-show="type.isEdit" class="pull-right text-muted">
-                                            <i ng-click="type.name=type.originalName;type.isEdit=false;" class="glyphicon glyphicon-remove hover-danger"></i>&nbsp;
-                                            <i ng-click="vm.editCategoryType(type)" class="fa fa-check hover-active"></i>
+                                        <span ng-show="value.isEdit" class="pull-right text-muted">
+                                            <i ng-click="value.name=value.originalName;value.isEdit=false;" class="glyphicon glyphicon-remove hover-danger"></i>&nbsp;
+                                            <i ng-click="vm.editLookupValue(value)" class="fa fa-check hover-active"></i>
                                         </span>
-                                        <span ng-click="vm.selectCategoryType(type)" class="block text-ellipsis" ng-show="!type.isEdit">{{type.name}}</span>
+                                        <span ng-click="vm.selectLookupValue(type)" class="block text-ellipsis" ng-show="!value.isEdit">{{value.name}}</span>
                                         <span>
                                             <input type="text"
                                                    class="w-sm"
-                                                   ng-model="type.name"
-                                                   ng-show="type.isEdit"
-                                                   ng-keypress="($event.which === 13 && type.originalName != type.name)?vm.editCategoryType(type):0"/>
+                                                   ng-model="value.name"
+                                                   ng-show="value.isEdit"
+                                                   ng-keypress="($event.which === 13 && value.originalName != value.name)?vm.editLookupValue(type):0" />
                                         </span>
                                     </a>
                                 </div>

@@ -353,9 +353,9 @@
         .module('VirtualClarityApp')
         .controller('categoryLookupManagementCtrl', categoryLookupManagementCtrl);
 
-    categoryLookupManagementCtrl.$inject = ['lookups', 'lookupsService', 'categoryTypesFactory'];
+    categoryLookupManagementCtrl.$inject = ['lookups', 'lookupsService', 'categoryTypesFactory', 'categoryFactory'];
 
-    function categoryLookupManagementCtrl(lookups, lookupsService, categoryTypesFactory) {
+    function categoryLookupManagementCtrl(lookups, lookupsService, categoryTypesFactory, categoryFactory) {
         var vm = this;
 
         vm.init = init;
@@ -367,10 +367,17 @@
         vm.editCategory = editCategory;
         vm.selectCategoryType = selectCategoryType;
         vm.editCategoryType = editCategoryType;
+        vm.addCategory = addCategory;
 
         function init() {
             vm.populateCategoryTypes();
             vm.populateCategories();
+        }
+
+        function addCategory() {
+            categoryFactory.addCategory().result.then(function() {
+
+            });
         }
 
         function editCategory(category) {
@@ -398,11 +405,9 @@
         }
 
         function populateCategories() {
-            if (vm.filter != null) {
-                lookupsService.getCategories(vm.filter).then(function(result) {
-                    vm.categories = result.data;
-                });
-            }
+            lookupsService.getCategories().then(function(result) {
+                vm.categories = result.data;
+            });
         }
 
         function createCategory() {
@@ -502,5 +507,52 @@
         }
 
         init();
+    }
+}(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('addCategoryCtrl', addCategoryCtrl);
+
+    addCategoryCtrl.$inject = ['lookupsService'];
+
+    function addCategoryCtrl(lookupsService) {
+        var vm = this;
+        vm.addLookupValue = addLookupValue;
+        vm.removeLookupValue = removeLookupValue;
+        vm.createCategory = createCategory;
+        vm.init = init;
+
+        function init() {
+            vm.newCategory = {};
+            vm.newCategory.values = [];
+            vm.newLookupValueIsActive = true;
+            vm.newLookupValue = '';
+        }
+
+        function removeLookupValue(lookupValue) {
+            vm.newCategory.values = _.remove(vm.newLookupValues, function (n) {
+                return n.name != lookupValue.name;
+            });
+        }
+
+        function addLookupValue() {
+            if (vm.newCategory.values.indexOfByProperty('name', vm.newLookupValue) < 0) {
+                vm.newCategory.values.push({ name: vm.newLookupValue, active: vm.newLookupValueIsActive });
+                vm.newLookupValue = '';
+                vm.newLookupValueIsActive = true;
+            }
+        }
+
+        function createCategory() {
+            lookupsService.createCategory(vm.newCategory).then(function () {
+                //modalinstance close
+            });
+        }
+
+        vm.init();
     }
 }(angular));

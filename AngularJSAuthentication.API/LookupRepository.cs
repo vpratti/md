@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AngularJSAuthentication.API.Models;
+using AutoMapper;
 
 namespace AngularJSAuthentication.API
 {
@@ -22,33 +23,39 @@ namespace AngularJSAuthentication.API
 
         public void CreateCategoryType(string name)
         {
-            if (_context.CategoryTypes.Any(i => i.Name.ToLower().Equals(name.ToLower())))
+            if (_context.LookupValues.Any(i => i.Name.ToLower().Equals(name.ToLower())))
             {
                 throw new Exception("Category type already exists.");
             }
 
-            _context.CategoryTypes.Add(new CategoryType(name));
+            //_context.LookupValues.Add(new LookupValue(name));
 
             _context.SaveChanges();
         }
 
-        public List<CategoryType> GetCategoryTypes()
+        public List<LookupValue> GetCategoryTypes()
         {
-            return _context.CategoryTypes.ToList();
+            return _context.LookupValues.ToList();
         }
 
-        public void CreateCategory(Category category)
+        public void CreateCategory(CategoryDto categoryDto)
         {
-            category = SetCreateCategoryDefaults(category);
+            var category = new Category(categoryDto.Code, categoryDto.Description, HttpContext.Current.User.Identity.Name);
 
-            _context.Categories.Add(category);
+            var result = _context.Categories.Add(category);
+
+            var lookupValues = new List<LookupValue>();
+
+            categoryDto.Values.ForEach(i => lookupValues.Add(new LookupValue(i.Name, i.Active, result.Id, HttpContext.Current.User.Identity.Name)));
+
+            result.LookupValues = lookupValues;
 
             _context.SaveChanges();
         }
 
-        public List<Category> GetCategories(long typeId)
+        public List<Category> GetCategories()
         {
-            var result =_context.Categories.Where(i => i.CategoryTypeId == typeId);
+            var result = _context.Categories;
 
             return result.ToList();
         }
@@ -68,7 +75,7 @@ namespace AngularJSAuthentication.API
 
             originalCategory.Code = category.Code;
             originalCategory.Description = category.Description;
-            originalCategory.CategoryTypeId = category.CategoryTypeId;
+            //originalCategory.CategoryTypeId = category.CategoryTypeId;
             originalCategory.Active = category.Active;
 
             _context.SaveChanges();
@@ -76,14 +83,14 @@ namespace AngularJSAuthentication.API
 
         public void EditCategoryType(long id, string name)
         {
-            CategoryType category = _context.CategoryTypes.Find(id);
+            LookupValue category = _context.LookupValues.Find(id);
 
             if (category == null)
             {
                 throw new Exception("There was an error while trying to edit your category");
             }
 
-            if (_context.CategoryTypes.Any(i => i.Name.ToLower().Equals(name.ToLower()) && i.Id != category.Id))
+            if (_context.LookupValues.Any(i => i.Name.ToLower().Equals(name.ToLower()) && i.Id != category.Id))
             {
                 throw new Exception("There is already a Type with that name");
             }
@@ -93,18 +100,20 @@ namespace AngularJSAuthentication.API
             _context.SaveChanges();
         }
 
-        private Category SetCreateCategoryDefaults(Category category)
-        {
-            category.Active = true;
+        //private Category SetCreateCategoryDefaults(CategoryDto categoryDto)
+        //{
+        //    var category = new Category {Active = true};
 
-            var username = HttpContext.Current.User.Identity.Name;
+        //    var username = HttpContext.Current.User.Identity.Name;
 
-            category.CreatedBy = username;
-            category.ModifiedBy = username;
-            category.CreatedOn = DateTime.UtcNow;
-            category.ModifiedOn = DateTime.UtcNow;
+        //    category.CreatedBy = username;
+        //    category.ModifiedBy = username;
+        //    category.CreatedOn = DateTime.UtcNow;
+        //    category.ModifiedOn = DateTime.UtcNow;
+        //    category.Code = categoryDto.Code;
+        //    category.Description = categoryDto.Description;
 
-            return category;
-        }
+        //    return category;
+        //}
     }
 }

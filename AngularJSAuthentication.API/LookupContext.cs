@@ -11,6 +11,6 @@ namespace AngularJSAuthentication.API
         }
 
         public DbSet<Category> Categories { get; set; }
-        public DbSet<CategoryType> CategoryTypes { get; set; } 
+        public DbSet<LookupValue> LookupValues { get; set; } 
     }
 }

@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace AngularJSAuthentication.API.Models
 {
@@ -7,19 +8,15 @@ namespace AngularJSAuthentication.API.Models
     {
         public Category() { }
 
-        public Category(string code, string description, long categoryTypeId)
+        public Category(string code, string description, string username)
         {
             Code = code;
             Description = description;
-            CategoryTypeId = categoryTypeId;
-        }
-
-        public Category(string code, string description, long categoryTypeId, long id)
-        {
-            Code = code;
-            Description = description;
-            CategoryTypeId = categoryTypeId;
-            Id = id;
+            CreatedBy = username;
+            ModifiedBy = username;
+            CreatedOn = DateTime.UtcNow;
+            ModifiedOn = DateTime.UtcNow;
+            Active = true;
         }
 
         [Required]
@@ -28,9 +25,6 @@ namespace AngularJSAuthentication.API.Models
         [Required]
         public string Description { get; set; }
 
-        public long CategoryTypeId { get; set; }
-
-        [ForeignKey("CategoryTypeId")]
-        public virtual CategoryType Type { get; set; }
+        public virtual List<LookupValue> LookupValues { get; set; } 
     }
 }

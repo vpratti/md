@@ -219,8 +219,8 @@
     <Compile Include="Mapping\MappingBootstrapper.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\CategoryDto.cs" />
-    <Compile Include="Models\CategoryType.cs" />
-    <Compile Include="Models\CategoryTypeDto.cs" />
+    <Compile Include="Models\LookupValue.cs" />
+    <Compile Include="Models\LookupValueDto.cs" />
     <Compile Include="Models\LookupBase.cs" />
     <Compile Include="Models\VirtualClarityUser.cs" />
     <Compile Include="Services\EmailService.cs" />

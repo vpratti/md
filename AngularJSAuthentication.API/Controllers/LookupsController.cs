@@ -25,9 +25,9 @@ namespace AngularJSAuthentication.API.Controllers
         [HttpGet]
         [Authorize(Roles = UserConstants.Admin)]
         [Route("GetCategories")]
-        public async Task<IHttpActionResult> GetCategories(long id)
+        public async Task<IHttpActionResult> GetCategories()
         {
-            var result = _lookupRepository.GetCategories(id);
+            var result = _lookupRepository.GetCategories();
 
             List<CategoryDto> mappedResult = _mappingEngine.Map<List<Category>, List<CategoryDto>>(result);
 
@@ -37,15 +37,18 @@ namespace AngularJSAuthentication.API.Controllers
         [HttpPost]
         [Authorize(Roles = UserConstants.Admin)]
         [Route("CreateCategory")]
-        public async Task<IHttpActionResult> CreateCategory(CategoryDto category)
+        public async Task<IHttpActionResult> CreateCategory(CategoryDto categoryDto)
         {
-            Guard.That(category.Code).IsNotNull();
-            Guard.That(category.Description).IsNotNull();
-            Guard.That(category.Type).IsNotNull();
+            Guard.That(categoryDto.Code).IsNotNull();
+            Guard.That(categoryDto.Description).IsNotNull();
 
-            var mappedCategory = new Category(category.Code, category.Description, category.Type.Id);
+            _lookupRepository.CreateCategory(categoryDto);
+
+            //_lookupRepository.UpdateCategory()
+            //var category = _mappingEngine.Map<CategoryDto, Category>();
+            //var mappedCategory = new Category(category.Code, category.Description, category.ValuesDtos.Id);
             
-            _lookupRepository.CreateCategory(mappedCategory);
+            //_lookupRepository.CreateCategory(mappedCategory);
 
             return Ok();
         }
@@ -57,11 +60,11 @@ namespace AngularJSAuthentication.API.Controllers
         {
             Guard.That(category.Code).IsNotNull();
             Guard.That(category.Description).IsNotNull();
-            Guard.That(category.Type).IsNotNull();
+            Guard.That(category.Values).IsNotNull();
 
-            var mappedCategory = new Category(category.Code, category.Description, category.Type.Id, category.Id);
+            //var mappedCategory = new Category(category.Code, category.Description, category.Type.Id, category.Id);
 
-            _lookupRepository.EditCategory(mappedCategory);
+            //_lookupRepository.EditCategory(mappedCategory);
 
             return Ok();
         }
@@ -69,11 +72,11 @@ namespace AngularJSAuthentication.API.Controllers
         [HttpPut]
         [Authorize(Roles = UserConstants.Admin)]
         [Route("EditCategoryType")]
-        public async Task<IHttpActionResult> EditCategoryType(CategoryTypeDto categoryType)
+        public async Task<IHttpActionResult> EditCategoryType(LookupValueDto lookupValue)
         {
-            Guard.That(categoryType.Name).IsNotNull();
+            Guard.That(lookupValue.Name).IsNotNull();
 
-            _lookupRepository.EditCategoryType(categoryType.Id, categoryType.Name);
+            _lookupRepository.EditCategoryType(lookupValue.Id, lookupValue.Name);
 
             return Ok();
         }
@@ -93,10 +96,10 @@ namespace AngularJSAuthentication.API.Controllers
         [Route("GetCategoryTypes")]
         public async Task<IHttpActionResult> GetCategoryTypes()
         {
-            List<CategoryType> categoryTypes = _lookupRepository.GetCategoryTypes();
+            List<LookupValue> categoryTypes = _lookupRepository.GetCategoryTypes();
 
-            List<CategoryTypeDto> categoryTypeDtos =
-                _mappingEngine.Map<List<CategoryType>, List<CategoryTypeDto>>(categoryTypes);
+            List<LookupValueDto> categoryTypeDtos =
+                _mappingEngine.Map<List<LookupValue>, List<LookupValueDto>>(categoryTypes);
 
             return Ok(categoryTypeDtos);
         }

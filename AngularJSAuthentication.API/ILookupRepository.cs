@@ -8,11 +8,11 @@ namespace AngularJSAuthentication.API
     {
         void CreateCategoryType(string name);
 
-        List<CategoryType> GetCategoryTypes();
+        List<LookupValue> GetCategoryTypes();
 
-        void CreateCategory(Category category);
+        void CreateCategory(CategoryDto categoryDto);
 
-        List<Category> GetCategories(long typeId);
+        List<Category> GetCategories();
 
         void DeleteCategory(long id);
 

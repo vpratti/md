@@ -13,3 +13,12 @@ th.action-column {
 .cursor-pointer {
     cursor: pointer;
 }
+
+.m-vertical {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.hover-pointer {
+    cursor: pointer;
+}

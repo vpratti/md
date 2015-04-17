@@ -22,3 +22,18 @@
     }
 
 }(angular));
+
+(function () {
+    'use strict';
+
+    Array.prototype.indexOfByProperty = indexOfByProperty;
+
+    function indexOfByProperty(key, value) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i][key] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+}());
