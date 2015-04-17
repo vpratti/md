@@ -4,6 +4,7 @@
     {
         public long Id { get; set; }
         public long CategoryId { get; set; }
+        public long MasterLookupValueId { get; set; }
 
         public string Name { get; set; }
 

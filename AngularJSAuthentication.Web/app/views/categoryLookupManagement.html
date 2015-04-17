@@ -13,7 +13,7 @@
                                     <div class="col-sm-12">
                                         <div class="input-group pull-left m-vertical w">
                                             <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
-                                            <input type="text" class="form-control input-sm" placeholder="Search By Code">
+                                            <input type="text" class="form-control input-sm" placeholder="Search By Code" ng-model="vm.categoryFilter">
                                         </div>
                                         <button class="btn btn-sm btn-primary pull-right m-vertical" ng-click="vm.addCategory();">Add Category</button>
                                     </div>
@@ -30,15 +30,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="category in vm.categories" ng-click="vm.selectedCategory=category;">
-                                                    <td>{{category.code}}</td>
-                                                    <td>{{category.description}}</td>
-                                                    <td>
+                                                <tr ng-repeat="category in vm.categories | filter: {code: vm.categoryFilter}">
+                                                    <td ng-class="{'selected' : category == vm.selectedCategory}" ng-click="vm.selectedCategory=category;">{{category.code}}</td>
+                                                    <td ng-class="{'selected' : category == vm.selectedCategory}" ng-click="vm.selectedCategory=category;">{{category.description}}</td>
+                                                    <td ng-class="{'selected' : category == vm.selectedCategory}" ng-click="vm.selectedCategory=category;">
                                                         <span ng-if="category.active">Active</span>
                                                         <span ng-if="!category.active">In Active</span>
                                                     </td>
-                                                    <td class="center-x">
-                                                        <span class="glyphicon glyphicon-pencil cursor-pointer" ng-click="vm.editCategory(category)" aria-hidden="true"></span>&nbsp;
+                                                    <td class="center-x" ng-class="{'selected' : category == vm.selectedCategory}">
+                                                        <!--<span class="glyphicon glyphicon-pencil cursor-pointer" ng-click="vm.editCategory(category)" aria-hidden="true"></span>&nbsp;-->
                                                         <span class="glyphicon glyphicon-remove cursor-pointer" ng-click="vm.deleteCategory(category.id)" aria-hidden="true"></span>
                                                     </td>
                                                 </tr>
@@ -76,7 +76,7 @@
                                             <i ng-click="value.name=value.originalName;value.isEdit=false;" class="glyphicon glyphicon-remove hover-danger"></i>&nbsp;
                                             <i ng-click="vm.editLookupValue(value)" class="fa fa-check hover-active"></i>
                                         </span>
-                                        <span ng-click="vm.selectLookupValue(type)" class="block text-ellipsis" ng-show="!value.isEdit">{{value.name}}</span>
+                                        <span ng-click="vm.selectLookupValue(value)" class="block text-ellipsis" ng-show="!value.isEdit">{{value.name}}</span>
                                         <span>
                                             <input type="text"
                                                    class="w-sm"

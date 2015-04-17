@@ -376,7 +376,7 @@
 
         function addCategory() {
             categoryFactory.addCategory().result.then(function() {
-
+                vm.populateCategories();
             });
         }
 
@@ -517,9 +517,9 @@
         .module('VirtualClarityApp')
         .controller('addCategoryCtrl', addCategoryCtrl);
 
-    addCategoryCtrl.$inject = ['lookupsService'];
+    addCategoryCtrl.$inject = ['$modalInstance','lookupsService'];
 
-    function addCategoryCtrl(lookupsService) {
+    function addCategoryCtrl($modalInstance, lookupsService) {
         var vm = this;
         vm.addLookupValue = addLookupValue;
         vm.removeLookupValue = removeLookupValue;
@@ -549,7 +549,7 @@
 
         function createCategory() {
             lookupsService.createCategory(vm.newCategory).then(function () {
-                //modalinstance close
+                $modalInstance.close();
             });
         }
 

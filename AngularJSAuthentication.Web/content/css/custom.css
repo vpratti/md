@@ -22,3 +22,9 @@ th.action-column {
 .hover-pointer {
     cursor: pointer;
 }
+
+.selected {
+    color: #31708f !important;
+    background-color: #d9edf7 !important;
+    border-color: #bce8f1 !important;
+}

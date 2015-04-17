@@ -10,6 +10,8 @@ namespace AngularJSAuthentication.API.Models
 
         public string Description { get; set; }
 
+        public bool Active { get; set; }
+
         public List<LookupValueDto> Values { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AngularJSAuthentication.API.Models
@@ -27,6 +28,8 @@ namespace AngularJSAuthentication.API.Models
         }
         
         public string Name { get; set; }
+
+        public virtual List<LookupAlias> LookupAliases { get; set; }
 
         public long CategoryId { get; set; }
 
