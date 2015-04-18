@@ -34,3 +34,11 @@ tr.selected-row > td {
     background-color: #d9edf7 !important;
     border-color: #bce8f1 !important;
 }
+
+.hover-warning:hover {
+    color: #fad733;
+}
+
+.hover-info:hover {
+    color: #23b7e5
+}

@@ -53,12 +53,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 displayName: 'Manage Roles'
             }
         })
-        .state('categoryLookupManagement', {
-            url: "/categoryLookupManagement",
-            templateUrl: "app/views/categoryLookupManagement.html",
-            controller: "categoryLookupManagementCtrl as vm",
+        .state('categoryManagement', {
+            url: "/categoryManagement",
+            templateUrl: "app/views/categoryManagement.html",
+            controller: "categoryManagementCtrl as vm",
             data: {
-                displayName: 'Manage Category Lookups'
+                displayName: 'Manage Categories'
             }
         });
 

@@ -31,9 +31,9 @@
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="category in vm.categories | filter: {code: vm.categoryFilter}" ng-class="{'selected-row' : category == vm.selectedCategory}">
-                                                    <td ng-click="vm.selectedCategory=category;">{{category.code}}</td>
-                                                    <td ng-click="vm.selectedCategory=category;">{{category.description}}</td>
-                                                    <td ng-click="vm.selectedCategory=category;">
+                                                    <td ng-click="vm.selectCategory(category)">{{category.code}}</td>
+                                                    <td ng-click="vm.selectCategory(category)">{{category.description}}</td>
+                                                    <td ng-click="vm.selectCategory(category)">
                                                         <span ng-if="category.active">Active</span>
                                                         <span ng-if="!category.active">In Active</span>
                                                     </td>
@@ -55,7 +55,6 @@
         <div class="col w-lg lt b-r" ng-if="vm.selectedCategory">
             <div class="vbox">
                 <div class="wrapper">
-                    <a href class="pull-right btn btn-sm btn-primary m-t-n-xs" ng-click="vm.createLookupValue()">New</a>
                     <div class="h4">Lookup Values</div>
                 </div>
                 <div class="wrapper b-t m-t-xxs">
@@ -71,20 +70,12 @@
                                 <div class="list-group">
                                     <a ng-repeat="value in vm.selectedCategory.values | filter: {name : vm.lookupValueQuery}"
                                        ng-class="{'b-l-success' : $index % 2 == 0, 'b-l-warning' : $index % 2 != 0, 'selected' : value == vm.selectedLookupValue}"
-                                       class="list-group-item b-l-3x hover-anchor"
-                                       ng-click="vm.selectedLookupValue=value;">
-                                        <span ng-show="value.isEdit" class="pull-right text-muted">
-                                            <i ng-click="value.name=value.originalName;value.isEdit=false;" class="glyphicon glyphicon-remove hover-danger"></i>&nbsp;
-                                            <i ng-click="vm.editLookupValue(value)" class="fa fa-check hover-active"></i>
+                                       class="list-group-item b-l-3x hover-anchor">
+                                        <span class="pull-right text-muted">
+                                            <i class="glyphicon glyphicon-pencil hover-warning" ng-click="vm.editLookupValue();"></i>&nbsp;
+                                            <i class="fa fa-trash-o hover-danger" ng-click="vm.deleteLookupValue();"></i>
                                         </span>
-                                        <span ng-click="vm.selectLookupValue(value)" class="block text-ellipsis" ng-show="!value.isEdit">{{value.name}}</span>
-                                        <span>
-                                            <input type="text"
-                                                   class="w-sm"
-                                                   ng-model="value.name"
-                                                   ng-show="value.isEdit"
-                                                   ng-keypress="($event.which === 13 && value.originalName != value.name)?vm.editLookupValue(type):0" />
-                                        </span>
+                                        <span ng-click="vm.selectedLookupValue=value;" class="block text-ellipsis hover-info">{{value.name}}</span>
                                     </a>
                                 </div>
                             </div>
@@ -102,10 +93,9 @@
                             </label>
                         </div>
                         <div class="form-group">
-                            <i class="fa fa-plus"
+                            <i class="fa fa-plus hover-pointer"
                                style="color: #27c24c"
-                               ng-click="vm.addLookupValue()"
-                               ng-class="{'hover-pointer' : vm.newCategory.values.indexOfByProperty('name', vm.newLookupValue) < 0}"></i>
+                               ng-click="vm.addLookupValue()"></i>
                         </div>
                     </div>
                 </div>
@@ -114,7 +104,6 @@
         <div class="col w-lg lt b-r" ng-if="vm.selectedLookupValue">
             <div class="vbox">
                 <div class="wrapper">
-                    <a href class="pull-right btn btn-sm btn-primary m-t-n-xs" ng-click="vm.createLookupAlias()">New</a>
                     <div class="h4">Lookup Aliases</div>
                 </div>
                 <div class="wrapper b-t m-t-xxs">
@@ -131,18 +120,11 @@
                                     <a ng-repeat="value in vm.selectedLookupValue.lookupAliases | filter: {name : vm.lookupAliasQuery}"
                                        ng-class="{'b-l-success' : $index % 2 == 0, 'b-l-warning' : $index % 2 != 0}"
                                        class="list-group-item b-l-3x hover-anchor">
-                                        <span ng-show="value.isEdit" class="pull-right text-muted">
-                                            <i class="glyphicon glyphicon-remove hover-danger"></i>&nbsp;
-                                            <i class="fa fa-check hover-active"></i>
+                                        <span class="pull-right text-muted">
+                                            <i class="glyphicon glyphicon-pencil hover-warning" ng-click="vm.editLookupAlias();"></i>&nbsp;
+                                            <i class="fa fa-trash-o hover-danger" ng-click="vm.deleteLookupAlias();"></i>
                                         </span>
-                                        <span class="block text-ellipsis" ng-show="!value.isEdit">{{value.name}}</span>
-                                        <span>
-                                            <!--<input type="text"
-                                                       class="w-sm"
-                                                       ng-model="value.name"
-                                                       ng-show="value.isEdit"
-                                                       ng-keypress="($event.which === 13 && value.originalName != value.name)?vm.editLookupValue(type):0" />-->
-                                        </span>
+                                        <span class="block text-ellipsis">{{value.name}}</span>
                                     </a>
                                 </div>
                             </div>
@@ -160,10 +142,9 @@
                             </label>
                         </div>
                         <div class="form-group">
-                            <i class="fa fa-plus"
+                            <i class="fa fa-plus hover-pointer"
                                style="color: #27c24c"
                                ng-click="vm.addLookupAlias()"></i>
-                            <!--ng-class="{'hover-pointer' : vm.newCategory.values.indexOfByProperty('name', vm.newLookupValue) < 0}"-->
                         </div>
                     </div>
                 </div>

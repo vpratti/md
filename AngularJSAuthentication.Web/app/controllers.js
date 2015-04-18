@@ -351,27 +351,34 @@
 
     angular
         .module('VirtualClarityApp')
-        .controller('categoryLookupManagementCtrl', categoryLookupManagementCtrl);
+        .controller('categoryManagementCtrl', categoryManagementCtrl);
 
-    categoryLookupManagementCtrl.$inject = ['lookups', 'lookupsService', 'categoryTypesFactory', 'categoryFactory'];
+    categoryManagementCtrl.$inject = ['lookups', 'lookupsService', 'categoryTypesFactory', 'categoryFactory'];
 
-    function categoryLookupManagementCtrl(lookups, lookupsService, categoryTypesFactory, categoryFactory) {
+    function categoryManagementCtrl(lookups, lookupsService, categoryTypesFactory, categoryFactory) {
         var vm = this;
 
         vm.init = init;
-        vm.populateLookupValues = populateLookupValues;
         vm.createCategory = createCategory;
         vm.populateCategories = populateCategories;
         vm.deleteCategory = deleteCategory;
-        vm.selectCategoryType = selectCategoryType;
         vm.addCategory = addCategory;
         vm.addLookupAlias = addLookupAlias;
         vm.addLookupValue = addLookupValue;
+        vm.resetSelectedModels = resetSelectedModels;
+        vm.selectCategory = selectCategory;
 
         function init() {
-            vm.populateLookupValues();
             vm.populateCategories();
             vm.newLookupAliasIsActive = true;
+            vm.newLookupValueIsActive = true;
+        }
+
+        function selectCategory(category) {
+            if (vm.selectedCategory != category) {
+                vm.selectedCategory = category;
+                vm.selectedLookupValue = null;
+            }
         }
 
         function addCategory() {
@@ -381,14 +388,14 @@
         }
 
         function deleteCategory(id) {
-            lookupsService.deleteCategory(id).then(function() {
-                vm.populateCategories();
-            });
-        }
+            lookupsService.deleteCategory(id).then(function () {
+                if (id == vm.selectedCategory.id) {
+                    vm.resetSelectedModels();
+                }
 
-        function populateLookupValues() {
-            lookupsService.getLookupValues().then(function (result) {
-                vm.categoryTypes = result.data; //todo rename
+                vm.categories = _.remove(vm.categories, function (n) {
+                    return n.id != id;
+                });
             });
         }
 
@@ -403,16 +410,6 @@
                 vm.newCategory = {};
                 vm.populateCategories();
             });
-        }
-
-        function selectCategoryType(type) {
-            if (angular.isUndefined(type.originalName)) {
-                type.originalName = type.name;
-            }
-
-            if (!type.isEdit) {
-                type.isEdit = true;
-            }
         }
 
         function addLookupAlias() {
@@ -441,6 +438,11 @@
                 vm.newLookupValue = '';
                 vm.newLookupValueIsActive = true;
             });
+        }
+
+        function resetSelectedModels() {
+            vm.selectedCategory = null;
+            vm.selectedLookupValue = null;
         }
 
         vm.init();
