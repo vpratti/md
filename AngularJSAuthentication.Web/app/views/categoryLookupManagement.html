@@ -30,14 +30,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="category in vm.categories | filter: {code: vm.categoryFilter}">
-                                                    <td ng-class="{'selected' : category == vm.selectedCategory}" ng-click="vm.selectedCategory=category;">{{category.code}}</td>
-                                                    <td ng-class="{'selected' : category == vm.selectedCategory}" ng-click="vm.selectedCategory=category;">{{category.description}}</td>
-                                                    <td ng-class="{'selected' : category == vm.selectedCategory}" ng-click="vm.selectedCategory=category;">
+                                                <tr ng-repeat="category in vm.categories | filter: {code: vm.categoryFilter}" ng-class="{'selected-row' : category == vm.selectedCategory}">
+                                                    <td ng-click="vm.selectedCategory=category;">{{category.code}}</td>
+                                                    <td ng-click="vm.selectedCategory=category;">{{category.description}}</td>
+                                                    <td ng-click="vm.selectedCategory=category;">
                                                         <span ng-if="category.active">Active</span>
                                                         <span ng-if="!category.active">In Active</span>
                                                     </td>
-                                                    <td class="center-x" ng-class="{'selected' : category == vm.selectedCategory}">
+                                                    <td class="center-x">
                                                         <!--<span class="glyphicon glyphicon-pencil cursor-pointer" ng-click="vm.editCategory(category)" aria-hidden="true"></span>&nbsp;-->
                                                         <span class="glyphicon glyphicon-remove cursor-pointer" ng-click="vm.deleteCategory(category.id)" aria-hidden="true"></span>
                                                     </td>
@@ -70,8 +70,9 @@
                             <div class="padder">
                                 <div class="list-group">
                                     <a ng-repeat="value in vm.selectedCategory.values | filter: {name : vm.lookupValueQuery}"
-                                       ng-class="{'b-l-success' : $index % 2 == 0, 'b-l-warning' : $index % 2 != 0}"
-                                       class="list-group-item b-l-3x hover-anchor">
+                                       ng-class="{'b-l-success' : $index % 2 == 0, 'b-l-warning' : $index % 2 != 0, 'selected' : value == vm.selectedLookupValue}"
+                                       class="list-group-item b-l-3x hover-anchor"
+                                       ng-click="vm.selectedLookupValue=value;">
                                         <span ng-show="value.isEdit" class="pull-right text-muted">
                                             <i ng-click="value.name=value.originalName;value.isEdit=false;" class="glyphicon glyphicon-remove hover-danger"></i>&nbsp;
                                             <i ng-click="vm.editLookupValue(value)" class="fa fa-check hover-active"></i>
@@ -87,6 +88,82 @@
                                     </a>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <div class="form-inline m-vertical">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Lookup Value" data-ng-model="vm.newLookupValue" style="width: 145px;">
+                        </div>
+                        <div class="checkbox m-l m-r-xs">
+                            <label class="i-checks">
+                                <input type="checkbox" data-ng-model="vm.newLookupValueIsActive"><i></i>Is Active
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <i class="fa fa-plus"
+                               style="color: #27c24c"
+                               ng-click="vm.addLookupValue()"
+                               ng-class="{'hover-pointer' : vm.newCategory.values.indexOfByProperty('name', vm.newLookupValue) < 0}"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col w-lg lt b-r" ng-if="vm.selectedLookupValue">
+            <div class="vbox">
+                <div class="wrapper">
+                    <a href class="pull-right btn btn-sm btn-primary m-t-n-xs" ng-click="vm.createLookupAlias()">New</a>
+                    <div class="h4">Lookup Aliases</div>
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <div class="input-group">
+                        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                        <input type="text" class="form-control input-sm" placeholder="search" ng-model="vm.lookupAliasQuery">
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="padder">
+                                <div class="list-group">
+                                    <a ng-repeat="value in vm.selectedLookupValue.lookupAliases | filter: {name : vm.lookupAliasQuery}"
+                                       ng-class="{'b-l-success' : $index % 2 == 0, 'b-l-warning' : $index % 2 != 0}"
+                                       class="list-group-item b-l-3x hover-anchor">
+                                        <span ng-show="value.isEdit" class="pull-right text-muted">
+                                            <i class="glyphicon glyphicon-remove hover-danger"></i>&nbsp;
+                                            <i class="fa fa-check hover-active"></i>
+                                        </span>
+                                        <span class="block text-ellipsis" ng-show="!value.isEdit">{{value.name}}</span>
+                                        <span>
+                                            <!--<input type="text"
+                                                       class="w-sm"
+                                                       ng-model="value.name"
+                                                       ng-show="value.isEdit"
+                                                       ng-keypress="($event.which === 13 && value.originalName != value.name)?vm.editLookupValue(type):0" />-->
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <div class="form-inline m-vertical">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Lookup Alias" data-ng-model="vm.newLookupAlias" style="width: 145px;">
+                        </div>
+                        <div class="checkbox m-l m-r-xs">
+                            <label class="i-checks">
+                                <input type="checkbox" data-ng-model="vm.newLookupAliasIsActive"><i></i>Is Active
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <i class="fa fa-plus"
+                               style="color: #27c24c"
+                               ng-click="vm.addLookupAlias()"></i>
+                            <!--ng-class="{'hover-pointer' : vm.newCategory.values.indexOfByProperty('name', vm.newLookupValue) < 0}"-->
                         </div>
                     </div>
                 </div>

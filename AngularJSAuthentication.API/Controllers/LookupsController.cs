@@ -69,37 +69,47 @@ namespace AngularJSAuthentication.API.Controllers
             return Ok();
         }
 
-        [HttpPut]
-        [Authorize(Roles = UserConstants.Admin)]
-        [Route("EditCategoryType")]
-        public async Task<IHttpActionResult> EditCategoryType(LookupValueDto lookupValue)
-        {
-            Guard.That(lookupValue.Name).IsNotNull();
+        //[HttpPut]
+        //[Authorize(Roles = UserConstants.Admin)]
+        //[Route("EditCategoryType")]
+        //public async Task<IHttpActionResult> EditCategoryType(LookupValueDto lookupValue)
+        //{
+        //    Guard.That(lookupValue.Name).IsNotNull();
 
-            _lookupRepository.EditCategoryType(lookupValue.Id, lookupValue.Name);
+        //    _lookupRepository.EditCategoryType(lookupValue.Id, lookupValue.Name);
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
+
+        //[HttpPost]
+        //[Authorize(Roles = UserConstants.Admin)]
+        //[Route("CreateCategoryType")]
+        //public async Task<IHttpActionResult> CreateCategoryType(string name)
+        //{
+        //   _lookupRepository.CreateCategoryType(name);
+
+        //    return Ok();
+        //}
 
         [HttpPost]
         [Authorize(Roles = UserConstants.Admin)]
-        [Route("CreateCategoryType")]
-        public async Task<IHttpActionResult> CreateCategoryType(string name)
+        [Route("CreateLookupAlias")]
+        public async Task<IHttpActionResult> CreateLookupAlias(LookupAliasDto lookupAliasDto)
         {
-           _lookupRepository.CreateCategoryType(name);
+            _lookupRepository.CreateLookupAlias(lookupAliasDto);
 
             return Ok();
         }
 
         [HttpGet]
         [Authorize(Roles = UserConstants.Admin)]
-        [Route("GetCategoryTypes")]
-        public async Task<IHttpActionResult> GetCategoryTypes()
+        [Route("GetLookupValues")]
+        public async Task<IHttpActionResult> GetLookupValues()
         {
-            List<LookupValue> categoryTypes = _lookupRepository.GetCategoryTypes();
+            List<LookupValue> lookupValues = _lookupRepository.GetLookupValues();
 
             List<LookupValueDto> categoryTypeDtos =
-                _mappingEngine.Map<List<LookupValue>, List<LookupValueDto>>(categoryTypes);
+                _mappingEngine.Map<List<LookupValue>, List<LookupValueDto>>(lookupValues);
 
             return Ok(categoryTypeDtos);
         }

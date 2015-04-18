@@ -21,19 +21,7 @@ namespace AngularJSAuthentication.API
             _context.Dispose();
         }
 
-        public void CreateCategoryType(string name)
-        {
-            if (_context.LookupValues.Any(i => i.Name.ToLower().Equals(name.ToLower())))
-            {
-                throw new Exception("Category type already exists.");
-            }
-
-            //_context.LookupValues.Add(new LookupValue(name));
-
-            _context.SaveChanges();
-        }
-
-        public List<LookupValue> GetCategoryTypes()
+        public List<LookupValue> GetLookupValues()
         {
             return _context.LookupValues.ToList();
         }
@@ -81,24 +69,33 @@ namespace AngularJSAuthentication.API
             _context.SaveChanges();
         }
 
-        public void EditCategoryType(long id, string name)
+        public void CreateLookupAlias(LookupAliasDto lookupAliasDto)
         {
-            LookupValue category = _context.LookupValues.Find(id);
-
-            if (category == null)
-            {
-                throw new Exception("There was an error while trying to edit your category");
-            }
-
-            if (_context.LookupValues.Any(i => i.Name.ToLower().Equals(name.ToLower()) && i.Id != category.Id))
-            {
-                throw new Exception("There is already a Type with that name");
-            }
-
-            category.Name = name;
-
+            var lookupAlias = new LookupAlias(lookupAliasDto, HttpContext.Current.User.Identity.Name);
+            LookupValue lookupValue = _context.LookupValues.Find(lookupAliasDto.LookupValueId);
+            lookupValue.LookupAliases.Add(lookupAlias);
+            
             _context.SaveChanges();
         }
+
+        //public void EditCategoryType(long id, string name)
+        //{
+        //    LookupValue category = _context.LookupValues.Find(id);
+
+        //    if (category == null)
+        //    {
+        //        throw new Exception("There was an error while trying to edit your category");
+        //    }
+
+        //    if (_context.LookupValues.Any(i => i.Name.ToLower().Equals(name.ToLower()) && i.Id != category.Id))
+        //    {
+        //        throw new Exception("There is already a Type with that name");
+        //    }
+
+        //    category.Name = name;
+
+        //    _context.SaveChanges();
+        //}
 
         //private Category SetCreateCategoryDefaults(CategoryDto categoryDto)
         //{

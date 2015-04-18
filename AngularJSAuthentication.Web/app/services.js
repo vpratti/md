@@ -239,16 +239,19 @@
             getCategories: getCategories,
             createCategory: createCategory,
             editCategory: editCategory,
-            getCategoryTypes: getCategoryTypes,
-            createCategoryType: createCategoryType,
             deleteCategory: deleteCategory,
-            editCategoryType: editCategoryType
+            addLookupAlias: addLookupAlias,
+            getLookupValues: getLookupValues
         };
 
         return factory;
 
+        function getLookupValues() {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetLookupValues');
+        }
+
         function getCategories(id) {
-            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetCategories?id=' + id);
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetCategories');
         }
 
         function createCategory(newCategory) {
@@ -259,16 +262,8 @@
             return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/EditCategory', category);
         }
 
-        function editCategoryType(category) {
-            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/EditCategoryType', category);
-        }
-
-        function getCategoryTypes() {
-            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetCategoryTypes');
-        }
-
-        function createCategoryType(name) {
-            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/CreateCategoryType?name=' + name);
+        function addLookupAlias(lookupAlias) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/CreateLookupAlias', lookupAlias);
         }
 
         function deleteCategory(id) {

@@ -17,6 +17,7 @@ namespace AngularJSAuthentication.API.Mapping
                 .IgnoreAllNonExisting();
 
             Mapper.CreateMap<LookupValue, LookupValueDto>()
+                .ForMember(dest => dest.LookupAliases, opt => opt.ResolveUsing(new LookupAliasesDtoResolver()))
                 .IgnoreAllNonExisting();
 
             Mapper.CreateMap<LookupValueDto, LookupValue>()
@@ -24,6 +25,9 @@ namespace AngularJSAuthentication.API.Mapping
 
             Mapper.CreateMap<CategoryDto, Category>()
                 .ForMember(dest => dest.LookupValues, opt => opt.ResolveUsing(new LookupValuesResovler()))
+                .IgnoreAllNonExisting();
+
+            Mapper.CreateMap<LookupAlias, LookupAliasDto>()
                 .IgnoreAllNonExisting();
         }
     }
@@ -47,6 +51,14 @@ namespace AngularJSAuthentication.API.Mapping
         {
             return Mapper.Map<List<LookupValue>, List<LookupValueDto>>(source.LookupValues);
             //throw new NotImplementedException();
+        }
+    }
+
+    public class LookupAliasesDtoResolver : ValueResolver<LookupValue, List<LookupAliasDto>>
+    {
+        protected override List<LookupAliasDto> ResolveCore(LookupValue source)
+        {
+            return Mapper.Map<List<LookupAlias>, List<LookupAliasDto>>(source.LookupAliases);
         }
     }
 }

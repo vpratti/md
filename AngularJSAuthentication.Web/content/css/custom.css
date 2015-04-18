@@ -28,3 +28,9 @@ th.action-column {
     background-color: #d9edf7 !important;
     border-color: #bce8f1 !important;
 }
+
+tr.selected-row > td {
+    color: #31708f !important;
+    background-color: #d9edf7 !important;
+    border-color: #bce8f1 !important;
+}

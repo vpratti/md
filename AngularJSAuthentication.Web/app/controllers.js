@@ -359,18 +359,16 @@
         var vm = this;
 
         vm.init = init;
-        vm.populateCategoryTypes = populateCategoryTypes;
-        vm.createCategoryType = createCategoryType;
+        vm.populateLookupValues = populateLookupValues;
         vm.createCategory = createCategory;
         vm.populateCategories = populateCategories;
         vm.deleteCategory = deleteCategory;
-        vm.editCategory = editCategory;
         vm.selectCategoryType = selectCategoryType;
-        vm.editCategoryType = editCategoryType;
         vm.addCategory = addCategory;
+        vm.addLookupAlias = addLookupAlias;
 
         function init() {
-            vm.populateCategoryTypes();
+            vm.populateLookupValues();
             vm.populateCategories();
         }
 
@@ -380,27 +378,15 @@
             });
         }
 
-        function editCategory(category) {
-            lookups.editCategoryLookup(category, vm.categoryTypes).result.then(function () {
-
-            });
-        }
-
-        function createCategoryType() {
-            categoryTypesFactory.createCategoryType().result.then(function() {
-                vm.populateCategoryTypes();
-            });
-        }
-
         function deleteCategory(id) {
             lookupsService.deleteCategory(id).then(function() {
                 vm.populateCategories();
             });
         }
 
-        function populateCategoryTypes() {
-            lookupsService.getCategoryTypes().then(function (result) {
-                vm.categoryTypes = result.data;
+        function populateLookupValues() {
+            lookupsService.getLookupValues().then(function (result) {
+                vm.categoryTypes = result.data; //todo rename
             });
         }
 
@@ -427,16 +413,16 @@
             }
         }
 
-        function editCategoryType(type) {
-            type.isEdit = false;
-            if (type.originalName != type.name) {
-                lookupsService.editCategoryType(type)
-                    .then(function onSuccess() {
-                        type.originalName = type.name;
-                    }, function onError() {
-                        type.isEdit = true;
-                    });
-            }
+        function addLookupAlias() {
+            var payload = {
+                name: vm.newLookupAlias,
+                active: vm.newLookupAliasIsActive,
+                lookupValueId: vm.selectedLookupValue.id
+            };
+
+            lookupsService.addLookupAlias(payload).then(function () {
+                console.log('success');
+            });
         }
 
         vm.init();
