@@ -1,5 +1,6 @@
 ﻿<div class="app-content-body  app-content-full animated fadeIn" style="overflow: hidden">
     <div class="hbox hbox-auto-xs bg-light " ng-init="app.settings.asideFolded = true; app.settings.asideFixed = true; app.settings.asideDock = false; app.settings.container = false; app.hideAside = false">
+        <!--Main area start-->
         <div class="col">
             <ui-breadcrumbs ng-if="authentication.isAuth" displayname-property="data.displayName"
                             template-url="/app/views/uiBreadcrumbs.html">
@@ -52,6 +53,8 @@
                 </div>
             </div>
         </div>
+        
+        <!--Lookup values column start-->
         <div class="col w-lg lt b-r animated fadeInRight" ng-if="vm.selectedCategory">
             <div class="vbox">
                 <div class="wrapper">
@@ -72,10 +75,27 @@
                                        ng-class="{'b-l-success' : value.active, 'b-l-warning' : !value.active, 'selected' : value == vm.selectedLookupValue}"
                                        class="list-group-item b-l-3x hover-anchor">
                                         <span class="pull-right text-muted">
-                                            <i class="glyphicon glyphicon-pencil hover-warning" ng-click="vm.editLookupValue();"></i>&nbsp;
-                                            <i class="fa fa-trash-o hover-danger" ng-click="vm.deleteLookupValue(value.id);"></i>
+                                            <i class="glyphicon glyphicon-pencil hover-warning animated fadeIn"
+                                               ng-if="!value.isEditing"
+                                               ng-click="value.isEditing=true;value.origName=value.name;value.origActive=value.active;"></i>
+                                            <i class="fa fa-trash-o hover-danger animated fadeIn" ng-if="!value.isEditing" ng-click="vm.deleteLookupValue(value.id);"></i>
                                         </span>
-                                        <span ng-click="vm.selectedLookupValue=value;" class="block text-ellipsis hover-info">{{value.name}}</span>
+                                        <span ng-click="vm.selectedLookupValue=value;" ng-if="!value.isEditing" class="block text-ellipsis hover-info">{{value.name}}</span>
+                                        <div class="form-inline" ng-if="value.isEditing">
+                                            <input type="text"
+                                                   class="animated fadeIn"
+                                                   style="width: 145px;"
+                                                   ng-model="value.name"
+                                                   ng-keypress="($event.which === 13 && value.origName != value.name)?vm.editLookupValue(value):0" />
+                                            <div class="checkbox m-l m-r-xs" ng-click="value.active=!value.active">
+                                                <label class="i-checks">
+                                                    <input type="checkbox" ng-model="value.active"><i></i>
+                                                </label>
+                                            </div>
+                                            <i class="glyphicon glyphicon-ok hover-success margin-top-sm pull-right animated fadeIn" ng-click="value.isEditing=false;vm.editLookupValue(value)"></i>
+                                            <i class="glyphicon glyphicon-remove hover-danger margin-top-sm pull-right animated fadeIn"
+                                               ng-click="value.isEditing=false;value.name=value.origName;value.active=value.origActive;"></i>
+                                        </div>
                                     </a>
                                 </div>
                             </div>
@@ -102,6 +122,8 @@
                 </div>
             </div>
         </div>
+        
+        <!--Lookup aliases column start-->
         <div class="col w-lg lt b-r animated fadeInRight" ng-if="vm.selectedLookupValue">
             <div class="vbox">
                 <div class="wrapper">

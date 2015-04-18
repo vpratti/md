@@ -130,6 +130,18 @@ namespace AngularJSAuthentication.API.Controllers
             _lookupRepository.DeleteLookupValue(id);
 
             return Ok();
-        } 
+        }
+
+        [HttpPut]
+        [Authorize(Roles = UserConstants.Admin)]
+        [Route("EditLookupValue")]
+        public async Task<IHttpActionResult> EditLookupValue(LookupValueDto lookupValueDto)
+        {
+            Guard.That(lookupValueDto.Name).IsNotNullOrEmpty();
+
+            _lookupRepository.EditLookupValue(lookupValueDto);
+
+            return Ok();
+        }
     }
 }

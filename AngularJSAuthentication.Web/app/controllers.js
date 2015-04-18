@@ -369,11 +369,19 @@
         vm.selectCategory = selectCategory;
         vm.deleteAlias = deleteAlias;
         vm.deleteLookupValue = deleteLookupValue;
+        vm.editLookupValue = editLookupValue;
 
         function init() {
             vm.populateCategories();
             vm.newLookupAliasIsActive = true;
             vm.newLookupValueIsActive = true;
+        }
+
+        function editLookupValue(lookupValue) {
+            lookupsService.editLookupValue(lookupValue).error(function() {
+                lookupValue.name = lookupValue.origName; //todo move logic to function & update view to use
+                lookupValue.active = lookupValue.origActive;
+            });
         }
 
         function deleteLookupValue(id) {

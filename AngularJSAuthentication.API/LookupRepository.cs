@@ -111,5 +111,17 @@ namespace AngularJSAuthentication.API
 
             _context.SaveChanges();
         }
+
+        public void EditLookupValue(LookupValueDto lookupValueDto)
+        {
+            LookupValue lookupValue = _context.LookupValues.Find(lookupValueDto.Id);
+
+            lookupValue.Name = lookupValueDto.Name;
+            lookupValue.Active = lookupValueDto.Active;
+            lookupValue.ModifiedOn = DateTime.UtcNow;
+            lookupValue.ModifiedBy = HttpContext.Current.User.Identity.Name;
+
+            _context.SaveChanges();
+        }
     }
 }

@@ -43,3 +43,11 @@ tr.selected-row > td {
     color: #23b7e5
 }
 
+.hover-success:hover {
+    color: #27c24c;
+}
+
+.margin-top-sm {
+    margin-top: 8px;
+}
+
