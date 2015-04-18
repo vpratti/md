@@ -1,4 +1,4 @@
-﻿<div class="app-content-body  app-content-full" style="overflow: hidden">
+﻿<div class="app-content-body  app-content-full animated fadeIn" style="overflow: hidden">
     <div class="hbox hbox-auto-xs bg-light " ng-init="app.settings.asideFolded = true; app.settings.asideFixed = true; app.settings.asideDock = false; app.settings.container = false; app.hideAside = false">
         <div class="col">
             <ui-breadcrumbs ng-if="authentication.isAuth" displayname-property="data.displayName"
@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        <div class="col w-lg lt b-r" ng-if="vm.selectedCategory">
+        <div class="col w-lg lt b-r animated fadeInRight" ng-if="vm.selectedCategory">
             <div class="vbox">
                 <div class="wrapper">
                     <div class="h4">Lookup Values</div>
@@ -73,7 +73,7 @@
                                        class="list-group-item b-l-3x hover-anchor">
                                         <span class="pull-right text-muted">
                                             <i class="glyphicon glyphicon-pencil hover-warning" ng-click="vm.editLookupValue();"></i>&nbsp;
-                                            <i class="fa fa-trash-o hover-danger" ng-click="vm.deleteLookupValue();"></i>
+                                            <i class="fa fa-trash-o hover-danger" ng-click="vm.deleteLookupValue(value.id);"></i>
                                         </span>
                                         <span ng-click="vm.selectedLookupValue=value;" class="block text-ellipsis hover-info">{{value.name}}</span>
                                     </a>
@@ -102,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="col w-lg lt b-r" ng-if="vm.selectedLookupValue">
+        <div class="col w-lg lt b-r animated fadeInRight" ng-if="vm.selectedLookupValue">
             <div class="vbox">
                 <div class="wrapper">
                     <div class="h4">Lookup Aliases</div>

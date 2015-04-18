@@ -1,4 +1,4 @@
-﻿<div ng-form="usermanagementForm">
+﻿<div ng-form="usermanagementForm" class=" animated fadeIn">
     <div class="row">
         <div class="col-md-12">
             <accordion close-others="oneAtATime">
@@ -7,19 +7,19 @@
                         <div class="col-sm-4"><input type="text" class="form-control" placeholder="Username" data-ng-model="vm.newUser.userName" required autofocus></div>
                         <div class="col-sm-4"><input type="text" class="form-control" placeholder="First Name" data-ng-model="vm.newUser.firstName" required></div>
                         <div class="col-sm-4"><input type="text" class="form-control" placeholder="Last Name" data-ng-model="vm.newUser.lastName" required></div>
-                    </div><br/>
+                    </div><br />
                     <div class="row">
                         <div class="col-sm-4"><input type="number" class="form-control" placeholder="Phone Number" data-ng-model="vm.newUser.phoneNumber" required></div>
                         <div class="col-sm-4"><input type="email" class="form-control" placeholder="Email" data-ng-model="vm.newUser.email" required></div>
                         <div class="col-sm-4"><input type="email" class="form-control" placeholder="Confirm Email" data-ng-model="vm.newUser.confirmEmail" required></div>
-                    </div><br/>
+                    </div><br />
                     <ui-select multiple ng-model="vm.newUser.roles" theme="select2" style="width: 100%; margin-bottom: 20px;">
                         <ui-select-match placeholder="Select Roles">{{$item.name}}</ui-select-match>
                         <ui-select-choices repeat="role in vm.availableRoles | filter:$select.search">
                             {{role.name}}
                         </ui-select-choices>
                     </ui-select>
-                    
+
                     <div class="row">
                         <div class="col-sm-6"><input type="password" class="form-control" placeholder="Password" data-ng-model="vm.newUser.password" required></div>
                         <div class="col-sm-6"><input type="password" class="form-control" placeholder="Confirm Password" data-ng-model="vm.newUser.confirmPassword" required></div>

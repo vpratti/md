@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AngularJSAuthentication.API.Models;
-using AutoMapper;
 
 namespace AngularJSAuthentication.API
 {
@@ -100,6 +99,15 @@ namespace AngularJSAuthentication.API
             LookupAlias lookupAlias = _context.LookupAliases.Find(id);
 
             _context.LookupAliases.Remove(lookupAlias);
+
+            _context.SaveChanges();
+        }
+
+        public void DeleteLookupValue(long id)
+        {
+            LookupValue lookupValue = _context.LookupValues.Find(id);
+
+            _context.LookupValues.Remove(lookupValue);
 
             _context.SaveChanges();
         }

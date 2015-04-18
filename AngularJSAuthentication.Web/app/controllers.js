@@ -368,11 +368,25 @@
         vm.resetSelectedModels = resetSelectedModels;
         vm.selectCategory = selectCategory;
         vm.deleteAlias = deleteAlias;
+        vm.deleteLookupValue = deleteLookupValue;
 
         function init() {
             vm.populateCategories();
             vm.newLookupAliasIsActive = true;
             vm.newLookupValueIsActive = true;
+        }
+
+        function deleteLookupValue(id) {
+            utility.confirm('Are you sure you want to delete this lookup value?').result.then(function() {
+                lookupsService.deleteLookupValue(id).then(function () {
+                    if (id == vm.selectedLookupValue.id) {
+                        vm.selectedLookupValue = null;
+                    }
+                    vm.selectedCategory.values = _.remove(vm.selectedCategory.values, function (n) {
+                        return n.id != id;
+                    });
+                });
+            });
         }
 
         function deleteAlias(id) {

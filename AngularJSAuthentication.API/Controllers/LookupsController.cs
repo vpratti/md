@@ -120,6 +120,16 @@ namespace AngularJSAuthentication.API.Controllers
             _lookupRepository.DeleteAlias(id);
 
             return Ok();
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = UserConstants.Admin)]
+        [Route("DeleteLookupValue")]
+        public async Task<IHttpActionResult> DeleteLookupValue(long id)
+        {
+            _lookupRepository.DeleteLookupValue(id);
+
+            return Ok();
         } 
     }
 }
