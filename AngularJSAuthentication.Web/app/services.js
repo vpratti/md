@@ -243,10 +243,14 @@
             addLookupAlias: addLookupAlias,
             getLookupValues: getLookupValues,
             addLookupValue: addLookupValue,
+            deleteAlias: deleteAlias
         };
 
         return factory;
 
+        function deleteAlias(id) {
+            return $http.delete(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/DeleteAlias?id=' + id);
+        }
 
         function addLookupValue(lookupValue) {
             return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/CreateLookupValue', lookupValue);

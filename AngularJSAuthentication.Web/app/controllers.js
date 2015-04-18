@@ -353,9 +353,9 @@
         .module('VirtualClarityApp')
         .controller('categoryManagementCtrl', categoryManagementCtrl);
 
-    categoryManagementCtrl.$inject = ['lookups', 'lookupsService', 'categoryTypesFactory', 'categoryFactory'];
+    categoryManagementCtrl.$inject = ['lookups', 'lookupsService', 'categoryTypesFactory', 'categoryFactory', 'utility'];
 
-    function categoryManagementCtrl(lookups, lookupsService, categoryTypesFactory, categoryFactory) {
+    function categoryManagementCtrl(lookups, lookupsService, categoryTypesFactory, categoryFactory, utility) {
         var vm = this;
 
         vm.init = init;
@@ -367,11 +367,22 @@
         vm.addLookupValue = addLookupValue;
         vm.resetSelectedModels = resetSelectedModels;
         vm.selectCategory = selectCategory;
+        vm.deleteAlias = deleteAlias;
 
         function init() {
             vm.populateCategories();
             vm.newLookupAliasIsActive = true;
             vm.newLookupValueIsActive = true;
+        }
+
+        function deleteAlias(id) {
+            utility.confirm('Are you sure you want to delete this alias?').result.then(function() {
+                lookupsService.deleteAlias(id).then(function () {
+                    vm.selectedLookupValue.lookupAliases = _.remove(vm.selectedLookupValue.lookupAliases, function (n) {
+                        return n.id != id;
+                    });
+                });
+            });
         }
 
         function selectCategory(category) {
@@ -413,31 +424,35 @@
         }
 
         function addLookupAlias() {
-            var payload = {
-                name: vm.newLookupAlias,
-                active: vm.newLookupAliasIsActive,
-                lookupValueId: vm.selectedLookupValue.id
-            };
+            if (vm.newLookupAlias) {
+                var payload = {
+                    name: vm.newLookupAlias,
+                    active: vm.newLookupAliasIsActive,
+                    lookupValueId: vm.selectedLookupValue.id
+                };
 
-            lookupsService.addLookupAlias(payload).then(function (result) {
-                vm.selectedLookupValue.lookupAliases.push(result.data);
-                vm.newLookupAlias = '';
-                vm.newLookupAliasIsActive = true;
-            });
+                lookupsService.addLookupAlias(payload).then(function(result) {
+                    vm.selectedLookupValue.lookupAliases.push(result.data);
+                    vm.newLookupAlias = '';
+                    vm.newLookupAliasIsActive = true;
+                });
+            }
         }
 
         function addLookupValue() {
-            var payload = {
-                name: vm.newLookupValue,
-                active: vm.newLookupValueIsActive,
-                categoryId: vm.selectedCategory.id,
-            }
+            if (vm.newLookupValue) {
+                var payload = {
+                    name: vm.newLookupValue,
+                    active: vm.newLookupValueIsActive,
+                    categoryId: vm.selectedCategory.id,
+                }
 
-            lookupsService.addLookupValue(payload).then(function(result) {
-                vm.selectedCategory.values.push(result.data);
-                vm.newLookupValue = '';
-                vm.newLookupValueIsActive = true;
-            });
+                lookupsService.addLookupValue(payload).then(function(result) {
+                    vm.selectedCategory.values.push(result.data);
+                    vm.newLookupValue = '';
+                    vm.newLookupValueIsActive = true;
+                });
+            }
         }
 
         function resetSelectedModels() {
@@ -530,6 +545,7 @@
         vm.addLookupValue = addLookupValue;
         vm.removeLookupValue = removeLookupValue;
         vm.createCategory = createCategory;
+        vm.$modalInstance = $modalInstance;
         vm.init = init;
 
         function init() {

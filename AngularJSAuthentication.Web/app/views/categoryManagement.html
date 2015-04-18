@@ -69,7 +69,7 @@
                             <div class="padder">
                                 <div class="list-group">
                                     <a ng-repeat="value in vm.selectedCategory.values | filter: {name : vm.lookupValueQuery}"
-                                       ng-class="{'b-l-success' : $index % 2 == 0, 'b-l-warning' : $index % 2 != 0, 'selected' : value == vm.selectedLookupValue}"
+                                       ng-class="{'b-l-success' : value.active, 'b-l-warning' : !value.active, 'selected' : value == vm.selectedLookupValue}"
                                        class="list-group-item b-l-3x hover-anchor">
                                         <span class="pull-right text-muted">
                                             <i class="glyphicon glyphicon-pencil hover-warning" ng-click="vm.editLookupValue();"></i>&nbsp;
@@ -93,7 +93,8 @@
                             </label>
                         </div>
                         <div class="form-group">
-                            <i class="fa fa-plus hover-pointer"
+                            <i class="fa fa-plus"
+                               ng-class="{'hover-pointer' : vm.newLookupValue}"
                                style="color: #27c24c"
                                ng-click="vm.addLookupValue()"></i>
                         </div>
@@ -118,11 +119,11 @@
                             <div class="padder">
                                 <div class="list-group">
                                     <a ng-repeat="value in vm.selectedLookupValue.lookupAliases | filter: {name : vm.lookupAliasQuery}"
-                                       ng-class="{'b-l-success' : $index % 2 == 0, 'b-l-warning' : $index % 2 != 0}"
+                                       ng-class="{'b-l-success' : value.active, 'b-l-warning' : !value.active}"
                                        class="list-group-item b-l-3x hover-anchor">
                                         <span class="pull-right text-muted">
                                             <i class="glyphicon glyphicon-pencil hover-warning" ng-click="vm.editLookupAlias();"></i>&nbsp;
-                                            <i class="fa fa-trash-o hover-danger" ng-click="vm.deleteLookupAlias();"></i>
+                                            <i class="fa fa-trash-o hover-danger" ng-click="vm.deleteAlias(value.id);"></i>
                                         </span>
                                         <span class="block text-ellipsis">{{value.name}}</span>
                                     </a>
@@ -142,7 +143,8 @@
                             </label>
                         </div>
                         <div class="form-group">
-                            <i class="fa fa-plus hover-pointer"
+                            <i class="fa fa-plus"
+                               ng-class="{'hover-pointer' : vm.newLookupAlias}"
                                style="color: #27c24c"
                                ng-click="vm.addLookupAlias()"></i>
                         </div>

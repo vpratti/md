@@ -7,5 +7,7 @@
         public bool Active { get; set; }
 
         public long LookupValueId { get; set; }
+
+        public long Id { get; set; }
     }
 }

@@ -95,39 +95,13 @@ namespace AngularJSAuthentication.API
             return lookupValue;
         }
 
-        //public void EditCategoryType(long id, string name)
-        //{
-        //    LookupValue category = _context.LookupValues.Find(id);
+        public void DeleteAlias(long id)
+        {
+            LookupAlias lookupAlias = _context.LookupAliases.Find(id);
 
-        //    if (category == null)
-        //    {
-        //        throw new Exception("There was an error while trying to edit your category");
-        //    }
+            _context.LookupAliases.Remove(lookupAlias);
 
-        //    if (_context.LookupValues.Any(i => i.Name.ToLower().Equals(name.ToLower()) && i.Id != category.Id))
-        //    {
-        //        throw new Exception("There is already a Type with that name");
-        //    }
-
-        //    category.Name = name;
-
-        //    _context.SaveChanges();
-        //}
-
-        //private Category SetCreateCategoryDefaults(CategoryDto categoryDto)
-        //{
-        //    var category = new Category {Active = true};
-
-        //    var username = HttpContext.Current.User.Identity.Name;
-
-        //    category.CreatedBy = username;
-        //    category.ModifiedBy = username;
-        //    category.CreatedOn = DateTime.UtcNow;
-        //    category.ModifiedOn = DateTime.UtcNow;
-        //    category.Code = categoryDto.Code;
-        //    category.Description = categoryDto.Description;
-
-        //    return category;
-        //}
+            _context.SaveChanges();
+        }
     }
 }

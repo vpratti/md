@@ -176,15 +176,12 @@
             </div>
         </aside>
 
-        <div id="content" class="app-content" role="main" ng-if="authentication.isAuth">
+        <div id="content" class="app-content" role="main">
             <ui-breadcrumbs ng-if="authentication.isAuth" displayname-property="data.displayName"
                             template-url="/app/views/uiBreadcrumbs.html">
             </ui-breadcrumbs>
             <div class="app-content-body" ui-view></div>
         </div>
-
-        <div ng-if="!authentication.isAuth" ui-view></div>
-
         <footer id="footer" class="app-footer" role="footer">
             <div class="wrapper b-t bg-light">
                 <span class="pull-right">Virtual Clarity<a href ui-scroll="app" class="m-l-sm text-muted"><i class="fa fa-long-arrow-up"></i></a></span>

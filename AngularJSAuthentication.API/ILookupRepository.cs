@@ -19,5 +19,7 @@ namespace AngularJSAuthentication.API
         LookupAlias CreateLookupAlias(LookupAliasDto lookupAliasDto);
 
         LookupValue CreateLookupValue(LookupValueDto lookupValueDto);
+
+        void DeleteAlias(long id);
     }
 }

@@ -44,12 +44,6 @@ namespace AngularJSAuthentication.API.Controllers
 
             _lookupRepository.CreateCategory(categoryDto);
 
-            //_lookupRepository.UpdateCategory()
-            //var category = _mappingEngine.Map<CategoryDto, Category>();
-            //var mappedCategory = new Category(category.Code, category.Description, category.ValuesDtos.Id);
-            
-            //_lookupRepository.CreateCategory(mappedCategory);
-
             return Ok();
         }
 
@@ -68,18 +62,6 @@ namespace AngularJSAuthentication.API.Controllers
 
             return Ok();
         }
-
-        //[HttpPut]
-        //[Authorize(Roles = UserConstants.Admin)]
-        //[Route("EditCategoryType")]
-        //public async Task<IHttpActionResult> EditCategoryType(LookupValueDto lookupValue)
-        //{
-        //    Guard.That(lookupValue.Name).IsNotNull();
-
-        //    _lookupRepository.EditCategoryType(lookupValue.Id, lookupValue.Name);
-
-        //    return Ok();
-        //}
 
         [HttpPost]
         [Authorize(Roles = UserConstants.Admin)]
@@ -129,5 +111,15 @@ namespace AngularJSAuthentication.API.Controllers
 
             return Ok();
         }
+
+        [HttpDelete]
+        [Authorize(Roles = UserConstants.Admin)]
+        [Route("DeleteAlias")]
+        public async Task<IHttpActionResult> DeleteAlias(long id)
+        {
+            _lookupRepository.DeleteAlias(id);
+
+            return Ok();
+        } 
     }
 }
