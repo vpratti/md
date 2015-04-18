@@ -241,10 +241,15 @@
             editCategory: editCategory,
             deleteCategory: deleteCategory,
             addLookupAlias: addLookupAlias,
-            getLookupValues: getLookupValues
+            getLookupValues: getLookupValues,
+            addLookupValue: addLookupValue
         };
 
         return factory;
+
+        function addLookupValue(lookupValue) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/CreateLookupValue', lookupValue);
+        }    
 
         function getLookupValues() {
             return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetLookupValues');

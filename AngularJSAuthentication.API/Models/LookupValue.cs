@@ -26,6 +26,17 @@ namespace AngularJSAuthentication.API.Models
             ModifiedOn = DateTime.UtcNow;
             Active = active;
         }
+
+        public LookupValue(LookupValueDto lookupValueDto, string username)
+        {
+            Name = lookupValueDto.Name;
+            CategoryId = lookupValueDto.CategoryId;
+            CreatedBy = username;
+            ModifiedBy = username;
+            CreatedOn = DateTime.UtcNow;
+            ModifiedOn = DateTime.UtcNow;
+            Active = lookupValueDto.Active;
+        }
         
         public string Name { get; set; }
 

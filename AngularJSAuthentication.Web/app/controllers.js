@@ -366,10 +366,12 @@
         vm.selectCategoryType = selectCategoryType;
         vm.addCategory = addCategory;
         vm.addLookupAlias = addLookupAlias;
+        vm.addLookupValue = addLookupValue;
 
         function init() {
             vm.populateLookupValues();
             vm.populateCategories();
+            vm.newLookupAliasIsActive = true;
         }
 
         function addCategory() {
@@ -420,8 +422,24 @@
                 lookupValueId: vm.selectedLookupValue.id
             };
 
-            lookupsService.addLookupAlias(payload).then(function () {
-                console.log('success');
+            lookupsService.addLookupAlias(payload).then(function (result) {
+                vm.selectedLookupValue.lookupAliases.push(result.data);
+                vm.newLookupAlias = '';
+                vm.newLookupAliasIsActive = true;
+            });
+        }
+
+        function addLookupValue() {
+            var payload = {
+                name: vm.newLookupValue,
+                active: vm.newLookupValueIsActive,
+                categoryId: vm.selectedCategory.id,
+            }
+
+            lookupsService.addLookupValue(payload).then(function(result) {
+                vm.selectedCategory.values.push(result.data);
+                vm.newLookupValue = '';
+                vm.newLookupValueIsActive = true;
             });
         }
 

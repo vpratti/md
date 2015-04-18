@@ -81,24 +81,30 @@ namespace AngularJSAuthentication.API.Controllers
         //    return Ok();
         //}
 
-        //[HttpPost]
-        //[Authorize(Roles = UserConstants.Admin)]
-        //[Route("CreateCategoryType")]
-        //public async Task<IHttpActionResult> CreateCategoryType(string name)
-        //{
-        //   _lookupRepository.CreateCategoryType(name);
+        [HttpPost]
+        [Authorize(Roles = UserConstants.Admin)]
+        [Route("CreateLookupValue")]
+        public async Task<IHttpActionResult> CreateLookupValue(LookupValueDto lookupValueDto)
+        {
+            LookupValue result = _lookupRepository.CreateLookupValue(lookupValueDto);
 
-        //    return Ok();
-        //}
+            LookupValueDto mappedResult = _mappingEngine.Map<LookupValue, LookupValueDto>(result);
+
+            return Ok(mappedResult);
+        }
 
         [HttpPost]
         [Authorize(Roles = UserConstants.Admin)]
         [Route("CreateLookupAlias")]
         public async Task<IHttpActionResult> CreateLookupAlias(LookupAliasDto lookupAliasDto)
         {
-            _lookupRepository.CreateLookupAlias(lookupAliasDto);
+            Guard.That(lookupAliasDto.Name).IsNotNullOrEmpty();
 
-            return Ok();
+            LookupAlias result = _lookupRepository.CreateLookupAlias(lookupAliasDto);
+
+            LookupAliasDto mappedResult = _mappingEngine.Map<LookupAlias, LookupAliasDto>(result);
+
+            return Ok(mappedResult);
         }
 
         [HttpGet]

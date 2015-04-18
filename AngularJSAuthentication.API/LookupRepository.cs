@@ -69,13 +69,30 @@ namespace AngularJSAuthentication.API
             _context.SaveChanges();
         }
 
-        public void CreateLookupAlias(LookupAliasDto lookupAliasDto)
+        public LookupAlias CreateLookupAlias(LookupAliasDto lookupAliasDto)
         {
             var lookupAlias = new LookupAlias(lookupAliasDto, HttpContext.Current.User.Identity.Name);
+
             LookupValue lookupValue = _context.LookupValues.Find(lookupAliasDto.LookupValueId);
+
             lookupValue.LookupAliases.Add(lookupAlias);
             
             _context.SaveChanges();
+
+            return lookupAlias;
+        }
+
+        public LookupValue CreateLookupValue(LookupValueDto lookupValueDto)
+        {
+            var lookupValue = new LookupValue(lookupValueDto, HttpContext.Current.User.Identity.Name);
+
+            Category category = _context.Categories.Find(lookupValue.CategoryId);
+
+            category.LookupValues.Add(lookupValue);
+
+            _context.SaveChanges();
+
+            return lookupValue;
         }
 
         //public void EditCategoryType(long id, string name)
