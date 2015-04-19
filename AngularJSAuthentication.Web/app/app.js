@@ -35,7 +35,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "app/views/usermanagement.html",
             controller: "usermanagementCtrl as vm",
             data: {
-                displayName: 'Manage Users'
+                displayName: 'Users'
             },
             onEnter: [
                 '$window', 'authService', function($window, authService) {
@@ -50,7 +50,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "app/views/rolemanagement.html",
             controller: "rolemanagementCtrl as vm",
             data: {
-                displayName: 'Manage Roles'
+                displayName: 'Roles'
             }
         })
         .state('categoryManagement', {
@@ -58,7 +58,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: "app/views/categoryManagement.html",
             controller: "categoryManagementCtrl as vm",
             data: {
-                displayName: 'Manage Categories'
+                displayName: 'Lookups'
             }
         });
 
