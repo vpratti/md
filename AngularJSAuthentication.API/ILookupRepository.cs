@@ -6,18 +6,26 @@ namespace AngularJSAuthentication.API
 {
     public interface ILookupRepository
     {
-        void CreateCategoryType(string name);
+        List<LookupValue> GetLookupValues();
 
-        List<CategoryType> GetCategoryTypes();
+        void CreateCategory(CategoryDto categoryDto);
 
-        void CreateCategory(Category category);
-
-        List<Category> GetCategories(long typeId);
+        List<Category> GetCategories();
 
         void DeleteCategory(long id);
 
-        void EditCategory(Category category);
+        void EditCategory(CategoryDto categoryDto);
 
-        void EditCategoryType(long id, string name);
+        LookupAlias CreateLookupAlias(LookupAliasDto lookupAliasDto);
+
+        LookupValue CreateLookupValue(LookupValueDto lookupValueDto);
+
+        void DeleteAlias(long id);
+
+        void DeleteLookupValue(long id);
+
+        void EditLookupValue(LookupValueDto lookupValueDto);
+
+        void EditAlias(LookupAliasDto lookupAliasDto);
     }
 }

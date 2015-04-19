@@ -1,0 +1,42 @@
+﻿<div ng-form="addCategoryForm">
+    <div class="modal-header">
+        <h3 class="modal-title">Add Category</h3>
+    </div>
+    <div class="modal-body">
+        <input type="text" class="form-control m-vertical" placeholder="Code" data-ng-model="vm.newCategory.code" required>
+        <input type="text" class="form-control m-vertical" placeholder="Description" data-ng-model="vm.newCategory.description" required>
+        <div class="form-inline m-vertical" ng-repeat="lookupValue in vm.newCategory.values">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Lookup Value" ng-model="lookupValue.name" style="width: 450px;">
+            </div>
+            <div class="checkbox m-l m-r-xs">
+                <label class="i-checks">
+                    <input type="checkbox" ng-model="lookupValue.active"><i></i>Is Active
+                </label>
+            </div>
+            <div class="form-group">
+                <i class="glyphicon glyphicon-trash hover-pointer" ng-click="vm.removeLookupValue(lookupValue)"></i>
+            </div>
+        </div>
+        <div class="form-inline m-vertical">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Lookup Value" data-ng-model="vm.newLookupValue" style="width: 450px;">
+            </div>
+            <div class="checkbox m-l m-r-xs">
+                <label class="i-checks">
+                    <input type="checkbox" data-ng-model="vm.newLookupValueIsActive"><i></i>Is Active
+                </label>
+            </div>
+            <div class="form-group">
+                <i class="fa fa-plus" 
+                   style="color: #27c24c" 
+                   ng-click="vm.addLookupValue()" 
+                   ng-class="{'hover-pointer' : vm.newCategory.values.indexOfByProperty('name', vm.newLookupValue) < 0}"></i>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="vm.createCategory();">Add</button>
+        <button class="btn btn-danger" ng-click="vm.$modalInstance.dismiss();">Cancel</button>
+    </div>
+</div>

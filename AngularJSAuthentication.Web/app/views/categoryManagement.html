@@ -1,0 +1,197 @@
+﻿<div class="app-content-body  app-content-full animated fadeIn" style="overflow: hidden">
+    <div class="hbox hbox-auto-xs bg-light " ng-init="app.settings.asideFolded = true; app.settings.asideFixed = true; app.settings.asideDock = false; app.settings.container = false; app.hideAside = false">
+        <!--Main area start-->
+        <div class="col">
+            <ui-breadcrumbs ng-if="authentication.isAuth" displayname-property="data.displayName"
+                            template-url="/app/views/uiBreadcrumbs.html">
+            </ui-breadcrumbs>
+            <div class="vbox">
+                <div class="row-row">
+                    <div class="cell">
+                        <div class="cell-inner">
+                            <div class="wrapper-md">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="input-group pull-left m-vertical w">
+                                            <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                                            <input type="text" class="form-control input-sm" placeholder="Search By Code" ng-model="vm.categoryFilter">
+                                        </div>
+                                        <button class="btn btn-sm btn-primary pull-right m-vertical" ng-click="vm.addCategory();">Add Category</button>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped b-t b-light">
+                                            <thead>
+                                                <tr>
+                                                    <th>Code</th>
+                                                    <th>Description</th>
+                                                    <th>Status</th>
+                                                    <th class="action-column">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="category in vm.categories | filter: {code: vm.categoryFilter}"
+                                                    ng-class="{'selected-row' : category == vm.selectedCategory}"
+                                                    class="hover-table-row">
+                                                    <td ng-click="vm.selectCategory(category)">{{category.code}}</td>
+                                                    <td ng-click="vm.selectCategory(category)">{{category.description}}</td>
+                                                    <td ng-click="vm.selectCategory(category)">
+                                                        <span ng-if="category.active">Active</span>
+                                                        <span ng-if="!category.active">In Active</span>
+                                                    </td>
+                                                    <td class="center-x">
+                                                        <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" ng-click="vm.editCategory(category)" aria-hidden="true"></span>&nbsp;
+                                                        <span class="fa fa-trash-o hover-danger cursor-pointer" ng-click="vm.deleteCategory(category.id)" aria-hidden="true"></span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--Lookup values column start-->
+        <div class="col w-lg lt b-r animated fadeInRight" ng-if="vm.selectedCategory">
+            <div class="vbox">
+                <div class="wrapper">
+                    <div class="h4">Lookup Values</div>
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <div class="input-group">
+                        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                        <input type="text" class="form-control input-sm" placeholder="search" ng-model="vm.lookupValueQuery">
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="padder">
+                                <div class="list-group">
+                                    <a ng-repeat="value in vm.selectedCategory.values | filter: {name : vm.lookupValueQuery}"
+                                       ng-class="{'b-l-info' : value.active, 'b-l-light' : !value.active, 'selected' : value == vm.selectedLookupValue}"
+                                       class="list-group-item b-l-3x hover-anchor">
+                                        <span class="pull-right text-muted">
+                                            <i class="glyphicon glyphicon-pencil hover-warning animated fadeIn"
+                                               ng-if="!value.isEditing"
+                                               ng-click="value.isEditing=true;value.origName=value.name;value.origActive=value.active;"></i>
+                                            <i class="fa fa-trash-o hover-danger animated fadeIn" ng-if="!value.isEditing" ng-click="vm.deleteLookupValue(value.id);"></i>
+                                        </span>
+                                        <span ng-click="vm.selectedLookupValue=value;" ng-if="!value.isEditing" class="block text-ellipsis hover-info">{{value.name}}</span>
+                                        <div class="form-inline" ng-if="value.isEditing">
+                                            <input type="text"
+                                                   class="animated fadeIn"
+                                                   style="width: 145px;"
+                                                   ng-model="value.name"
+                                                   ng-keypress="($event.which === 13 && value.origName != value.name)?vm.editLookupValue(value):0" />
+                                            <div class="checkbox m-l m-r-xs" ng-click="value.active=!value.active">
+                                                <label class="i-checks">
+                                                    <input type="checkbox" ng-model="value.active"><i></i>
+                                                </label>
+                                            </div>
+                                            <i class="glyphicon glyphicon-ok hover-success margin-top-sm pull-right animated fadeIn" ng-click="value.isEditing=false;vm.editLookupValue(value)"></i>
+                                            <i class="glyphicon glyphicon-remove hover-danger margin-top-sm pull-right animated fadeIn"
+                                               ng-click="value.isEditing=false;value.name=value.origName;value.active=value.origActive;"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <div class="form-inline m-vertical">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Lookup Value" data-ng-model="vm.newLookupValue" style="width: 145px;">
+                        </div>
+                        <div class="checkbox m-l m-r-xs">
+                            <label class="i-checks">
+                                <input type="checkbox" data-ng-model="vm.newLookupValueIsActive"><i></i>Is Active
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <i class="fa fa-plus"
+                               ng-class="{'hover-pointer' : vm.newLookupValue}"
+                               style="color: #27c24c"
+                               ng-click="vm.addLookupValue()"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--Lookup aliases column start-->
+        <div class="col w-lg lt b-r animated fadeInRight" ng-if="vm.selectedLookupValue">
+            <div class="vbox">
+                <div class="wrapper">
+                    <div class="h4">Lookup Aliases</div>
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <div class="input-group">
+                        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                        <input type="text" class="form-control input-sm" placeholder="search" ng-model="vm.lookupAliasQuery">
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="padder">
+                                <div class="list-group">
+                                    <a ng-repeat="value in vm.selectedLookupValue.lookupAliases | filter: {name : vm.lookupAliasQuery}"
+                                       ng-class="{'b-l-info' : value.active, 'b-l-light' : !value.active}"
+                                       class="list-group-item b-l-3x hover-anchor">
+                                        <span class="pull-right text-muted">
+                                            <i class="glyphicon glyphicon-pencil hover-warning animated fadeIn"
+                                               ng-if="!value.isEditing"
+                                               ng-click="value.isEditing=true;value.origName=value.name;value.origActive=value.active;"></i>
+                                            <i class="fa fa-trash-o hover-danger animated fadeIn" ng-if="!value.isEditing" ng-click="vm.deleteAlias(value.id);"></i>
+                                        </span>
+                                        <span ng-if="!value.isEditing" class="block text-ellipsis">{{value.name}}</span>
+                                        <div class="form-inline" ng-if="value.isEditing">
+                                            <input type="text"
+                                                   class="animated fadeIn"
+                                                   style="width: 145px;"
+                                                   ng-model="value.name"
+                                                   ng-keypress="($event.which === 13 && value.origName != value.name)?vm.editAlias(value):0" />
+                                            <div class="checkbox m-l m-r-xs" ng-click="value.active=!value.active">
+                                                <label class="i-checks">
+                                                    <input type="checkbox" ng-model="value.active"><i></i>
+                                                </label>
+                                            </div>
+                                            <i class="glyphicon glyphicon-ok hover-success margin-top-sm pull-right animated fadeIn" ng-click="value.isEditing=false;vm.editAlias(value)"></i>
+                                            <i class="glyphicon glyphicon-remove hover-danger margin-top-sm pull-right animated fadeIn"
+                                               ng-click="value.isEditing=false;value.name=value.origName;value.active=value.origActive;"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <div class="form-inline m-vertical">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Lookup Alias" data-ng-model="vm.newLookupAlias" style="width: 145px;">
+                        </div>
+                        <div class="checkbox m-l m-r-xs">
+                            <label class="i-checks">
+                                <input type="checkbox" data-ng-model="vm.newLookupAliasIsActive"><i></i>Is Active
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <i class="fa fa-plus"
+                               ng-class="{'hover-pointer' : vm.newLookupAlias}"
+                               style="color: #27c24c"
+                               ng-click="vm.addLookupAlias()"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

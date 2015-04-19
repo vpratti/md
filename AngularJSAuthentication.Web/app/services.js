@@ -239,16 +239,44 @@
             getCategories: getCategories,
             createCategory: createCategory,
             editCategory: editCategory,
-            getCategoryTypes: getCategoryTypes,
-            createCategoryType: createCategoryType,
             deleteCategory: deleteCategory,
-            editCategoryType: editCategoryType
+            addLookupAlias: addLookupAlias,
+            getLookupValues: getLookupValues,
+            addLookupValue: addLookupValue,
+            deleteAlias: deleteAlias,
+            editAlias: editAlias,
+            deleteLookupValue: deleteLookupValue,
+            editLookupValue: editLookupValue
         };
 
         return factory;
 
+        function editAlias(alias) {
+            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/EditAlias', alias);
+        }
+
+        function editLookupValue(lookupValue) {
+            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/EditLookupValue', lookupValue);
+        }
+
+        function deleteLookupValue(id) {
+            return $http.delete(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/DeleteLookupValue?id=' + id);
+        }
+
+        function deleteAlias(id) {
+            return $http.delete(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/DeleteAlias?id=' + id);
+        }
+
+        function addLookupValue(lookupValue) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/CreateLookupValue', lookupValue);
+        }    
+
+        function getLookupValues() {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetLookupValues');
+        }
+
         function getCategories(id) {
-            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetCategories?id=' + id);
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetCategories');
         }
 
         function createCategory(newCategory) {
@@ -259,16 +287,8 @@
             return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/EditCategory', category);
         }
 
-        function editCategoryType(category) {
-            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/EditCategoryType', category);
-        }
-
-        function getCategoryTypes() {
-            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetCategoryTypes');
-        }
-
-        function createCategoryType(name) {
-            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/CreateCategoryType?name=' + name);
+        function addLookupAlias(lookupAlias) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/CreateLookupAlias', lookupAlias);
         }
 
         function deleteCategory(id) {
@@ -288,49 +308,20 @@
 
     function lookups($modal) {
         var factory = {
-            editCategoryLookup: editCategoryLookup
+            editCategory: editCategory
         };
 
         return factory;
 
-        function editCategoryLookup(category, categoryTypes) {
+        function editCategory(category) {
             return $modal.open({
-                templateUrl: 'app/views/editCategoryLookup.html',
-                controller: 'editCategoryLookupCtrl as vm',
+                templateUrl: 'app/views/editCategory.html',
+                controller: 'editCategoryCtrl as vm',
                 resolve: {
                     category: function() {
                         return category;
-                    },
-                    categoryTypes: function() {
-                        return categoryTypes;
                     }
                 }
-            });
-        }
-    }
-}(angular));
-
-(function(angular) {
-    'use strict';
-
-    angular
-        .module('VirtualClarityApp')
-        .factory('categoryTypesFactory', categoryTypesFactory);
-
-    categoryTypesFactory.$inject = ['$modal'];
-
-    function categoryTypesFactory($modal) {
-        var factory = {
-            createCategoryType: createCategoryType
-        };
-
-        return factory;
-
-        function createCategoryType() {
-            return $modal.open({
-                templateUrl: 'app/views/createCategoryType.html',
-                controller: 'createCategoryTypeCtrl as vm',
-                size: 'sm'
             });
         }
     }
