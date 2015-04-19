@@ -51,7 +51,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: "rolemanagementCtrl as vm",
             data: {
                 displayName: 'Roles'
-            }
+            },
+            onEnter: [
+                '$window', 'authService', function ($window, authService) {
+                    if (!authService.authentication.isAdmin) {
+                        $window.location.href = "#/dashboard";
+                    }
+                }
+            ]
         })
         .state('categoryManagement', {
             url: "/categoryManagement",
@@ -59,7 +66,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: "categoryManagementCtrl as vm",
             data: {
                 displayName: 'Lookups'
-            }
+            },
+            onEnter: [
+                '$window', 'authService', function ($window, authService) {
+                    if (!authService.authentication.isAdmin) {
+                        $window.location.href = "#/dashboard";
+                    }
+                }
+            ]
         });
 
     $urlRouterProvider.otherwise('/');
