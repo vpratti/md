@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using AngularJSAuthentication.API.Constants;
+using AngularJSAuthentication.API.DbRepositories;
 using AngularJSAuthentication.API.Models;
 using AutoMapper;
 using Seterlund.CodeGuard;

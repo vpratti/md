@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using AngularJSAuthentication.API.Models;
 
-namespace AngularJSAuthentication.API
+namespace AngularJSAuthentication.API.DbContexts
 {
     public class LookupContext : DbContext
     {
@@ -12,6 +12,6 @@ namespace AngularJSAuthentication.API
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<LookupValue> LookupValues { get; set; }
-        public DbSet<LookupAlias> LookupAliases { get; set; } 
+        public DbSet<LookupAlias> LookupAliases { get; set; }
     }
 }

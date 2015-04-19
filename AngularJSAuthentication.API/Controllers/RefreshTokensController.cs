@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
+using AngularJSAuthentication.API.DbRepositories;
 
 namespace AngularJSAuthentication.API.Controllers
 {

@@ -1,9 +1,9 @@
-﻿using AngularJSAuthentication.API.Entities;
+﻿using System.Data.Entity;
+using AngularJSAuthentication.API.Entities;
 using AngularJSAuthentication.API.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
 
-namespace AngularJSAuthentication.API
+namespace AngularJSAuthentication.API.DbContexts
 {
     public class AuthContext : IdentityDbContext<VirtualClarityUser>
     {

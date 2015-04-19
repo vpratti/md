@@ -1,8 +1,7 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AngularJSAuthentication.API.Models;
 
-namespace AngularJSAuthentication.API
+namespace AngularJSAuthentication.API.DbRepositories
 {
     public interface ILookupRepository
     {
