@@ -1,0 +1,72 @@
+﻿<div class="hbox hbox-auto-xs hbox-auto-sm">
+    <div class="col w-lg bg-light dk b-r bg-auto" id="aside">
+        <div class="wrapper">
+            <form>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" placeholder="Timeframe Name" class="input-sm form-control">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" placeholder="Timeframe Description" class="input-sm form-control">
+                </div>
+                <div class="form-group">
+                    <label>End Date</label>
+                    <input type="text" placeholder="eg. 3:00 pm" class="input-sm form-control">
+                </div>
+                <div class="form-group">
+                    <label>Belongs To</label>
+                    <div>
+                        <div class="btn-group dropdown" dropdown>
+                            <button class="btn btn-sm btn-default dropdown-toggle" dropdown-toggle>
+                                <span class="dropdown-label">Choose a type</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href>Travel</a></li>
+                                <li><a href>Phone</a></li>
+                                <li><a href>Meeting</a></li>
+                                <li><a href>Appointment</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-t-md m-b-md"><button class="btn btn-sm btn-primary">Create Timeframe</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="wrapper">
+            <h3 class="m-n font-thin">Timeframes</h3>
+            <div ui-jq="nestable" class="dd">
+                <ol class="dd-list">
+                    <li class="dd-item" data-id="1">
+                        <div class="dd-handle">Item 1</div>
+                    </li>
+                    <li class="dd-item" data-id="2">
+                        <div class="dd-handle">Item 2</div>
+                        <ol class="dd-list">
+                            <li class="dd-item" data-id="3"><div class="dd-handle">Item 3</div></li>
+                            <li class="dd-item" data-id="4"><div class="dd-handle">Item 4</div></li>
+                            <li class="dd-item" data-id="5">
+                                <div class="dd-handle">Item 5</div>
+                                <ol class="dd-list">
+                                    <li class="dd-item" data-id="6"><div class="dd-handle">Item 6</div></li>
+                                    <li class="dd-item" data-id="7"><div class="dd-handle">Item 7</div></li>
+                                    <li class="dd-item" data-id="8"><div class="dd-handle">Item 8</div></li>
+                                </ol>
+                            </li>
+                            <li class="dd-item" data-id="9"><div class="dd-handle">Item 9</div></li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../js/ui-load.js"></script>
+<script src="../../js/ui-jp.config.js"></script>
+<script src="../../js/ui-jp.js"></script>

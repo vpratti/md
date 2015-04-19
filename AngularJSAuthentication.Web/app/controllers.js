@@ -1,4 +1,4 @@
-﻿(function(angular) {
+﻿(function (angular) {
     'use strict';
 
     angular
@@ -109,7 +109,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -188,7 +188,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -233,7 +233,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -249,7 +249,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -280,7 +280,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -304,7 +304,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -346,7 +346,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -515,3 +515,14 @@
     }
 }(angular));
 
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('timelineCtrl', timelineCtrl);
+
+    function timelineCtrl() {
+        var vm = this;
+    }
+}(angular));

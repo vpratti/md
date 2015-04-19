@@ -53,7 +53,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 displayName: 'Roles'
             },
             onEnter: [
-                '$window', 'authService', function ($window, authService) {
+                '$window', 'authService', function($window, authService) {
                     if (!authService.authentication.isAdmin) {
                         $window.location.href = "#/dashboard";
                     }
@@ -68,12 +68,20 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 displayName: 'Lookups'
             },
             onEnter: [
-                '$window', 'authService', function ($window, authService) {
+                '$window', 'authService', function($window, authService) {
                     if (!authService.authentication.isAdmin) {
                         $window.location.href = "#/dashboard";
                     }
                 }
             ]
+        })
+        .state('timeline', {
+            url: "/timeline",
+            templateUrl: "app/views/timeline.html",
+            controller: "timelineCtrl as vm",
+            data: {
+                displayName: 'Timeline'
+            }
         });
 
     $urlRouterProvider.otherwise('/');
