@@ -1,4 +1,7 @@
-﻿<div ng-form="usermanagementForm" class=" animated fadeIn">
+﻿<ui-breadcrumbs ng-if="authentication.isAuth" displayname-property="data.displayName"
+                template-url="/app/views/uiBreadcrumbs.html">
+</ui-breadcrumbs>
+<div ng-form="usermanagementForm" class=" animated fadeIn">
     <div class="row">
         <div class="col-md-12">
             <accordion close-others="oneAtATime">

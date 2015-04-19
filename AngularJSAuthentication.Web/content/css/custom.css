@@ -63,3 +63,7 @@ tr.hover-table-row:hover > td {
     transform: translateY(-50%);
 }
 
+.breadcrumb-m-1-col > ol {
+    margin-left: 280px;
+}
+
