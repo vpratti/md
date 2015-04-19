@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AngularJSAuthentication.API.Models
 {
-    public abstract class LookupBase
+    public abstract class EntityBase
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }

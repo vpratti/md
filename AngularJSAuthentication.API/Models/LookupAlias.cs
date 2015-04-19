@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AngularJSAuthentication.API.Models
 {
-    public class LookupAlias : LookupBase
+    public class LookupAlias : EntityBase
     {
         public LookupAlias()
         {

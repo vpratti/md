@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AngularJSAuthentication.API.Models
 {
-    public class Category : LookupBase
+    public class Category : EntityBase
     {
         public Category() { }
 

@@ -223,7 +223,8 @@
     <Compile Include="Models\LookupAliasDto.cs" />
     <Compile Include="Models\LookupValue.cs" />
     <Compile Include="Models\LookupValueDto.cs" />
-    <Compile Include="Models\LookupBase.cs" />
+    <Compile Include="Models\EntityBase.cs" />
+    <Compile Include="Models\Timeframe.cs" />
     <Compile Include="Models\VirtualClarityUser.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Entities\Client.cs" />

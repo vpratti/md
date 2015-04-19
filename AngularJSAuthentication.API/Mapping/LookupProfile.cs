@@ -50,7 +50,6 @@ namespace AngularJSAuthentication.API.Mapping
         protected override List<LookupValueDto> ResolveCore(Category source)
         {
             return Mapper.Map<List<LookupValue>, List<LookupValueDto>>(source.LookupValues);
-            //throw new NotImplementedException();
         }
     }
 
