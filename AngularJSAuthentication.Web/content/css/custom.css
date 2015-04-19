@@ -57,3 +57,9 @@ tr.hover-table-row:hover > td {
     margin-top: 8px;
 }
 
+.vertical-align {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+

@@ -1,4 +1,4 @@
-﻿(function(angular) {
+﻿(function (angular) {
     'use strict';
 
     angular
@@ -109,7 +109,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -188,7 +188,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -233,7 +233,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -249,7 +249,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -280,7 +280,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -304,7 +304,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -346,7 +346,7 @@
     }
 }(angular));
 
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular
@@ -515,3 +515,46 @@
     }
 }(angular));
 
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('timelineCtrl', timelineCtrl);
+
+    timelineCtrl.$inject = ['timelineService', 'parentTimeframes'];
+
+    function timelineCtrl(timelineService, parentTimeframes) {
+        var vm = this;
+        vm.createTimeframe = createTimeframe;
+        vm.populateTimeframes = populateTimeframes;
+        vm.timeframes = parentTimeframes.data;
+        vm.selectTimeframe = selectTimeframe;
+
+        function selectTimeframe(branch) {
+            //branch.id
+            //fetch assets for timeframe
+            //display assets
+        }
+
+        function createTimeframe() {
+            timelineService.createTimeframe(vm.timeframe).then(function (result) {
+                if (angular.isDefined(vm.timeframe.parentTimeFrame) && vm.timeframe.parentTimeFrame != null) {
+                    var index = vm.timeframes.indexOfByProperty('id', vm.timeframe.parentTimeFrame.id);
+
+                    vm.timeframes[index].children.push({label: result.data.name, id:result.data.id});
+                } else {
+                    vm.timeframes.push(result.data);
+                }
+
+                vm.timeframe = {};
+            });
+        }
+
+        function populateTimeframes() {
+            timelineService.getTimeframes().then(function (result) {
+                vm.timeframes = result.data;
+            });
+        }
+    }
+}(angular));

@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Http;
+using AngularJSAuthentication.API.DbContexts;
+using AngularJSAuthentication.API.DbRepositories;
 using AngularJSAuthentication.API.Extensions;
 using AngularJSAuthentication.API.Services;
 using Microsoft.AspNet.Identity;

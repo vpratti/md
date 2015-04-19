@@ -1,6 +1,6 @@
 ﻿
 var app = angular.module('VirtualClarityApp', ['ui.router', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap',
-    'ui.select', 'ngSanitize', 'angularUtils.directives.uiBreadcrumbs']);
+    'ui.select', 'ngSanitize', 'angularUtils.directives.uiBreadcrumbs', 'angularBootstrapNavTree']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
@@ -51,7 +51,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: "rolemanagementCtrl as vm",
             data: {
                 displayName: 'Roles'
-            }
+            },
+            onEnter: [
+                '$window', 'authService', function($window, authService) {
+                    if (!authService.authentication.isAdmin) {
+                        $window.location.href = "#/dashboard";
+                    }
+                }
+            ]
         })
         .state('categoryManagement', {
             url: "/categoryManagement",
@@ -59,6 +66,30 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: "categoryManagementCtrl as vm",
             data: {
                 displayName: 'Lookups'
+            },
+            onEnter: [
+                '$window', 'authService', function($window, authService) {
+                    if (!authService.authentication.isAdmin) {
+                        $window.location.href = "#/dashboard";
+                    }
+                }
+            ]
+        })
+        .state('timeline', {
+            url: "/timeline",
+            templateUrl: "app/views/timeline.html",
+            controller: "timelineCtrl as vm",
+            data: {
+                displayName: 'Timeline'
+            },
+            resolve: {
+                parentTimeframes: ['timelineService', '$window', function (timelineService, $window) {
+                    return timelineService.getTimeframes().error(function (result, event) {
+                        if (event == 401) {
+                            $window.location.href = "/";
+                        }
+                    });
+                }]
             }
         });
 

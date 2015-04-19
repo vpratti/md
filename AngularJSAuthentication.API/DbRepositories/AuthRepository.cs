@@ -1,17 +1,18 @@
-﻿using System.Web.Security;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Security;
 using AngularJSAuthentication.API.Constants;
+using AngularJSAuthentication.API.DbContexts;
 using AngularJSAuthentication.API.Entities;
 using AngularJSAuthentication.API.Exceptions;
 using AngularJSAuthentication.API.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WebGrease.Css.Extensions;
 
-namespace AngularJSAuthentication.API
+namespace AngularJSAuthentication.API.DbRepositories
 {
 
     public class AuthRepository : IDisposable

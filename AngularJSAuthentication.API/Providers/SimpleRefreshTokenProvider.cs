@@ -1,4 +1,5 @@
-﻿using AngularJSAuthentication.API.Entities;
+﻿using AngularJSAuthentication.API.DbRepositories;
+using AngularJSAuthentication.API.Entities;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Infrastructure;
 using System;

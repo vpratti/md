@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AngularJSAuthentication.API.Extensions;
 using AngularJSAuthentication.API.Models;
 using AutoMapper;
@@ -50,7 +49,6 @@ namespace AngularJSAuthentication.API.Mapping
         protected override List<LookupValueDto> ResolveCore(Category source)
         {
             return Mapper.Map<List<LookupValue>, List<LookupValueDto>>(source.LookupValues);
-            //throw new NotImplementedException();
         }
     }
 

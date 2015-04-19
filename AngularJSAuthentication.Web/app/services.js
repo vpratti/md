@@ -326,3 +326,30 @@
         }
     }
 }(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .factory('timelineService', timelineService);
+
+    timelineService.$inject = ['$http', 'ngAuthSettings'];
+
+    function timelineService($http, ngAuthSettings) {
+        var factory = {
+            createTimeframe: createTimeframe,
+            getTimeframes: getTimeframes
+        };
+
+        return factory;
+
+        function createTimeframe(timeframe) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/Timelines/CreateTimeframe', timeframe);
+        }
+
+        function getTimeframes() {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Timelines/GetTimeframes');
+        }
+    }
+}(angular));

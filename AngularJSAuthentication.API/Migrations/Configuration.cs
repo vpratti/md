@@ -1,3 +1,5 @@
+using AngularJSAuthentication.API.DbContexts;
+
 namespace AngularJSAuthentication.API.Migrations
 {
     using Entities;

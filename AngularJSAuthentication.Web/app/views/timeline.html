@@ -1,0 +1,46 @@
+﻿<div class="hbox hbox-auto-xs hbox-auto-sm">
+    <div class="col w-lg bg-light dk b-r bg-auto" id="aside">
+        <div class="wrapper">
+            <form>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" placeholder="Timeframe Name" class="input-sm form-control" ng-model="vm.timeframe.name">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" placeholder="Timeframe Description" class="input-sm form-control" ng-model="vm.timeframe.description">
+                </div>
+                <div class="form-group">
+                    <label>End Date</label>
+                    <input type="date" class="input-sm form-control" ng-model="vm.timeframe.endDate"/>
+                </div>
+                
+                <!--ng-model="vm.timeframe.childTimeFrame"-->
+                <div class="form-group">
+                    <label>Belongs To</label>
+                    <ui-select ng-model="vm.timeframe.parentTimeFrame" theme="select2" style="width: 230px; margin-bottom: 20px; ">
+                        <ui-select-match placeholder="Select Parent Timeframe">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="timeframe in vm.timeframes | filter:$select.search">
+                            {{timeframe.name}}
+                        </ui-select-choices>
+                    </ui-select>
+                    <i class="glyphicon glyphicon-remove-sign hover-danger hover-pointer vertical-align" ng-click="vm.timeframe.parentTimeFrame=null;"></i>
+                </div>
+                <div class="m-t-md m-b-md"><button class="btn btn-sm btn-primary" ng-click="vm.createTimeframe()">Create Timeframe</button></div>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="wrapper-md">
+            <label class="font-bold">Timeframes</label>
+            <div class="b-a bg-light dk r r-2x">
+                <abn-tree tree-data="vm.timeframes" on-select="vm.selectTimeframe(branch)"></abn-tree>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../js/ui-load.js"></script>
+<script src="../../js/ui-jp.config.js"></script>
+<script src="../../js/ui-jp.js"></script>

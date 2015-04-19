@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AngularJSAuthentication.API.DbContexts;
 using AngularJSAuthentication.API.Models;
 
-namespace AngularJSAuthentication.API
+namespace AngularJSAuthentication.API.DbRepositories
 {
     public class LookupRepository : IDisposable, ILookupRepository
     {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AngularJSAuthentication.API.Models
 {
-    public class LookupValue : LookupBase
+    public class LookupValue : EntityBase
     {
         public LookupValue() { }
 
