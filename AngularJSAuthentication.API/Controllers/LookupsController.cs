@@ -56,9 +56,7 @@ namespace AngularJSAuthentication.API.Controllers
             Guard.That(category.Description).IsNotNull();
             Guard.That(category.Values).IsNotNull();
 
-            //var mappedCategory = new Category(category.Code, category.Description, category.Type.Id, category.Id);
-
-            //_lookupRepository.EditCategory(mappedCategory);
+            _lookupRepository.EditCategory(category);
 
             return Ok();
         }

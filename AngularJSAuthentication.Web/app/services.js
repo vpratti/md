@@ -308,74 +308,20 @@
 
     function lookups($modal) {
         var factory = {
-            editCategoryLookup: editCategoryLookup
+            editCategory: editCategory
         };
 
         return factory;
 
-        function editCategoryLookup(category, categoryTypes) {
+        function editCategory(category) {
             return $modal.open({
-                templateUrl: 'app/views/editCategoryLookup.html',
-                controller: 'editCategoryLookupCtrl as vm',
+                templateUrl: 'app/views/editCategory.html',
+                controller: 'editCategoryCtrl as vm',
                 resolve: {
                     category: function() {
                         return category;
-                    },
-                    categoryTypes: function() {
-                        return categoryTypes;
                     }
                 }
-            });
-        }
-    }
-}(angular));
-
-(function(angular) {
-    'use strict';
-
-    angular
-        .module('VirtualClarityApp')
-        .factory('categoryTypesFactory', categoryTypesFactory);
-
-    categoryTypesFactory.$inject = ['$modal'];
-
-    function categoryTypesFactory($modal) {
-        var factory = {
-            createCategoryType: createCategoryType
-        };
-
-        return factory;
-
-        function createCategoryType() {
-            return $modal.open({
-                templateUrl: 'app/views/createCategoryType.html',
-                controller: 'createCategoryTypeCtrl as vm',
-                size: 'sm'
-            });
-        }
-    }
-}(angular));
-
-(function (angular) {
-    'use strict';
-
-    angular
-        .module('VirtualClarityApp')
-        .factory('categoryFactory', categoryFactory);
-
-    categoryFactory.$inject = ['$modal'];
-
-    function categoryFactory($modal) {
-        var factory = {
-            addCategory: addCategory
-        };
-
-        return factory;
-
-        function addCategory() {
-            return $modal.open({
-                templateUrl: 'app/views/addCategory.html',
-                controller: 'addCategoryCtrl as vm',
             });
         }
     }

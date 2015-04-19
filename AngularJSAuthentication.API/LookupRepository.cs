@@ -56,14 +56,15 @@ namespace AngularJSAuthentication.API
             _context.SaveChanges();
         }
 
-        public void EditCategory(Category category)
+        public void EditCategory(CategoryDto categoryDto)
         {
-            var originalCategory = _context.Categories.Find(category.Id);
+            var category = _context.Categories.Find(categoryDto.Id);
 
-            originalCategory.Code = category.Code;
-            originalCategory.Description = category.Description;
-            //originalCategory.CategoryTypeId = category.CategoryTypeId;
-            originalCategory.Active = category.Active;
+            category.Code = categoryDto.Code;
+            category.Description = categoryDto.Description;
+            category.Active = categoryDto.Active;
+            category.ModifiedOn = DateTime.UtcNow;
+            category.ModifiedBy = HttpContext.Current.User.Identity.Name;
 
             _context.SaveChanges();
         }

@@ -353,16 +353,15 @@
         .module('VirtualClarityApp')
         .controller('categoryManagementCtrl', categoryManagementCtrl);
 
-    categoryManagementCtrl.$inject = ['lookups', 'lookupsService', 'categoryTypesFactory', 'categoryFactory', 'utility'];
+    categoryManagementCtrl.$inject = ['lookups', 'lookupsService', 'utility'];
 
-    function categoryManagementCtrl(lookups, lookupsService, categoryTypesFactory, categoryFactory, utility) {
+    function categoryManagementCtrl(lookups, lookupsService, utility) {
         var vm = this;
 
         vm.init = init;
         vm.createCategory = createCategory;
         vm.populateCategories = populateCategories;
         vm.deleteCategory = deleteCategory;
-        vm.addCategory = addCategory;
         vm.addLookupAlias = addLookupAlias;
         vm.addLookupValue = addLookupValue;
         vm.selectCategory = selectCategory;
@@ -370,11 +369,16 @@
         vm.deleteLookupValue = deleteLookupValue;
         vm.editLookupValue = editLookupValue;
         vm.editAlias = editAlias;
+        vm.editCategory = editCategory;
 
         function init() {
             vm.populateCategories();
             vm.newLookupAliasIsActive = true;
             vm.newLookupValueIsActive = true;
+        }
+
+        function editCategory(category) {
+            lookups.editCategory(category);
         }
 
         function editLookupValue(lookupValue) {
@@ -419,12 +423,6 @@
                 vm.selectedCategory = category;
                 vm.selectedLookupValue = null;
             }
-        }
-
-        function addCategory() {
-            categoryFactory.addCategory().result.then(function() {
-                vm.populateCategories();
-            });
         }
 
         function deleteCategory(id) {
@@ -489,117 +487,31 @@
     }
 }(angular));
 
-(function(angular) {
-    'use strict';
-
-    angular
-        .module('VirtualClarityApp')
-        .controller('createCategoryTypeCtrl', createCategoryTypeCtrl);
-
-    createCategoryTypeCtrl.$inject = ['lookupsService', '$modalInstance'];
-
-    function createCategoryTypeCtrl(lookupsService, $modalInstance) {
-        var vm = this;
-        vm.init = init;
-        vm.createCategoryType = createCategoryType;
-        vm.$modalInstance = $modalInstance;
-
-        function init() {
-            vm.lookupsService = lookupsService;
-        }
-
-        function createCategoryType() {
-            vm.inProgress = true;
-            vm.lookupsService.createCategoryType(vm.categoryTypeName)
-                .then(
-                    function onSuccess() {
-                        $modalInstance.close();
-                    },
-                    function onError() {
-                        vm.inProgress = false;
-                    });
-        }
-
-        init();
-    }
-}(angular));
-
 (function (angular) {
     'use strict';
 
     angular
         .module('VirtualClarityApp')
-        .controller('editCategoryLookupCtrl', editCategoryLookupCtrl);
+        .controller('editCategoryCtrl', editCategoryCtrl);
 
-    editCategoryLookupCtrl.$inject = ['lookupsService', 'category', 'categoryTypes', '$modalInstance'];
+    editCategoryCtrl.$inject = ['lookupsService', 'category', '$modalInstance'];
 
-    function editCategoryLookupCtrl(lookupsService, category, categoryTypes, $modalInstance) {
+    function editCategoryCtrl(lookupsService, category, $modalInstance) {
         var vm = this;
         vm.init = init;
         vm.editCategory = editCategory;
+        vm.$modalInstance = $modalInstance;
+        vm.lookupsService = lookupsService;
 
         function init() {
-            vm.category = category;
-            vm.$modalInstance = $modalInstance;
-            vm.lookupsService = lookupsService;
-            vm.statuses = [true, false];
-            vm.categoryTypes = categoryTypes;
-        }
+            vm.category = category;}
 
         function editCategory() {
-            lookupsService.editCategory(vm.category).then(function() {
-                $modalInstance.close();
-            });
+            lookupsService.editCategory(vm.category);
+            $modalInstance.close();
         }
 
         init();
     }
 }(angular));
 
-(function(angular) {
-    'use strict';
-
-    angular
-        .module('VirtualClarityApp')
-        .controller('addCategoryCtrl', addCategoryCtrl);
-
-    addCategoryCtrl.$inject = ['$modalInstance','lookupsService'];
-
-    function addCategoryCtrl($modalInstance, lookupsService) {
-        var vm = this;
-        vm.addLookupValue = addLookupValue;
-        vm.removeLookupValue = removeLookupValue;
-        vm.createCategory = createCategory;
-        vm.$modalInstance = $modalInstance;
-        vm.init = init;
-
-        function init() {
-            vm.newCategory = {};
-            vm.newCategory.values = [];
-            vm.newLookupValueIsActive = true;
-            vm.newLookupValue = '';
-        }
-
-        function removeLookupValue(lookupValue) {
-            vm.newCategory.values = _.remove(vm.newLookupValues, function (n) {
-                return n.name != lookupValue.name;
-            });
-        }
-
-        function addLookupValue() {
-            if (vm.newCategory.values.indexOfByProperty('name', vm.newLookupValue) < 0) {
-                vm.newCategory.values.push({ name: vm.newLookupValue, active: vm.newLookupValueIsActive });
-                vm.newLookupValue = '';
-                vm.newLookupValueIsActive = true;
-            }
-        }
-
-        function createCategory() {
-            lookupsService.createCategory(vm.newCategory).then(function () {
-                $modalInstance.close();
-            });
-        }
-
-        vm.init();
-    }
-}(angular));

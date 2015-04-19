@@ -14,7 +14,7 @@ namespace AngularJSAuthentication.API
 
         void DeleteCategory(long id);
 
-        void EditCategory(Category category);
+        void EditCategory(CategoryDto categoryDto);
 
         LookupAlias CreateLookupAlias(LookupAliasDto lookupAliasDto);
 

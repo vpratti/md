@@ -47,6 +47,12 @@ tr.selected-row > td {
     color: #27c24c;
 }
 
+tr.hover-table-row:hover > td {
+    color: #31708f !important;
+    background-color: #d9edf7 !important;
+    border-color: #bce8f1 !important;
+}
+
 .margin-top-sm {
     margin-top: 8px;
 }

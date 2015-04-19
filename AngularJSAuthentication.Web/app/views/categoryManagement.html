@@ -31,7 +31,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="category in vm.categories | filter: {code: vm.categoryFilter}" ng-class="{'selected-row' : category == vm.selectedCategory}">
+                                                <tr ng-repeat="category in vm.categories | filter: {code: vm.categoryFilter}"
+                                                    ng-class="{'selected-row' : category == vm.selectedCategory}"
+                                                    class="hover-table-row">
                                                     <td ng-click="vm.selectCategory(category)">{{category.code}}</td>
                                                     <td ng-click="vm.selectCategory(category)">{{category.description}}</td>
                                                     <td ng-click="vm.selectCategory(category)">
@@ -39,8 +41,8 @@
                                                         <span ng-if="!category.active">In Active</span>
                                                     </td>
                                                     <td class="center-x">
-                                                        <!--<span class="glyphicon glyphicon-pencil cursor-pointer" ng-click="vm.editCategory(category)" aria-hidden="true"></span>&nbsp;-->
-                                                        <span class="glyphicon glyphicon-remove cursor-pointer" ng-click="vm.deleteCategory(category.id)" aria-hidden="true"></span>
+                                                        <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" ng-click="vm.editCategory(category)" aria-hidden="true"></span>&nbsp;
+                                                        <span class="fa fa-trash-o hover-danger cursor-pointer" ng-click="vm.deleteCategory(category.id)" aria-hidden="true"></span>
                                                     </td>
                                                 </tr>
                                             </tbody>
