@@ -1,6 +1,6 @@
 ﻿
 var app = angular.module('VirtualClarityApp', ['ui.router', 'LocalStorageModule', 'angular-loading-bar', 'ui.bootstrap',
-    'ui.select', 'ngSanitize', 'angularUtils.directives.uiBreadcrumbs']);
+    'ui.select', 'ngSanitize', 'angularUtils.directives.uiBreadcrumbs', 'angularBootstrapNavTree']);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
@@ -81,6 +81,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: "timelineCtrl as vm",
             data: {
                 displayName: 'Timeline'
+            },
+            resolve: {
+                parentTimeframes: ['timelineService', '$window', function (timelineService, $window) {
+                    return timelineService.getTimeframes().error(function (result, event) {
+                        if (event == 401) {
+                            $window.location.href = "/";
+                        }
+                    });
+                }]
             }
         });
 
