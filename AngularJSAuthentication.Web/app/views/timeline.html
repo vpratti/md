@@ -1,18 +1,18 @@
 ﻿<div class="hbox hbox-auto-xs hbox-auto-sm animated fadeIn">
-    <div class="col w-lg bg-light dk b-r bg-auto" id="aside">
+    <div class="col w-lg bg-light dk b-r bg-auto" id="aside" ng-form="createTimeframeForm">
         <div class="wrapper">
             <form>
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text" placeholder="Timeframe Name" class="input-sm form-control" ng-model="vm.timeframe.name">
+                    <input type="text" placeholder="Timeframe Name" class="input-sm form-control" ng-model="vm.timeframe.name" required>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <input type="text" placeholder="Timeframe Description" class="input-sm form-control" ng-model="vm.timeframe.description">
+                    <input type="text" placeholder="Timeframe Description" class="input-sm form-control" ng-model="vm.timeframe.description" required>
                 </div>
                 <div class="form-group">
                     <label>End Date</label>
-                    <input type="date" class="input-sm form-control" ng-model="vm.timeframe.endDate" />
+                    <input type="date" class="input-sm form-control" ng-model="vm.timeframe.endDate" required/>
                 </div>
 
                 <!--ng-model="vm.timeframe.childTimeFrame"-->
@@ -26,7 +26,7 @@
                     </ui-select>
                     <i class="glyphicon glyphicon-remove-sign hover-danger hover-pointer vertical-align" ng-click="vm.timeframe.parentTimeFrame=null;"></i>
                 </div>
-                <div class="m-t-md m-b-md"><button class="btn btn-sm btn-primary" ng-click="vm.createTimeframe()">Create Timeframe</button></div>
+                <div class="m-t-md m-b-md"><button class="btn btn-sm btn-primary" ng-click="vm.createTimeframe()" ng-disabled="createTimeframeForm.$invalid">Create Timeframe</button></div>
             </form>
         </div>
     </div>
