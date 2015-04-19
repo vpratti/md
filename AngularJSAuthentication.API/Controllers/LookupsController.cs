@@ -143,5 +143,17 @@ namespace AngularJSAuthentication.API.Controllers
 
             return Ok();
         }
+
+        [HttpPut]
+        [Authorize(Roles = UserConstants.Admin)]
+        [Route("EditAlias")]
+        public async Task<IHttpActionResult> EditAlias(LookupAliasDto lookupAliasDto)
+        {
+            Guard.That(lookupAliasDto.Name).IsNotNullOrEmpty();
+
+            _lookupRepository.EditAlias(lookupAliasDto);
+
+            return Ok();
+        }
     }
 }

@@ -365,11 +365,11 @@
         vm.addCategory = addCategory;
         vm.addLookupAlias = addLookupAlias;
         vm.addLookupValue = addLookupValue;
-        vm.resetSelectedModels = resetSelectedModels;
         vm.selectCategory = selectCategory;
         vm.deleteAlias = deleteAlias;
         vm.deleteLookupValue = deleteLookupValue;
         vm.editLookupValue = editLookupValue;
+        vm.editAlias = editAlias;
 
         function init() {
             vm.populateCategories();
@@ -394,6 +394,13 @@
                         return n.id != id;
                     });
                 });
+            });
+        }
+
+        function editAlias(alias) {
+            lookupsService.editAlias(alias).error(function() {
+                alias.name = alias.origName;
+                alias.active = alias.origActive;
             });
         }
 
@@ -423,7 +430,8 @@
         function deleteCategory(id) {
             lookupsService.deleteCategory(id).then(function () {
                 if (id == vm.selectedCategory.id) {
-                    vm.resetSelectedModels();
+                    vm.selectedCategory = null;
+                    vm.selectedLookupValue = null;
                 }
 
                 vm.categories = _.remove(vm.categories, function (n) {
@@ -475,11 +483,6 @@
                     vm.newLookupValueIsActive = true;
                 });
             }
-        }
-
-        function resetSelectedModels() {
-            vm.selectedCategory = null;
-            vm.selectedLookupValue = null;
         }
 
         vm.init();

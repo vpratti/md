@@ -123,5 +123,17 @@ namespace AngularJSAuthentication.API
 
             _context.SaveChanges();
         }
+
+        public void EditAlias(LookupAliasDto lookupAliasDto)
+        {
+            LookupAlias lookupAlias = _context.LookupAliases.Find(lookupAliasDto.Id);
+
+            lookupAlias.Name = lookupAliasDto.Name;
+            lookupAlias.Active = lookupAliasDto.Active;
+            lookupAlias.ModifiedOn = DateTime.UtcNow;
+            lookupAlias.ModifiedBy = HttpContext.Current.User.Identity.Name;
+
+            _context.SaveChanges();
+        }
     }
 }

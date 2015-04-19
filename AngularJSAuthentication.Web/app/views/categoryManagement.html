@@ -72,7 +72,7 @@
                             <div class="padder">
                                 <div class="list-group">
                                     <a ng-repeat="value in vm.selectedCategory.values | filter: {name : vm.lookupValueQuery}"
-                                       ng-class="{'b-l-success' : value.active, 'b-l-warning' : !value.active, 'selected' : value == vm.selectedLookupValue}"
+                                       ng-class="{'b-l-info' : value.active, 'b-l-light' : !value.active, 'selected' : value == vm.selectedLookupValue}"
                                        class="list-group-item b-l-3x hover-anchor">
                                         <span class="pull-right text-muted">
                                             <i class="glyphicon glyphicon-pencil hover-warning animated fadeIn"
@@ -141,13 +141,30 @@
                             <div class="padder">
                                 <div class="list-group">
                                     <a ng-repeat="value in vm.selectedLookupValue.lookupAliases | filter: {name : vm.lookupAliasQuery}"
-                                       ng-class="{'b-l-success' : value.active, 'b-l-warning' : !value.active}"
+                                       ng-class="{'b-l-info' : value.active, 'b-l-light' : !value.active}"
                                        class="list-group-item b-l-3x hover-anchor">
                                         <span class="pull-right text-muted">
-                                            <i class="glyphicon glyphicon-pencil hover-warning" ng-click="vm.editLookupAlias();"></i>&nbsp;
-                                            <i class="fa fa-trash-o hover-danger" ng-click="vm.deleteAlias(value.id);"></i>
+                                            <i class="glyphicon glyphicon-pencil hover-warning animated fadeIn"
+                                               ng-if="!value.isEditing"
+                                               ng-click="value.isEditing=true;value.origName=value.name;value.origActive=value.active;"></i>
+                                            <i class="fa fa-trash-o hover-danger animated fadeIn" ng-if="!value.isEditing" ng-click="vm.deleteAlias(value.id);"></i>
                                         </span>
-                                        <span class="block text-ellipsis">{{value.name}}</span>
+                                        <span ng-if="!value.isEditing" class="block text-ellipsis">{{value.name}}</span>
+                                        <div class="form-inline" ng-if="value.isEditing">
+                                            <input type="text"
+                                                   class="animated fadeIn"
+                                                   style="width: 145px;"
+                                                   ng-model="value.name"
+                                                   ng-keypress="($event.which === 13 && value.origName != value.name)?vm.editAlias(value):0" />
+                                            <div class="checkbox m-l m-r-xs" ng-click="value.active=!value.active">
+                                                <label class="i-checks">
+                                                    <input type="checkbox" ng-model="value.active"><i></i>
+                                                </label>
+                                            </div>
+                                            <i class="glyphicon glyphicon-ok hover-success margin-top-sm pull-right animated fadeIn" ng-click="value.isEditing=false;vm.editAlias(value)"></i>
+                                            <i class="glyphicon glyphicon-remove hover-danger margin-top-sm pull-right animated fadeIn"
+                                               ng-click="value.isEditing=false;value.name=value.origName;value.active=value.origActive;"></i>
+                                        </div>
                                     </a>
                                 </div>
                             </div>

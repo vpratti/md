@@ -40,7 +40,7 @@ tr.selected-row > td {
 }
 
 .hover-info:hover {
-    color: #23b7e5
+    color: #23b7e5;
 }
 
 .hover-success:hover {

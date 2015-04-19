@@ -25,5 +25,7 @@ namespace AngularJSAuthentication.API
         void DeleteLookupValue(long id);
 
         void EditLookupValue(LookupValueDto lookupValueDto);
+
+        void EditAlias(LookupAliasDto lookupAliasDto);
     }
 }
