@@ -353,9 +353,9 @@
         .module('VirtualClarityApp')
         .controller('categoryManagementCtrl', categoryManagementCtrl);
 
-    categoryManagementCtrl.$inject = ['lookups', 'lookupsService', 'utility'];
+    categoryManagementCtrl.$inject = ['lookups', 'lookupsService', 'utility', 'categoryFactory'];
 
-    function categoryManagementCtrl(lookups, lookupsService, utility) {
+    function categoryManagementCtrl(lookups, lookupsService, utility, categoryFactory) {
         var vm = this;
 
         vm.init = init;
@@ -370,11 +370,18 @@
         vm.editLookupValue = editLookupValue;
         vm.editAlias = editAlias;
         vm.editCategory = editCategory;
+        vm.addCategory = addCategory;
 
         function init() {
             vm.populateCategories();
             vm.newLookupAliasIsActive = true;
             vm.newLookupValueIsActive = true;
+        }
+
+        function addCategory() {
+            categoryFactory.addCategory().result.then(function () {
+                vm.populateCategories();
+            });
         }
 
         function editCategory(category) {
@@ -556,5 +563,53 @@
                 vm.timeframes = result.data;
             });
         }
+    }
+}(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('addCategoryCtrl', addCategoryCtrl);
+
+    addCategoryCtrl.$inject = ['$modalInstance', 'lookupsService'];
+
+    function addCategoryCtrl($modalInstance, lookupsService) {
+        var vm = this;
+        vm.addLookupValue = addLookupValue;
+        vm.removeLookupValue = removeLookupValue;
+        vm.createCategory = createCategory;
+        vm.$modalInstance = $modalInstance;
+        vm.init = init;
+
+        function init() {
+            vm.newCategory = {};
+            vm.newCategory.values = [];
+            vm.newLookupValueIsActive = true;
+            vm.newLookupValue = '';
+        }
+
+        function removeLookupValue(lookupValue) {
+            vm.newCategory.values = _.remove(vm.newLookupValues, function (n) {
+                return n.name != lookupValue.name;
+            });
+        }
+
+        function addLookupValue() {
+            if (vm.newCategory.values.indexOfByProperty('name', vm.newLookupValue) < 0) {
+                vm.newCategory.values.push({ name: vm.newLookupValue, active: vm.newLookupValueIsActive });
+                vm.newLookupValue = '';
+                vm.newLookupValueIsActive = true;
+            }
+        }
+
+        function createCategory() {
+            lookupsService.createCategory(vm.newCategory).then(function () {
+                $modalInstance.close();
+            });
+        }
+
+        vm.init();
     }
 }(angular));

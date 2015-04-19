@@ -353,3 +353,28 @@
         }
     }
 }(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .factory('categoryFactory', categoryFactory);
+
+    categoryFactory.$inject = ['$modal'];
+
+    function categoryFactory($modal) {
+        var factory = {
+            addCategory: addCategory
+        };
+
+        return factory;
+
+        function addCategory() {
+            return $modal.open({
+                templateUrl: 'app/views/addCategory.html',
+                controller: 'addCategoryCtrl as vm',
+            });
+        }
+    }
+}(angular));
