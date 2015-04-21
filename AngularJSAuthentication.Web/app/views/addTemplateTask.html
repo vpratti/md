@@ -21,7 +21,7 @@
         </div>
 
         <label class="font-bold">Activity Task</label>
-        <div class="form-inline m-vertical" ng-show="vm.isNewTask">
+        <div class="form-inline m-vertical animated fadeIn" ng-show="vm.isNewTask">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="New Task Name" data-ng-model="vm.template.activityTaskName" style="width:285px;">
             </div>
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="form-inline m-vertical" ng-show="!vm.isNewTask">
+        <div class="form-inline m-vertical animated fadeIn" ng-show="!vm.isNewTask">
             <ui-select ng-model="vm.template.taskId" theme="select2" style="width:50%">
                 <ui-select-match placeholder="Select Activity Task">{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices repeat="task.id as task in vm.activityTasks | filter:$select.search track by $index">
