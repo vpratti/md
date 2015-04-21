@@ -4,13 +4,13 @@ using AngularJSAuthentication.API.Dto;
 
 namespace AngularJSAuthentication.API.Models
 {
-    public class ActivityTask : EntityBase
+    public class ActivityTemplate : EntityBase
     {
-        public ActivityTask() { }
+        public ActivityTemplate() { }
 
-        public ActivityTask(NewActivityTaskDto newActivityTaskDto, string username)
+        public ActivityTemplate(NewActivityTemplateDto newActivityTemplate, string username)
         {
-            Name = newActivityTaskDto.Name;
+            Name = newActivityTemplate.Name;
             CreatedBy = username;
             ModifiedBy = username;
             CreatedOn = DateTime.UtcNow;
@@ -21,5 +21,6 @@ namespace AngularJSAuthentication.API.Models
         public string Name { get; set; }
 
         public virtual ICollection<TemplateTask> TemplateTasks { get; set; }
+      
     }
 }

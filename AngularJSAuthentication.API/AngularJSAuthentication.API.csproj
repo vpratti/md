@@ -200,6 +200,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Configurations\ActivityTaskConfiguration.cs" />
     <Compile Include="Configurations\TimeframeConfiguration.cs" />
     <Compile Include="DbContexts\AuthContext.cs" />
     <Compile Include="DbRepositories\AuthRepository.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Controllers\TimelinesController.cs" />
     <Compile Include="DbRepositories\ITimelineRepository.cs" />
     <Compile Include="DbRepositories\TimelineRepository.cs" />
+    <Compile Include="Dto\NewActivityTaskDto.cs" />
     <Compile Include="Exceptions\FailedResetPasswordException.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="DbRepositories\ILookupRepository.cs" />
