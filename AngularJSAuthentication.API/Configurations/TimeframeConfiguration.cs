@@ -21,8 +21,7 @@ namespace AngularJSAuthentication.API.Configurations
 
             HasOptional(i => i.Parent)
                 .WithMany(i => i.Children)
-                .HasForeignKey(i => i.ParentId)
-                .WillCascadeOnDelete(false);
+                .HasForeignKey(i => i.ParentId);
         }
     }
 }

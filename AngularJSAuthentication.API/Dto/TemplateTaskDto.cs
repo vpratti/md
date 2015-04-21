@@ -23,5 +23,7 @@ namespace AngularJSAuthentication.API.Dto
         public string Domain { get; set; }
         public string TaskName { get; set; }
         public long Tminus { get; set; }
+
+        public ActivityTaskDto ActivityTask { get; set; }
     }
 }
