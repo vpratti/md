@@ -18,6 +18,16 @@ namespace AngularJSAuthentication.API.Models
             Active = true;
         }
 
+        public ActivityTask(string name, string username)
+        {
+            Name = name;
+            CreatedBy = username;
+            ModifiedBy = username;
+            CreatedOn = DateTime.UtcNow;
+            ModifiedOn = DateTime.UtcNow;
+            Active = true;
+        }
+
         public string Name { get; set; }
 
         public virtual ICollection<TemplateTask> TemplateTasks { get; set; }

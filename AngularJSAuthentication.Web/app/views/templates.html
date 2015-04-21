@@ -1,3 +1,109 @@
-﻿<ui-breadcrumbs ng-if="authentication.isAuth" displayname-property="data.displayName"
-                template-url="/app/views/uiBreadcrumbs.html">
-</ui-breadcrumbs>
+﻿<div class="app-content-body  app-content-full animated fadeIn" style="overflow: hidden">
+    <div class="hbox hbox-auto-xs bg-light " ng-init="app.settings.asideFolded = true; app.settings.asideFixed = true; app.settings.asideDock = false; app.settings.container = false; app.hideAside = false">
+        <!--Main area start-->
+        <div class="col">
+            <ui-breadcrumbs ng-if="authentication.isAuth" displayname-property="data.displayName"
+                            template-url="/app/views/uiBreadcrumbs.html">
+            </ui-breadcrumbs>
+            <div class="vbox">
+                <div class="row-row">
+                    <div class="cell">
+                        <div class="cell-inner">
+                            <div class="wrapper-md">
+                                <div class="form-inline" ng-form="newTemplateForm">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-sm" placeholder="Lookup Value" data-ng-model="vm.newTemplateName" style="width: 200px;" required="">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-sm btn-primary m-vertical" ng-disabled="newTemplateForm.$invalid" ng-click="vm.addTemplate();">Add Template</button>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped b-t b-light">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Status</th>
+                                                    <th class="action-column">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="template in vm.activityTemplates"
+                                                    ng-class="{'selected-row' : template == vm.selectedTemplate}"
+                                                    class="hover-table-row">
+                                                    <td ng-click="vm.selectTemplate(template)">{{template.name}}</td>
+                                                    <td ng-click="vm.selectTemplate(template)">
+                                                        <span ng-if="template.active">Active</span>
+                                                        <span ng-if="!template.active">In Active</span>
+                                                    </td>
+                                                    <td class="center-x">
+                                                        <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" aria-hidden="true"></span>&nbsp;
+                                                        <span class="fa fa-trash-o hover-danger cursor-pointer" aria-hidden="true"></span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Lookup values column start-->
+        <div class="col w-lg lt b-r animated fadeInRight" ng-if="vm.selectedTemplate">
+            <div class="vbox">
+                <div class="wrapper">
+                    <a href="" class="pull-right btn btn-sm btn-primary m-t-n-xs" ng-click="vm.createTemplateTask()">Add Task</a>
+                    <div class="h4">Template Tasks</div>
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <div class="input-group">
+                        <span class="input-group-addon input-sm"><i class="fa fa-search"></i></span>
+                        <input type="text" class="form-control input-sm" placeholder="search" ng-model="vm.templateTasksQuery">
+                    </div>
+                </div>
+                <div class="row-row">
+                    <div class="cell scrollable hover">
+                        <div class="cell-inner">
+                            <div class="padder">
+                                <div class="list-group">
+                                    <a ng-repeat="task in vm.selectedTemplate.templateTasks | filter: {name : vm.templateTasksQuery}"
+                                       ng-class="{'b-l-info' : value.active, 'b-l-light' : !value.active}"
+                                       class="list-group-item b-l-3x hover-anchor">
+                                        <span class="pull-right text-muted">
+                                            <i class="glyphicon glyphicon-pencil hover-warning animated fadeIn"></i>
+                                            <i class="fa fa-trash-o hover-danger animated fadeIn"></i>
+                                        </span>
+                                        <span class="block text-ellipsis">{{task.stage}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper b-t m-t-xxs">
+                    <!--<div class="form-inline m-vertical">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Lookup Value" data-ng-model="vm.newLookupValue" style="width: 145px;">
+                    </div>
+                    <div class="checkbox m-l m-r-xs">
+                        <label class="i-checks">
+                            <input type="checkbox" data-ng-model="vm.newLookupValueIsActive"><i></i>Is Active
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <i class="fa fa-plus"
+                           ng-class="{'hover-pointer' : vm.newLookupValue}"
+                           style="color: #27c24c"
+                           ng-click="vm.addLookupValue()"></i>
+                    </div>
+                </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

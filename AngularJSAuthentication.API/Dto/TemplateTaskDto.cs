@@ -1,5 +1,4 @@
-﻿using System;
-using AngularJSAuthentication.API.Models;
+﻿using AngularJSAuthentication.API.Models;
 
 namespace AngularJSAuthentication.API.Dto
 {
@@ -18,10 +17,11 @@ namespace AngularJSAuthentication.API.Dto
         }
 
         public long TemplateId { get; set; }
-        public long TaskId { get; set; }
+        public long? TaskId { get; set; }
         public string Stage { get; set; }
         public string Environment { get; set; }
         public string Domain { get; set; }
+        public string TaskName { get; set; }
         public long Tminus { get; set; }
     }
 }

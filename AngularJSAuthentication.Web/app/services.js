@@ -390,13 +390,58 @@
 
     function activityTemplatesService($http, ngAuthSettings) {
         var factory = {
-            getTemplates: getTemplates
+            getTemplates: getTemplates,
+            createTemplate: createTemplate,
+            createTemplateTask: createTemplateTask,
+            getActivityTasks: getActivityTasks
         };
 
         return factory;
 
         function getTemplates() {
             return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/GetTemplates');
+        }
+
+        function getActivityTasks() {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/GetActivityTasks');
+        }
+
+        function createTemplate(name) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/CreateTemplate', { name: name });
+        }
+
+        function createTemplateTask(template) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/CreateTemplateTask', template);
+        }
+    }
+}(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .factory('activityTemplates', activityTemplates);
+
+    activityTemplates.$inject = ['$modal'];
+
+    function activityTemplates($modal) {
+        var factory = {
+            addTemplateTask: addTemplateTask
+        };
+
+        return factory;
+
+        function addTemplateTask(templateId) {
+            return $modal.open({
+                templateUrl: 'app/views/addTemplateTask.html',
+                controller: 'addTemplateTaskCtrl as vm',
+                resolve: {
+                    templateId: function() {
+                        return templateId;
+                    }
+                }
+            });
         }
     }
 }(angular));

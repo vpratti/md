@@ -20,7 +20,6 @@ namespace AngularJSAuthentication.API.Models
 
         public string Name { get; set; }
 
-        public virtual ICollection<TemplateTask> TemplateTasks { get; set; }
-      
+        public virtual ICollection<TemplateTask> TemplateTasks { get; set; }     
     }
 }

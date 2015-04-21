@@ -230,6 +230,7 @@
     <Compile Include="DbRepositories\LookupRepository.cs" />
     <Compile Include="Mapping\LookupProfile.cs" />
     <Compile Include="Mapping\MappingBootstrapper.cs" />
+    <Compile Include="Mapping\TemplatesProfile.cs" />
     <Compile Include="Mapping\TimelinesProfile.cs" />
     <Compile Include="Models\TemplateTask.cs" />
     <Compile Include="Models\ActivityTemplate.cs" />
