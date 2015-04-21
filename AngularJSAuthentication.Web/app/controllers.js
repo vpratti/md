@@ -613,3 +613,86 @@
         vm.init();
     }
 }(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('templatesCtrl', templatesCtrl);
+
+    templatesCtrl.$inject = ['activityTemplatesService', 'activityTemplates'];
+
+    function templatesCtrl(activityTemplatesService, activityTemplates) {
+        var vm = this;
+        vm.init = init;
+        vm.addTemplate = addTemplate;
+        vm.selectTemplate = selectTemplate;
+        vm.createTemplateTask = createTemplateTask;
+
+        function init() {
+            activityTemplatesService.getTemplates().then(function(result) {
+                vm.activityTemplates = result.data;
+            });
+        }
+
+        function selectTemplate(template) {
+            vm.selectedTemplate = template;
+        }
+
+        function addTemplate() {
+            activityTemplatesService.createTemplate(vm.newTemplateName).then(function(result) {
+                vm.activityTemplates.push(result.data);
+            });
+        }
+
+        function createTemplateTask() {
+            activityTemplates.addTemplateTask(vm.selectedTemplate.id).result.then(function(data) {
+                vm.selectedTemplate.templateTasks.push(data);
+            });
+        }
+
+        vm.init();
+    }
+}(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('addTemplateTaskCtrl', addTemplateTaskCtrl);
+
+    addTemplateTaskCtrl.$inject = ['$modalInstance', 'activityTemplatesService', 'templateId'];
+
+    function addTemplateTaskCtrl($modalInstance, activityTemplatesService, templateId) {
+        var vm = this;
+        vm.init = init;
+        vm.addTemplateTask = addTemplateTask;
+        vm.handleNewTaskToggle = handleNewTaskToggle;
+        vm.$modalInstance = $modalInstance;
+
+        function init() {
+            vm.template = {};
+            vm.template.templateId = templateId;
+
+            activityTemplatesService.getActivityTasks().then(function (result) {
+                vm.activityTasks = result.data;
+            });
+        }
+
+        function addTemplateTask() {
+            activityTemplatesService.createTemplateTask(vm.template).then(function(result) {
+                $modalInstance.close(result.data);
+            });
+        }
+
+        function handleNewTaskToggle() {
+            if (vm.isNewTask) {
+                vm.template.taskId = null;
+            }
+        }
+
+        vm.init();
+    }
+}(angular));

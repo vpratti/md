@@ -91,6 +91,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     });
                 }]
             }
+        })
+        .state('templates', {
+            url: "/templates",
+            templateUrl: "app/views/templates.html",
+            controller: "templatesCtrl as vm",
+            data: {
+                displayName: 'Templates'
+            }
         });
 
     $urlRouterProvider.otherwise('/');

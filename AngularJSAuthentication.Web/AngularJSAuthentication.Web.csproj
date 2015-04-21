@@ -66,6 +66,7 @@
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\tokensManagerService.js" />
     <Content Include="app\views\addCategory.html" />
+    <Content Include="app\views\addTemplateTask.html" />
     <Content Include="app\views\categoryManagement.html" />
     <Content Include="app\views\confirm.html" />
     <Content Include="app\views\editCategory.html" />
@@ -76,6 +77,7 @@
     <Content Include="app\views\passwordRecovery.html" />
     <Content Include="app\views\rolemanagement.html" />
     <Content Include="app\views\signup.html" />
+    <Content Include="app\views\templates.html" />
     <Content Include="app\views\timeline.html" />
     <Content Include="app\views\uiBreadcrumbs.html" />
     <Content Include="app\views\usermanagement.html" />

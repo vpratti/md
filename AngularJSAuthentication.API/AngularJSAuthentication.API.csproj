@@ -202,7 +202,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Configurations\ActivityTaskConfiguration.cs" />
     <Compile Include="Configurations\TimeframeConfiguration.cs" />
+    <Compile Include="Controllers\ActivityTemplatesController.cs" />
     <Compile Include="DbContexts\AuthContext.cs" />
+    <Compile Include="DbRepositories\ActivityTemplatesRepository.cs" />
     <Compile Include="DbRepositories\AuthRepository.cs" />
     <Compile Include="Constants\EmailConstants.cs" />
     <Compile Include="Constants\UserConstants.cs" />
@@ -213,6 +215,7 @@
     <Compile Include="Controllers\RefreshTokensController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TimelinesController.cs" />
+    <Compile Include="DbRepositories\IActivityTemplatesRepository.cs" />
     <Compile Include="DbRepositories\ITimelineRepository.cs" />
     <Compile Include="DbRepositories\TimelineRepository.cs" />
     <Compile Include="Dto\NewTemplateTaskDto.cs" />
@@ -227,6 +230,7 @@
     <Compile Include="DbRepositories\LookupRepository.cs" />
     <Compile Include="Mapping\LookupProfile.cs" />
     <Compile Include="Mapping\MappingBootstrapper.cs" />
+    <Compile Include="Mapping\TemplatesProfile.cs" />
     <Compile Include="Mapping\TimelinesProfile.cs" />
     <Compile Include="Models\TemplateTask.cs" />
     <Compile Include="Models\ActivityTemplate.cs" />

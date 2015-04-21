@@ -14,6 +14,7 @@ namespace AngularJSAuthentication.API.DbContexts
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new TimeframeConfiguration());
+
             modelBuilder.Entity<TemplateTask>()
                            .HasKey(cp => new { cp.TemplateId, cp.TaskId });
 
@@ -25,7 +26,8 @@ namespace AngularJSAuthentication.API.DbContexts
             modelBuilder.Entity<ActivityTask>()
                         .HasMany(p => p.TemplateTasks)
                         .WithRequired()
-                        .HasForeignKey(cp => cp.TaskId);  
+                        .HasForeignKey(cp => cp.TaskId); 
+ 
             base.OnModelCreating(modelBuilder);
         }
 
@@ -34,5 +36,7 @@ namespace AngularJSAuthentication.API.DbContexts
         public DbSet<LookupAlias> LookupAliases { get; set; }
         public DbSet<Timeframe> Timeframes { get; set; }
         public DbSet<ActivityTask> ActivityTasks { get; set; }
+        public DbSet<ActivityTemplate> ActivityTemplates { get; set; }
+        public DbSet<TemplateTask> TemplateTasks { get; set; } 
     }
 }
