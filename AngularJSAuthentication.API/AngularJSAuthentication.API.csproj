@@ -215,6 +215,10 @@
     <Compile Include="Controllers\TimelinesController.cs" />
     <Compile Include="DbRepositories\ITimelineRepository.cs" />
     <Compile Include="DbRepositories\TimelineRepository.cs" />
+    <Compile Include="Dto\NewTemplateTaskDto.cs" />
+    <Compile Include="Dto\TemplateTaskDto.cs" />
+    <Compile Include="Dto\ActivityTemplateDto.cs" />
+    <Compile Include="Dto\NewActivityTemplateDto.cs" />
     <Compile Include="Dto\NewActivityTaskDto.cs" />
     <Compile Include="Exceptions\FailedResetPasswordException.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -224,6 +228,8 @@
     <Compile Include="Mapping\LookupProfile.cs" />
     <Compile Include="Mapping\MappingBootstrapper.cs" />
     <Compile Include="Mapping\TimelinesProfile.cs" />
+    <Compile Include="Models\TemplateTask.cs" />
+    <Compile Include="Models\ActivityTemplate.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Dto\CategoryDto.cs" />
     <Compile Include="Models\Item.cs" />
