@@ -621,13 +621,16 @@
         .module('VirtualClarityApp')
         .controller('templatesCtrl', templatesCtrl);
 
-    templatesCtrl.$inject = [];
+    templatesCtrl.$inject = ['activityTemplatesService'];
 
-    function templatesCtrl() {
+    function templatesCtrl(activityTemplatesService) {
         var vm = this;
         vm.init = init;
 
         function init() {
+            activityTemplatesService.getTemplates().then(function(result) {
+                vm.activityTemplates = result.data;
+            });
         }
 
         vm.init();

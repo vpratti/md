@@ -378,3 +378,25 @@
         }
     }
 }(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .factory('activityTemplatesService', activityTemplatesService);
+
+    activityTemplatesService.$inject = ['$http', 'ngAuthSettings'];
+
+    function activityTemplatesService($http, ngAuthSettings) {
+        var factory = {
+            getTemplates: getTemplates
+        };
+
+        return factory;
+
+        function getTemplates() {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/GetTemplates');
+        }
+    }
+}(angular));

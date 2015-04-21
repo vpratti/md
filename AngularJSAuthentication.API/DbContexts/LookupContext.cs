@@ -36,5 +36,7 @@ namespace AngularJSAuthentication.API.DbContexts
         public DbSet<LookupAlias> LookupAliases { get; set; }
         public DbSet<Timeframe> Timeframes { get; set; }
         public DbSet<ActivityTask> ActivityTasks { get; set; }
+        public DbSet<ActivityTemplate> ActivityTemplates { get; set; }
+        public DbSet<TemplateTask> TemplateTasks { get; set; } 
     }
 }
