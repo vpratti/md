@@ -613,3 +613,23 @@
         vm.init();
     }
 }(angular));
+
+(function (angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('templatesCtrl', templatesCtrl);
+
+    templatesCtrl.$inject = [];
+
+    function templatesCtrl() {
+        var vm = this;
+        vm.init = init;
+
+        function init() {
+        }
+
+        vm.init();
+    }
+}(angular));
