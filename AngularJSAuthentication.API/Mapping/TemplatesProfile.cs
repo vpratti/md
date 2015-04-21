@@ -18,7 +18,19 @@ namespace AngularJSAuthentication.API.Mapping
                 .IgnoreAllNonExisting();
 
             Mapper.CreateMap<TemplateTask, TemplateTaskDto>()
+                .ForMember(dest => dest.ActivityTask, opt => opt.ResolveUsing(new ActivityTaskDtoResolver()))
                 .IgnoreAllNonExisting();
+
+            Mapper.CreateMap<ActivityTask, ActivityTaskDto>()
+                .IgnoreAllNonExisting();
+        }
+    }
+
+    public class ActivityTaskDtoResolver : ValueResolver<TemplateTask, ActivityTaskDto>
+    {
+        protected override ActivityTaskDto ResolveCore(TemplateTask source)
+        {
+            return Mapper.Map<ActivityTask, ActivityTaskDto>(source.ActivityTask);
         }
     }
 

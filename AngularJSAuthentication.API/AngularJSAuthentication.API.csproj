@@ -201,6 +201,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Configurations\ActivityTaskConfiguration.cs" />
+    <Compile Include="Configurations\TemplateTaskConfiguration.cs" />
     <Compile Include="Configurations\TimeframeConfiguration.cs" />
     <Compile Include="Controllers\ActivityTemplatesController.cs" />
     <Compile Include="DbContexts\AuthContext.cs" />

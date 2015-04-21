@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using AngularJSAuthentication.API.Dto;
 
 namespace AngularJSAuthentication.API.Models
@@ -23,10 +24,14 @@ namespace AngularJSAuthentication.API.Models
         }
 
         public long TemplateId { get; set; }
+
+        [ForeignKey("ActivityTask"), Column(Order = 0)]
         public long? TaskId { get; set; }
         public string Stage { get; set; }
         public string Environment { get; set; }
         public string Domain { get; set; }
         public long Tminus { get; set; }
+
+        public virtual ActivityTask ActivityTask { get; set; }
     }
 }

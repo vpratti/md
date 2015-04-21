@@ -2,11 +2,11 @@
 
 namespace AngularJSAuthentication.API.Dto
 {
-    public class TaskDto
+    public class ActivityTaskDto
     {
-        public TaskDto() { }
+        public ActivityTaskDto() { }
 
-        public TaskDto(ActivityTask activityTask)
+        public ActivityTaskDto(ActivityTask activityTask)
         {
             Id = activityTask.Id;
             Name = activityTask.Name;

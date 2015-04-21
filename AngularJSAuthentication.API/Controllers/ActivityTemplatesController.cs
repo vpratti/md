@@ -29,7 +29,10 @@ namespace AngularJSAuthentication.API.Controllers
         {
             List<ActivityTemplate> result = _activityTemplatesRepository.GetTemplates();
 
-            return Ok(result);
+            List<AcvitityTemplateDto> mappedResult =
+                _mapppingEngine.Map<List<ActivityTemplate>, List<AcvitityTemplateDto>>(result);
+
+            return Ok(mappedResult);
         }
 
         [HttpGet]

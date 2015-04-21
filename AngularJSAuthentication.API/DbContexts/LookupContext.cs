@@ -14,9 +14,7 @@ namespace AngularJSAuthentication.API.DbContexts
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new TimeframeConfiguration());
-
-            modelBuilder.Entity<TemplateTask>()
-                           .HasKey(cp => new { cp.TemplateId, cp.TaskId });
+            modelBuilder.Configurations.Add(new TemplateTaskConfiguration());
 
             modelBuilder.Entity<ActivityTemplate>()
                         .HasMany(c => c.TemplateTasks)
