@@ -15,6 +15,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
+using AngularJSAuthentication.API.Dto;
 using WebGrease.Css.Extensions;
 
 namespace AngularJSAuthentication.API.Controllers

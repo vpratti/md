@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using AngularJSAuthentication.API.Dto;
 
 namespace AngularJSAuthentication.API.Models
 {

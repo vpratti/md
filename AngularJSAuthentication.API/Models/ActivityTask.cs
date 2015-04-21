@@ -4,11 +4,11 @@ using AngularJSAuthentication.API.Dto;
 
 namespace AngularJSAuthentication.API.Models
 {
-    public class Timeframe : EntityBase
+    public class ActivityTask : EntityBase
     {
-        public Timeframe() { }
+        public ActivityTask() { }
 
-        public Timeframe(NewTimeframeDto newTimeframeDto, string username)
+        public ActivityTask(NewTimeframeDto newTimeframeDto, string username)
         {
             Name = newTimeframeDto.Name;
             Description = newTimeframeDto.Description;
@@ -28,12 +28,16 @@ namespace AngularJSAuthentication.API.Models
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public DateTime StartDate { get; set; }
+
+        public DateTime DueDate { get; set; }
+
         public DateTime EndDate { get; set; }
 
         public long? ParentId { get; set; }
 
-        public virtual Timeframe Parent { get; set; }
+        public virtual ActivityTask Parent { get; set; }
 
-        public virtual ICollection<Timeframe> Children { get; set; } 
+        public virtual ICollection<ActivityTask> SubTasks { get; set; } 
     }
 }

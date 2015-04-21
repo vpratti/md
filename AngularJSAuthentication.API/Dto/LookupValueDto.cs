@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using AngularJSAuthentication.API.Models;
 
-namespace AngularJSAuthentication.API.Models
+namespace AngularJSAuthentication.API.Dto
 {
     public class LookupValueDto
     {

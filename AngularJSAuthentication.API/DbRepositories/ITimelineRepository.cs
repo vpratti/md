@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AngularJSAuthentication.API.Dto;
 using AngularJSAuthentication.API.Models;
 
 namespace AngularJSAuthentication.API.DbRepositories

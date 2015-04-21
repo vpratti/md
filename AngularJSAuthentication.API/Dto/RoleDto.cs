@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace AngularJSAuthentication.API.Models
+namespace AngularJSAuthentication.API.Dto
 {
     [DataContract]
     public class RoleDto

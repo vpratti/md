@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AngularJSAuthentication.API.Models
+namespace AngularJSAuthentication.API.Dto
 {
     public class CategoryDto
     {

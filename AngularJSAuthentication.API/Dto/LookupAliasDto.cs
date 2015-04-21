@@ -1,4 +1,4 @@
-﻿namespace AngularJSAuthentication.API.Models
+﻿namespace AngularJSAuthentication.API.Dto
 {
     public class LookupAliasDto
     {

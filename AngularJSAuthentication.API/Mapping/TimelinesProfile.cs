@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AngularJSAuthentication.API.Dto;
 using AngularJSAuthentication.API.Extensions;
 using AngularJSAuthentication.API.Models;
 using AutoMapper;

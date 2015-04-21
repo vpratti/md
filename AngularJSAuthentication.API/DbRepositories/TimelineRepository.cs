@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AngularJSAuthentication.API.DbContexts;
+using AngularJSAuthentication.API.Dto;
 using AngularJSAuthentication.API.Models;
 
 namespace AngularJSAuthentication.API.DbRepositories

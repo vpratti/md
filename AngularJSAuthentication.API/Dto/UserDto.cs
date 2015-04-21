@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using AngularJSAuthentication.API.Models;
 
-namespace AngularJSAuthentication.API.Models
+namespace AngularJSAuthentication.API.Dto
 {
     [DataContract]
     public class UserDto

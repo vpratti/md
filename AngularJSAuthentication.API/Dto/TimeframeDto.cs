@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AngularJSAuthentication.API.Models;
 
-namespace AngularJSAuthentication.API.Models
+namespace AngularJSAuthentication.API.Dto
 {
     public class TimeframeDto
     {
