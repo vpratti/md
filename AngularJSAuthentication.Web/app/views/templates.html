@@ -12,7 +12,7 @@
                             <div class="wrapper-md">
                                 <div class="form-inline" ng-form="newTemplateForm">
                                     <div class="form-group">
-                                        <input type="text" class="form-control input-sm" placeholder="Lookup Value" data-ng-model="vm.newTemplateName" style="width: 200px;" required="">
+                                        <input type="text" class="form-control input-sm" placeholder="Template Name" data-ng-model="vm.newTemplateName" style="width: 200px;" required="">
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-sm btn-primary m-vertical" ng-disabled="newTemplateForm.$invalid" ng-click="vm.addTemplate();">Add Template</button>
@@ -24,7 +24,6 @@
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
-                                                    <th>Status</th>
                                                     <th class="action-column">Actions</th>
                                                 </tr>
                                             </thead>
@@ -33,10 +32,6 @@
                                                     ng-class="{'selected-row' : template == vm.selectedTemplate}"
                                                     class="hover-table-row">
                                                     <td ng-click="vm.selectTemplate(template)">{{template.name}}</td>
-                                                    <td ng-click="vm.selectTemplate(template)">
-                                                        <span ng-if="template.active">Active</span>
-                                                        <span ng-if="!template.active">In Active</span>
-                                                    </td>
                                                     <td class="center-x">
                                                         <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" aria-hidden="true"></span>&nbsp;
                                                         <span class="fa fa-trash-o hover-danger cursor-pointer" aria-hidden="true"></span>
@@ -54,11 +49,11 @@
         </div>
 
         <!--Lookup values column start-->
-        <div class="col w-lg lt b-r animated fadeInRight" ng-if="vm.selectedTemplate">
+        <div class="col w-auto lt b-r animated fadeInRight" ng-if="vm.selectedTemplate">
             <div class="vbox">
                 <div class="wrapper">
                     <a href="" class="pull-right btn btn-sm btn-primary m-t-n-xs" ng-click="vm.createTemplateTask()">Add Task</a>
-                    <div class="h4">Template Tasks</div>
+                    <div class="h4">Tasks</div>
                 </div>
                 <div class="wrapper b-t m-t-xxs">
                     <div class="input-group">
@@ -70,7 +65,7 @@
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
                             <div class="padder">
-                                <div class="list-group">
+                                <!--<div class="list-group">
                                     <a ng-repeat="task in vm.selectedTemplate.templateTasks | filter: {name : vm.templateTasksQuery}"
                                        ng-class="{'b-l-info' : value.active, 'b-l-light' : !value.active}"
                                        class="list-group-item b-l-3x hover-anchor">
@@ -80,6 +75,37 @@
                                         </span>
                                         <span class="block text-ellipsis">{{task.stage}}</span>
                                     </a>
+                                </div>-->
+                                <div class="panel panel-default">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped b-t b-light">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Stage</th>
+                                                    <th>Domain</th>
+                                                    <th>Environment</th>
+                                                    <th>TMinus</th>
+                                                    <th class="action-column">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="task in vm.selectedTemplate.templateTasks | filter: {name : vm.templateTasksQuery}"
+                                                    ng-class="{'selected-row' : template == vm.selectedTemplate}"
+                                                    class="hover-table-row">
+                                                    <td>{{task.activityTask.name}}</td>
+                                                    <td>{{task.stage}}</td>
+                                                    <td>{{task.domain}}</td>
+                                                    <td>{{task.environment}}</td>
+                                                    <td>{{task.tminus}}</td>
+                                                    <td class="center-x">
+                                                        <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" aria-hidden="true"></span>&nbsp;
+                                                        <span class="fa fa-trash-o hover-danger cursor-pointer" aria-hidden="true"></span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
