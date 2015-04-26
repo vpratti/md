@@ -393,7 +393,8 @@
             getTemplates: getTemplates,
             createTemplate: createTemplate,
             createTemplateTask: createTemplateTask,
-            getActivityTasks: getActivityTasks
+            getActivityTasks: getActivityTasks,
+            deleteTemplate: deleteTemplate
         };
 
         return factory;
@@ -412,6 +413,10 @@
 
         function createTemplateTask(template) {
             return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/CreateTemplateTask', template);
+        }
+
+        function deleteTemplate(id) {
+            return $http.delete(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/DeleteTemplate?id=' + id);
         }
     }
 }(angular));

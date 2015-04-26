@@ -621,18 +621,32 @@
         .module('VirtualClarityApp')
         .controller('templatesCtrl', templatesCtrl);
 
-    templatesCtrl.$inject = ['activityTemplatesService', 'activityTemplates'];
+    templatesCtrl.$inject = ['activityTemplatesService', 'activityTemplates', 'utility'];
 
-    function templatesCtrl(activityTemplatesService, activityTemplates) {
+    function templatesCtrl(activityTemplatesService, activityTemplates, utility) {
         var vm = this;
         vm.init = init;
         vm.addTemplate = addTemplate;
         vm.selectTemplate = selectTemplate;
         vm.createTemplateTask = createTemplateTask;
+        vm.deleteTemplate = deleteTemplate;
 
         function init() {
             activityTemplatesService.getTemplates().then(function(result) {
                 vm.activityTemplates = result.data;
+            });
+        }
+
+        function deleteTemplate(id) {
+            utility.confirm('Are you sure you want to delete this template?').result.then(function() {
+                activityTemplatesService.deleteTemplate(id).then(function() {
+                    vm.activityTemplates = _.remove(vm.activityTemplates, function(n) {
+                        return n.id !== id;
+                    });
+                    if (vm.selectedTemplate.id === id) {
+                        vm.selectedTemplate = null;
+                    }
+                });
             });
         }
 

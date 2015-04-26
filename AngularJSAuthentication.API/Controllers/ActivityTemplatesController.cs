@@ -77,5 +77,15 @@ namespace AngularJSAuthentication.API.Controllers
  
             return Ok(mappedResult);
         }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("DeleteTemplate")]
+        public async Task<IHttpActionResult> DeleteTemplate(long id)
+        {
+            await _activityTemplatesRepository.DeleteTemplate(id);
+
+            return Ok();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using AngularJSAuthentication.API.DbContexts;
 using AngularJSAuthentication.API.Dto;
@@ -58,6 +59,15 @@ namespace AngularJSAuthentication.API.DbRepositories
         public List<ActivityTask> GetActivityTasks()
         {
             return _context.ActivityTasks.ToList();
+        }
+
+        public async Task DeleteTemplate(long id)
+        {
+            ActivityTemplate template = await _context.ActivityTemplates.FindAsync(id);
+
+            _context.ActivityTemplates.Remove(template);
+
+            await _context.SaveChangesAsync();
         }
 
         public void Dispose()
