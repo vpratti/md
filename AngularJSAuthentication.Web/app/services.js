@@ -394,7 +394,8 @@
             createTemplate: createTemplate,
             createTemplateTask: createTemplateTask,
             getActivityTasks: getActivityTasks,
-            deleteTemplate: deleteTemplate
+            deleteTemplate: deleteTemplate,
+            deleteTemplateTask: deleteTemplateTask
         };
 
         return factory;
@@ -418,6 +419,11 @@
         function deleteTemplate(id) {
             return $http.delete(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/DeleteTemplate?id=' + id);
         }
+
+        function deleteTemplateTask(taskid, templateid) {
+            return $http.delete(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/DeleteTemplateTask',
+                { params: { taskid: taskid, templateid: templateid } });
+        }
     }
 }(angular));
 
@@ -437,13 +443,16 @@
 
         return factory;
 
-        function addTemplateTask(templateId) {
+        function addTemplateTask(templateId, templateTasks) {
             return $modal.open({
                 templateUrl: 'app/views/addTemplateTask.html',
                 controller: 'addTemplateTaskCtrl as vm',
                 resolve: {
                     templateId: function() {
                         return templateId;
+                    },
+                    templateTasks: function() {
+                        return templateTasks;
                     }
                 }
             });

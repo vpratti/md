@@ -31,6 +31,8 @@ namespace AngularJSAuthentication.API.Models
         public string Environment { get; set; }
         public string Domain { get; set; }
         public long Tminus { get; set; }
+        public bool Milestone { get; set; }
+        public string MilestoneGroup { get; set; }
 
         public virtual ActivityTask ActivityTask { get; set; }
     }

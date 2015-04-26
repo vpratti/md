@@ -65,17 +65,6 @@
                     <div class="cell scrollable hover">
                         <div class="cell-inner">
                             <div class="padder">
-                                <!--<div class="list-group">
-                                    <a ng-repeat="task in vm.selectedTemplate.templateTasks | filter: {name : vm.templateTasksQuery}"
-                                       ng-class="{'b-l-info' : value.active, 'b-l-light' : !value.active}"
-                                       class="list-group-item b-l-3x hover-anchor">
-                                        <span class="pull-right text-muted">
-                                            <i class="glyphicon glyphicon-pencil hover-warning animated fadeIn"></i>
-                                            <i class="fa fa-trash-o hover-danger animated fadeIn"></i>
-                                        </span>
-                                        <span class="block text-ellipsis">{{task.stage}}</span>
-                                    </a>
-                                </div>-->
                                 <div class="panel panel-default">
                                     <div class="table-responsive">
                                         <table class="table table-striped b-t b-light">
@@ -100,7 +89,7 @@
                                                     <td>{{task.tminus}}</td>
                                                     <td class="center-x">
                                                         <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" aria-hidden="true"></span>&nbsp;
-                                                        <span class="fa fa-trash-o hover-danger cursor-pointer" aria-hidden="true"></span>
+                                                        <span class="fa fa-trash-o hover-danger cursor-pointer" aria-hidden="true" ng-click="vm.deleteTemplateTask(task)"></span>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -110,24 +99,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="wrapper b-t m-t-xxs">
-                    <!--<div class="form-inline m-vertical">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Lookup Value" data-ng-model="vm.newLookupValue" style="width: 145px;">
-                    </div>
-                    <div class="checkbox m-l m-r-xs">
-                        <label class="i-checks">
-                            <input type="checkbox" data-ng-model="vm.newLookupValueIsActive"><i></i>Is Active
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <i class="fa fa-plus"
-                           ng-class="{'hover-pointer' : vm.newLookupValue}"
-                           style="color: #27c24c"
-                           ng-click="vm.addLookupValue()"></i>
-                    </div>
-                </div>-->
                 </div>
             </div>
         </div>

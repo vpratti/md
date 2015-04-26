@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using AngularJSAuthentication.API.Controllers;
 using AngularJSAuthentication.API.DbContexts;
 using AngularJSAuthentication.API.Dto;
 using AngularJSAuthentication.API.Models;
@@ -53,6 +55,14 @@ namespace AngularJSAuthentication.API.DbRepositories
 
             _context.SaveChanges();
 
+            ActivityTask activityTask = _context.ActivityTasks.Find(templateTask.TaskId);
+
+            templateTask.ActivityTask = new ActivityTask
+            {
+                Id = activityTask.Id,
+                Name = activityTask.Name
+            };
+
             return templateTask;
         }
 
@@ -66,6 +76,19 @@ namespace AngularJSAuthentication.API.DbRepositories
             ActivityTemplate template = await _context.ActivityTemplates.FindAsync(id);
 
             _context.ActivityTemplates.Remove(template);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteTemplateTask(DeleteTemplateTaskObj deleteTemplateTaskObj)
+        {
+            TemplateTask templateTask =
+                await
+                    _context.TemplateTasks.FirstAsync(
+                        i =>
+                            i.TaskId == deleteTemplateTaskObj.TaskId && i.TemplateId == deleteTemplateTaskObj.TemplateId);
+
+            _context.TemplateTasks.Remove(templateTask);
 
             await _context.SaveChangesAsync();
         }

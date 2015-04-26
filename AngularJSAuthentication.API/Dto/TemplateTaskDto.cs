@@ -16,6 +16,7 @@ namespace AngularJSAuthentication.API.Dto
             Tminus = templateTask.Tminus;
         }
 
+        public long Id { get; set; }
         public long TemplateId { get; set; }
         public long? TaskId { get; set; }
         public string Stage { get; set; }

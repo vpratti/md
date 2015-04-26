@@ -630,6 +630,7 @@
         vm.selectTemplate = selectTemplate;
         vm.createTemplateTask = createTemplateTask;
         vm.deleteTemplate = deleteTemplate;
+        vm.deleteTemplateTask = deleteTemplateTask;
 
         function init() {
             activityTemplatesService.getTemplates().then(function(result) {
@@ -650,6 +651,16 @@
             });
         }
 
+        function deleteTemplateTask(task) {
+            utility.confirm('Are you sure you want to delete this template task?').result.then(function() {
+                activityTemplatesService.deleteTemplateTask(task.taskId, task.templateId).then(function () {
+                    vm.selectedTemplate.templateTasks = _.remove(vm.selectedTemplate.templateTasks, function (n) {
+                        return n.id !== task.id;
+                    });
+                });
+            });
+        }
+
         function selectTemplate(template) {
             vm.selectedTemplate = template;
         }
@@ -661,7 +672,7 @@
         }
 
         function createTemplateTask() {
-            activityTemplates.addTemplateTask(vm.selectedTemplate.id).result.then(function(data) {
+            activityTemplates.addTemplateTask(vm.selectedTemplate.id, vm.selectedTemplate.templateTasks).result.then(function (data) {
                 vm.selectedTemplate.templateTasks.push(data);
             });
         }
@@ -677,9 +688,9 @@
         .module('VirtualClarityApp')
         .controller('addTemplateTaskCtrl', addTemplateTaskCtrl);
 
-    addTemplateTaskCtrl.$inject = ['$modalInstance', 'activityTemplatesService', 'templateId'];
+    addTemplateTaskCtrl.$inject = ['$modalInstance', 'activityTemplatesService', 'templateId', 'templateTasks'];
 
-    function addTemplateTaskCtrl($modalInstance, activityTemplatesService, templateId) {
+    function addTemplateTaskCtrl($modalInstance, activityTemplatesService, templateId, templateTasks) {
         var vm = this;
         vm.init = init;
         vm.addTemplateTask = addTemplateTask;
@@ -691,6 +702,9 @@
             vm.template.templateId = templateId;
 
             activityTemplatesService.getActivityTasks().then(function (result) {
+                result.data = _.remove(result.data, function(n) {
+                    return !(templateTasks.indexOfByProperty('taskId', n.id) > -1);
+                });
                 vm.activityTasks = result.data;
             });
         }

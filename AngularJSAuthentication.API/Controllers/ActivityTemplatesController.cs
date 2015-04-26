@@ -42,7 +42,9 @@ namespace AngularJSAuthentication.API.Controllers
         {
             List<ActivityTask> result = _activityTemplatesRepository.GetActivityTasks();
 
-            return Ok(result);
+            List<ActivityTaskDto> mappedResult = _mapppingEngine.Map<List<ActivityTask>, List<ActivityTaskDto>>(result);
+
+            return Ok(mappedResult);
         }
 
         [HttpPost]
@@ -87,5 +89,21 @@ namespace AngularJSAuthentication.API.Controllers
 
             return Ok();
         }
+
+        [HttpDelete]
+        [Authorize]
+        [Route("DeleteTemplateTask")]
+        public async Task<IHttpActionResult> DeleteTemplateTask([FromUri] DeleteTemplateTaskObj deleteTemplateTaskObj)
+        {
+            await _activityTemplatesRepository.DeleteTemplateTask(deleteTemplateTaskObj);
+
+            return Ok();
+        }
+    }
+
+    public class DeleteTemplateTaskObj
+    {
+        public long TaskId { get; set; }
+        public long TemplateId { get; set; }
     }
 }
