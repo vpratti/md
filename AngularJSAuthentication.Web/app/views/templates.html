@@ -1,7 +1,7 @@
 ﻿<div class="app-content-body  app-content-full animated fadeIn" style="overflow: hidden">
     <div class="hbox hbox-auto-xs bg-light " ng-init="app.settings.asideFolded = true; app.settings.asideFixed = true; app.settings.asideDock = false; app.settings.container = false; app.hideAside = false">
         <!--Main area start-->
-        <div class="col">
+        <div class="col w-xxl">
             <ui-breadcrumbs ng-if="authentication.isAuth" displayname-property="data.displayName"
                             template-url="/app/views/uiBreadcrumbs.html">
             </ui-breadcrumbs>
@@ -75,6 +75,8 @@
                                                     <th>Domain</th>
                                                     <th>Environment</th>
                                                     <th>TMinus</th>
+                                                    <th>Milestone</th>
+                                                    <th>Milestone Group</th>
                                                     <th class="action-column">Actions</th>
                                                 </tr>
                                             </thead>
@@ -87,6 +89,11 @@
                                                     <td>{{task.domain}}</td>
                                                     <td>{{task.environment}}</td>
                                                     <td>{{task.tminus}}</td>
+                                                    <td>{{task.milestone}}</td>
+                                                    <td>
+                                                        <span ng-if="task.milestoneGroup == null || task.milestoneGroup == ''">None</span>
+                                                        <span ng-if="task.milestoneGroup && task.milestoneGroup != ''">task.milestoneGroup</span>
+                                                    </td>
                                                     <td class="center-x">
                                                         <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" aria-hidden="true"></span>&nbsp;
                                                         <span class="fa fa-trash-o hover-danger cursor-pointer" aria-hidden="true" ng-click="vm.deleteTemplateTask(task)"></span>

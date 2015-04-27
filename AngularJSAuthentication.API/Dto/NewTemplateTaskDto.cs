@@ -10,6 +10,8 @@ namespace AngularJSAuthentication.API.Dto
         public string Environment { get; set; }
         public string Domain { get; set; }
         public string ActivityTaskName { get; set; }
+        public string MilestoneGroup { get; set; }
         public int Tminus { get; set; }
+        public bool Milestone { get; set; }
     }
 }

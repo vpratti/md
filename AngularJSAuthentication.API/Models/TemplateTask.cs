@@ -20,6 +20,8 @@ namespace AngularJSAuthentication.API.Models
             ModifiedBy = username;
             CreatedOn = DateTime.UtcNow;
             ModifiedOn = DateTime.UtcNow;
+            Milestone = newTemplateTask.Milestone;
+            MilestoneGroup = newTemplateTask.MilestoneGroup;
             Active = true;
         }
 
