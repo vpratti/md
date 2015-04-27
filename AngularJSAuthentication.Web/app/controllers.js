@@ -688,9 +688,9 @@
         .module('VirtualClarityApp')
         .controller('addTemplateTaskCtrl', addTemplateTaskCtrl);
 
-    addTemplateTaskCtrl.$inject = ['$modalInstance', 'activityTemplatesService', 'templateId', 'templateTasks'];
+    addTemplateTaskCtrl.$inject = ['$modalInstance', 'activityTemplatesService', 'templateId', 'templateTasks', 'lookupsService'];
 
-    function addTemplateTaskCtrl($modalInstance, activityTemplatesService, templateId, templateTasks) {
+    function addTemplateTaskCtrl($modalInstance, activityTemplatesService, templateId, templateTasks, lookupsService) {
         var vm = this;
         vm.init = init;
         vm.addTemplateTask = addTemplateTask;
@@ -700,6 +700,18 @@
         function init() {
             vm.template = {};
             vm.template.templateId = templateId;
+
+            lookupsService.getLookupsByCategoryCode('domain').then(function(result) {
+                vm.domainLookups = result.data;
+            });
+
+            lookupsService.getLookupsByCategoryCode('stage').then(function (result) {
+                vm.stageLookups = result.data;
+            });
+
+            lookupsService.getLookupsByCategoryCode('environment').then(function (result) {
+                vm.environmentLookups = result.data;
+            });
 
             activityTemplatesService.getActivityTasks().then(function (result) {
                 result.data = _.remove(result.data, function(n) {

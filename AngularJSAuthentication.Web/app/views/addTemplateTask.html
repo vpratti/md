@@ -3,17 +3,34 @@
         <h3 class="modal-title">Add Template Task</h3>
     </div>
     <div class="modal-body">
+        <label class="font-bold">Stage</label>
         <div class="form-group">
-            <label class="font-bold">Stage</label>
-            <input type="text" class="form-control" placeholder="Stage" data-ng-model="vm.template.stage" required>
+            <ui-select ng-model="vm.template.stage" theme="select2" style="width:50%" required>
+                <ui-select-match placeholder="Select Stage">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="lookup.name as lookup in vm.stageLookups | filter:$select.search track by $index">
+                    {{lookup.name}}
+                </ui-select-choices>
+            </ui-select>
         </div>
+
+        <label class="font-bold">Environment</label>
         <div class="form-group">
-            <label class="font-bold">Environment</label>
-            <input type="text" class="form-control" placeholder="Environment" data-ng-model="vm.template.environment" required>
+            <ui-select ng-model="vm.template.environment" theme="select2" style="width:50%" required>
+                <ui-select-match placeholder="Select Environment">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="lookup.name as lookup in vm.environmentLookups | filter:$select.search track by $index">
+                    {{lookup.name}}
+                </ui-select-choices>
+            </ui-select>
         </div>
+
+        <label class="font-bold">Domain</label>
         <div class="form-group">
-            <label class="font-bold">Domain</label>
-            <input type="text" class="form-control" placeholder="Domain" data-ng-model="vm.template.domain" required>
+            <ui-select ng-model="vm.template.domain" theme="select2" style="width:50%" required>
+                <ui-select-match placeholder="Select Domain">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="lookup.name as lookup in vm.domainLookups | filter:$select.search track by $index">
+                    {{lookup.name}}
+                </ui-select-choices>
+            </ui-select>
         </div>
         <div class="form-group">
             <label class="font-bold">T-</label>

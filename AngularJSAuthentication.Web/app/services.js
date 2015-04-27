@@ -246,7 +246,8 @@
             deleteAlias: deleteAlias,
             editAlias: editAlias,
             deleteLookupValue: deleteLookupValue,
-            editLookupValue: editLookupValue
+            editLookupValue: editLookupValue,
+            getLookupsByCategoryCode: getLookupsByCategoryCode
         };
 
         return factory;
@@ -273,6 +274,10 @@
 
         function getLookupValues() {
             return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetLookupValues');
+        }
+
+        function getLookupsByCategoryCode(code) {
+            return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/Lookup/GetLookupsByCategoryCode', { params: { code: code } });
         }
 
         function getCategories(id) {

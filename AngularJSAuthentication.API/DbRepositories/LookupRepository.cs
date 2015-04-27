@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using AngularJSAuthentication.API.DbContexts;
 using AngularJSAuthentication.API.Dto;
@@ -25,6 +27,13 @@ namespace AngularJSAuthentication.API.DbRepositories
         public List<LookupValue> GetLookupValues()
         {
             return _context.LookupValues.ToList();
+        }
+
+        public async Task<List<LookupValue>> GetLookupValuesByCategoryCode(string code)
+        {
+            Category category = await _context.Categories.FirstAsync(i => i.Code.ToLower().Equals(code.ToLower()));
+
+            return category.LookupValues;
         }
 
         public void CreateCategory(CategoryDto categoryDto)

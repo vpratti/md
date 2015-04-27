@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AngularJSAuthentication.API.Dto;
 using AngularJSAuthentication.API.Models;
 
@@ -7,6 +8,8 @@ namespace AngularJSAuthentication.API.DbRepositories
     public interface ILookupRepository
     {
         List<LookupValue> GetLookupValues();
+
+        Task<List<LookupValue>> GetLookupValuesByCategoryCode(string code); 
 
         void CreateCategory(CategoryDto categoryDto);
 

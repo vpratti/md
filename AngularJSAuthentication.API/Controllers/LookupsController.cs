@@ -102,6 +102,18 @@ namespace AngularJSAuthentication.API.Controllers
             return Ok(categoryTypeDtos);
         }
 
+        [HttpGet]
+        [Authorize]
+        [Route("GetLookupsByCategoryCode")]
+        public async Task<IHttpActionResult> GetLookupsByCategoryCode(string code)
+        {
+            List<LookupValue> result = await _lookupRepository.GetLookupValuesByCategoryCode(code);
+
+            List<LookupValueDto> mappedResult = _mappingEngine.Map<List<LookupValue>, List<LookupValueDto>>(result);
+
+            return Ok(mappedResult);
+        }
+
         [HttpDelete]
         [Authorize(Roles = UserConstants.Admin)]
         [Route("DeleteCategory")]
