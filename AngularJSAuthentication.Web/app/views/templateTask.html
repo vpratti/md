@@ -39,6 +39,7 @@
             <label class="font-bold">T-</label>
             <input type="text" class="form-control" placeholder="T-" data-ng-model="vm.templateTask.tminus" required>
         </div>
+
         <label class="font-bold">Milestone</label>
         <div class="form-inline m-vertical animated fadeIn">
             <div class="form-group">
@@ -50,10 +51,11 @@
                 </label>
             </div>
         </div>
+
         <label class="font-bold">Activity Task</label>
         <div class="form-inline m-vertical animated fadeIn" ng-show="vm.isNewTask">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="New Task Name" data-ng-model="vm.templateTask.activityTaskName" style="width:285px;">
+                <input type="text" class="form-control w-full" placeholder="New Task Name" data-ng-model="vm.templateTask.activityTaskName">
             </div>
             <div class="checkbox m-l m-r-xs">
                 <label class="i-checks">

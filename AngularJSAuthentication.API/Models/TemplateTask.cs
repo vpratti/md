@@ -37,5 +37,17 @@ namespace AngularJSAuthentication.API.Models
         public string MilestoneGroup { get; set; }
 
         public virtual ActivityTask ActivityTask { get; set; }
+
+        public void UpdateTemplateTask(TemplateTaskDto templateTaskDto, string username)
+        {
+            Stage = templateTaskDto.Stage;
+            Environment = templateTaskDto.Environment;
+            Domain = templateTaskDto.Domain;
+            Tminus = templateTaskDto.Tminus;
+            Milestone = templateTaskDto.Milestone;
+            MilestoneGroup = templateTaskDto.MilestoneGroup;
+            ModifiedOn = DateTime.UtcNow;
+            ModifiedBy = username;
+        }
     }
 }

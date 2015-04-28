@@ -93,6 +93,20 @@ namespace AngularJSAuthentication.API.DbRepositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<TemplateTask> UpdateTemplateTask(TemplateTaskDto templateTaskDto)
+        {
+            TemplateTask templateTask = await
+                _context.TemplateTasks.FirstAsync(
+                    i =>
+                        i.TaskId == templateTaskDto.TaskId && i.TemplateId == templateTaskDto.TemplateId);
+
+            templateTask.UpdateTemplateTask(templateTaskDto, HttpContext.Current.User.Identity.Name);
+
+            await _context.SaveChangesAsync();
+
+            return templateTask;
+        }
+
         public void Dispose()
         {
             _context.Dispose();

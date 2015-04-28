@@ -80,6 +80,18 @@ namespace AngularJSAuthentication.API.Controllers
             return Ok(mappedResult);
         }
 
+        [HttpPut]
+        [Authorize]
+        [Route("UpdateTemplateTask")]
+        public async Task<IHttpActionResult> UpdateTemplateTask(TemplateTaskDto templateTaskDto)
+        {
+            TemplateTask result = await _activityTemplatesRepository.UpdateTemplateTask(templateTaskDto);
+
+            TemplateTaskDto mappedResult = _mapppingEngine.Map<TemplateTask, TemplateTaskDto>(result);
+
+            return Ok(mappedResult);
+        }
+
         [HttpDelete]
         [Authorize]
         [Route("DeleteTemplate")]
@@ -99,11 +111,5 @@ namespace AngularJSAuthentication.API.Controllers
 
             return Ok();
         }
-    }
-
-    public class DeleteTemplateTaskObj
-    {
-        public long TaskId { get; set; }
-        public long TemplateId { get; set; }
     }
 }

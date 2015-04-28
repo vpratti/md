@@ -71,6 +71,7 @@
     <Content Include="app\views\categoryManagement.html" />
     <Content Include="app\views\confirm.html" />
     <Content Include="app\views\editCategory.html" />
+    <Content Include="app\views\editTemplateTask.html" />
     <Content Include="app\views\editUser.html" />
     <Content Include="app\views\errorNotification.html" />
     <Content Include="app\views\login.html" />

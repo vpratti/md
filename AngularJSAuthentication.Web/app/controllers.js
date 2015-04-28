@@ -631,6 +631,7 @@
         vm.createTemplateTask = createTemplateTask;
         vm.deleteTemplate = deleteTemplate;
         vm.deleteTemplateTask = deleteTemplateTask;
+        vm.editTemplateTask = editTemplateTask;
 
         function init() {
             activityTemplatesService.getTemplates().then(function(result) {
@@ -672,15 +673,29 @@
         }
 
         function createTemplateTask() {
+            var templateTasksCopy = angular.copy(vm.selectedTemplate.templateTasks);
+            activityTemplates.addTemplateTask(vm.selectedTemplate.id, templateTasksCopy, getTemplateValues()).result.then(function (data) {
+                vm.selectedTemplate.templateTasks.push(data);
+            });
+        }
+
+        function editTemplateTask(task) {
+            var templateTaskCopy = angular.copy(task);
+            var templateTasksCopy = angular.copy(vm.selectedTemplate.templateTasks);
+            activityTemplates.editTemplateTask(templateTaskCopy, templateTasksCopy, getTemplateValues()).result.then(function(result) {
+                var index = vm.selectedTemplate.templateTasks.indexOfByProperty('id', result.id);
+                vm.selectedTemplate.templateTasks[index] = result;
+            });
+        }
+
+        function getTemplateValues() {
             var templateValues = {
                 stage: vm.selectedTemplate.stage,
                 domain: vm.selectedTemplate.domain,
                 environment: vm.selectedTemplate.environment
             };
 
-            activityTemplates.addTemplateTask(vm.selectedTemplate.id, vm.selectedTemplate.templateTasks, templateValues).result.then(function(data) {
-                vm.selectedTemplate.templateTasks.push(data);
-            });
+            return templateValues;
         }
 
         vm.init();
@@ -746,23 +761,29 @@
         vm.templateValues = templateValues;
 
         function init() {
-            vm.template = {};
-            vm.template.templateId = templateId;
-            vm.template.stage = templateValues.stage;
-            vm.template.domain = templateValues.domain;
-            vm.template.environment = templateValues.environment;
+            vm.templateTask = {};
+            vm.templateTask.templateId = templateId;
+            vm.templateTask.stage = templateValues.stage;
+            vm.templateTask.domain = templateValues.domain;
+            vm.templateTask.environment = templateValues.environment;
 
-            lookupsService.getLookupsByCategoryCode('domain').then(function(result) {
-                vm.domainLookups = result.data;
-            });
+            if (!vm.templateTask.domain) {
+                lookupsService.getLookupsByCategoryCode('domain').then(function (result) {
+                    vm.domainLookups = result.data;
+                });
+            }
 
-            lookupsService.getLookupsByCategoryCode('stage').then(function (result) {
-                vm.stageLookups = result.data;
-            });
+            if (!vm.templateTask.stage) {
+                lookupsService.getLookupsByCategoryCode('stage').then(function (result) {
+                    vm.stageLookups = result.data;
+                });
+            }
 
-            lookupsService.getLookupsByCategoryCode('environment').then(function (result) {
-                vm.environmentLookups = result.data;
-            });
+            if (!vm.templateTask.environment) {
+                lookupsService.getLookupsByCategoryCode('environment').then(function (result) {
+                    vm.environmentLookups = result.data;
+                });
+            }
 
             activityTemplatesService.getActivityTasks().then(function (result) {
                 result.data = _.remove(result.data, function(n) {
@@ -773,15 +794,70 @@
         }
 
         function addTemplateTask() {
-            activityTemplatesService.createTemplateTask(vm.template).then(function(result) {
+            activityTemplatesService.createTemplateTask(vm.templateTask).then(function(result) {
                 $modalInstance.close(result.data);
             });
         }
 
         function handleNewTaskToggle() {
             if (vm.isNewTask) {
-                vm.template.taskId = null;
+                vm.templateTask.taskId = null;
             }
+        }
+
+        vm.init();
+    }
+}(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('editTemplateTaskCtrl', editTemplateTaskCtrl);
+
+    editTemplateTaskCtrl.$inject = ['templateTask', 'activityTemplatesService', 'templateTasks', 'templateValues',
+        'lookupsService', '$q', '$modalInstance'];
+
+    function editTemplateTaskCtrl(templateTask, activityTemplatesService, templateTasks, templateValues,
+        lookupsService, $q, $modalInstance) {
+        var vm = this;
+        vm.init = init;
+        vm.$modalInstance = $modalInstance;
+        vm.updateTemplateTask = updateTemplateTask;
+
+        function init() {
+            vm.templateValues = templateValues;
+
+            $q.all(
+            [
+                lookupsService.getLookupsByCategoryCode('domain'),
+                lookupsService.getLookupsByCategoryCode('stage'),
+                lookupsService.getLookupsByCategoryCode('environment')
+            ]).then(function(result) {
+                vm.domainLookups = result[0].data;
+                vm.stageLookups = result[1].data;
+                vm.environmentLookups = result[2].data;
+                vm.templateTask = templateTask;
+            });
+
+            activityTemplatesService.getActivityTasks().then(function (result) {
+                templateTasks = _.remove(templateTasks, function(n) {
+                    return n.id !== templateTask.taskId;
+                });
+
+                result.data = _.remove(result.data, function (n) {
+                    return !(templateTasks.indexOfByProperty('taskId', n.id) > -1);
+                });
+
+                vm.activityTasks = result.data;
+            });
+        }
+
+        function updateTemplateTask() {
+            activityTemplatesService.updateTemplateTask(vm.templateTask).then(function(result) {
+                $modalInstance.close(result.data);
+            });
         }
 
         vm.init();

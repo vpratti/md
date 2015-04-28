@@ -233,6 +233,7 @@
     <Compile Include="Mapping\MappingBootstrapper.cs" />
     <Compile Include="Mapping\TemplatesProfile.cs" />
     <Compile Include="Mapping\TimelinesProfile.cs" />
+    <Compile Include="Models\DeleteTemplateTaskObj.cs" />
     <Compile Include="Models\TemplateTask.cs" />
     <Compile Include="Models\ActivityTemplate.cs" />
     <Compile Include="Models\Category.cs" />

@@ -400,7 +400,8 @@
             createTemplateTask: createTemplateTask,
             getActivityTasks: getActivityTasks,
             deleteTemplate: deleteTemplate,
-            deleteTemplateTask: deleteTemplateTask
+            deleteTemplateTask: deleteTemplateTask,
+            updateTemplateTask: updateTemplateTask
         };
 
         return factory;
@@ -419,6 +420,10 @@
 
         function createTemplateTask(template) {
             return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/CreateTemplateTask', template);
+        }
+
+        function updateTemplateTask(template) {
+            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/UpdateTemplateTask', template);
         }
 
         function deleteTemplate(id) {
@@ -444,7 +449,8 @@
     function activityTemplates($modal) {
         var factory = {
             addTemplateTask: addTemplateTask,
-            addTemplate: addTemplate
+            addTemplate: addTemplate,
+            editTemplateTask: editTemplateTask
         };
 
         return factory;
@@ -458,6 +464,25 @@
                         return templateId;
                     },
                     templateTasks: function() {
+                        return templateTasks;
+                    },
+                    templateValues: function () {
+                        return templateValues;
+                    }
+                },
+                windowClass: 'md'
+            });
+        }
+
+        function editTemplateTask(templateTask, templateTasks, templateValues) {
+            return $modal.open({
+                templateUrl: 'app/views/editTemplateTask.html',
+                controller: 'editTemplateTaskCtrl as vm',
+                resolve: {
+                    templateTask: function () {
+                        return templateTask;
+                    },
+                    templateTasks: function () {
                         return templateTasks;
                     },
                     templateValues: function () {

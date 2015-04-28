@@ -1,4 +1,4 @@
-﻿<div ng-form="addTemplateTaskForm">
+﻿<div ng-form="editTemplateTaskForm">
     <div class="modal-header">
         <h3 class="modal-title">Add Template Task</h3>
     </div>
@@ -50,34 +50,14 @@
                 </label>
             </div>
         </div>
-        <label class="font-bold">Activity Task</label>
-        <div class="form-inline m-vertical animated fadeIn" ng-show="vm.isNewTask">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="New Task Name" data-ng-model="vm.templateTask.activityTaskName" style="width:285px;">
-            </div>
-            <div class="checkbox m-l m-r-xs">
-                <label class="i-checks">
-                    <input type="checkbox" data-ng-model="vm.isNewTask" ng-change="vm.handleNewTaskToggle()"><i></i>New Activity Task
-                </label>
-            </div>
-        </div>
-
-        <div class="form-inline m-vertical animated fadeIn" ng-show="!vm.isNewTask">
-            <ui-select ng-model="vm.templateTask.taskId" theme="select2" style="width:50%">
-                <ui-select-match placeholder="Select Activity Task">{{$select.selected.name}}</ui-select-match>
-                <ui-select-choices repeat="task.id as task in vm.activityTasks | filter:$select.search track by $index">
-                    {{task.name}}
-                </ui-select-choices>
-            </ui-select>
-            <div class="checkbox m-l m-r-xs">
-                <label class="i-checks">
-                    <input type="checkbox" data-ng-model="vm.isNewTask" ng-change="vm.handleNewTaskToggle()"><i></i>New Activity Task
-                </label>
-            </div>
+        
+        <div class="form-group">
+            <label class="font-bold">Activity Task</label>
+            <input type="text" class="form-control w-full" data-ng-model="vm.templateTask.activityTask.name" disabled>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="vm.addTemplateTask();" ng-disabled="addTemplateTaskForm.$invalid">Add</button>
+        <button class="btn btn-primary" ng-click="vm.updateTemplateTask();" ng-disabled="editTemplateTaskForm.$invalid && editTemplateTaskForm.$dirty">Update</button>
         <button class="btn btn-danger" ng-click="vm.$modalInstance.dismiss();">Cancel</button>
     </div>
 </div>
