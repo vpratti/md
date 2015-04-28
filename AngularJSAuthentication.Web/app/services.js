@@ -413,8 +413,8 @@
             return $http.get(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/GetActivityTasks');
         }
 
-        function createTemplate(name) {
-            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/CreateTemplate', { name: name });
+        function createTemplate(template) {
+            return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/CreateTemplate', template);
         }
 
         function createTemplateTask(template) {
@@ -443,12 +443,13 @@
 
     function activityTemplates($modal) {
         var factory = {
-            addTemplateTask: addTemplateTask
+            addTemplateTask: addTemplateTask,
+            addTemplate: addTemplate
         };
 
         return factory;
 
-        function addTemplateTask(templateId, templateTasks) {
+        function addTemplateTask(templateId, templateTasks, templateValues) {
             return $modal.open({
                 templateUrl: 'app/views/addTemplateTask.html',
                 controller: 'addTemplateTaskCtrl as vm',
@@ -458,8 +459,20 @@
                     },
                     templateTasks: function() {
                         return templateTasks;
+                    },
+                    templateValues: function () {
+                        return templateValues;
                     }
-                }
+                },
+                windowClass: 'md'
+            });
+        }
+
+        function addTemplate() {
+            return $modal.open({
+                templateUrl: 'app/views/addTemplate.html',
+                controller: 'addTemplateCtrl as vm',
+                windowClass: 'md'
             });
         }
     }

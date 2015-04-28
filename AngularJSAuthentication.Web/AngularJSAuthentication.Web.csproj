@@ -66,6 +66,7 @@
     <Content Include="app\services\authService.js" />
     <Content Include="app\services\tokensManagerService.js" />
     <Content Include="app\views\addCategory.html" />
+    <Content Include="app\views\addTemplate.html" />
     <Content Include="app\views\addTemplateTask.html" />
     <Content Include="app\views\categoryManagement.html" />
     <Content Include="app\views\confirm.html" />

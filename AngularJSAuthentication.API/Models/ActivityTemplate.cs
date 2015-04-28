@@ -11,6 +11,9 @@ namespace AngularJSAuthentication.API.Models
         public ActivityTemplate(NewActivityTemplateDto newActivityTemplate, string username)
         {
             Name = newActivityTemplate.Name;
+            Stage = newActivityTemplate.Stage;
+            Environment = newActivityTemplate.Environment;
+            Domain = newActivityTemplate.Domain;
             CreatedBy = username;
             ModifiedBy = username;
             CreatedOn = DateTime.UtcNow;
@@ -19,6 +22,9 @@ namespace AngularJSAuthentication.API.Models
         }
 
         public string Name { get; set; }
+        public string Stage { get; set; }
+        public string Environment { get; set; }
+        public string Domain { get; set; }
 
         public virtual ICollection<TemplateTask> TemplateTasks { get; set; }     
     }

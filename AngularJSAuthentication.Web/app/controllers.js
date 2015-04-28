@@ -666,14 +666,59 @@
         }
 
         function addTemplate() {
-            activityTemplatesService.createTemplate(vm.newTemplateName).then(function(result) {
-                vm.activityTemplates.push(result.data);
+            activityTemplates.addTemplate().result.then(function(result) {
+                vm.activityTemplates.push(result);
             });
         }
 
         function createTemplateTask() {
-            activityTemplates.addTemplateTask(vm.selectedTemplate.id, vm.selectedTemplate.templateTasks).result.then(function (data) {
+            var templateValues = {
+                stage: vm.selectedTemplate.stage,
+                domain: vm.selectedTemplate.domain,
+                environment: vm.selectedTemplate.environment
+            };
+
+            activityTemplates.addTemplateTask(vm.selectedTemplate.id, vm.selectedTemplate.templateTasks, templateValues).result.then(function(data) {
                 vm.selectedTemplate.templateTasks.push(data);
+            });
+        }
+
+        vm.init();
+    }
+}(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('addTemplateCtrl', addTemplateCtrl);
+
+    addTemplateCtrl.$inject = ['$modalInstance', 'lookupsService', 'activityTemplatesService'];
+
+    function addTemplateCtrl($modalInstance, lookupsService, activityTemplatesService) {
+        var vm = this;
+        vm.$modalInstance = $modalInstance;
+        vm.addTemplate = addTemplate;
+        vm.init = init;
+
+        function init() {
+            lookupsService.getLookupsByCategoryCode('domain').then(function (result) {
+                vm.domainLookups = result.data;
+            });
+
+            lookupsService.getLookupsByCategoryCode('stage').then(function (result) {
+                vm.stageLookups = result.data;
+            });
+
+            lookupsService.getLookupsByCategoryCode('environment').then(function (result) {
+                vm.environmentLookups = result.data;
+            });
+        }
+
+        function addTemplate() {
+            activityTemplatesService.createTemplate(vm.template).then(function(result) {
+                $modalInstance.close(result.data);
             });
         }
 
@@ -688,18 +733,24 @@
         .module('VirtualClarityApp')
         .controller('addTemplateTaskCtrl', addTemplateTaskCtrl);
 
-    addTemplateTaskCtrl.$inject = ['$modalInstance', 'activityTemplatesService', 'templateId', 'templateTasks', 'lookupsService'];
+    addTemplateTaskCtrl.$inject = ['$modalInstance', 'activityTemplatesService', 'templateId', 'templateTasks', 'lookupsService',
+    'templateValues'];
 
-    function addTemplateTaskCtrl($modalInstance, activityTemplatesService, templateId, templateTasks, lookupsService) {
+    function addTemplateTaskCtrl($modalInstance, activityTemplatesService, templateId, templateTasks, lookupsService,
+        templateValues) {
         var vm = this;
         vm.init = init;
         vm.addTemplateTask = addTemplateTask;
         vm.handleNewTaskToggle = handleNewTaskToggle;
         vm.$modalInstance = $modalInstance;
+        vm.templateValues = templateValues;
 
         function init() {
             vm.template = {};
             vm.template.templateId = templateId;
+            vm.template.stage = templateValues.stage;
+            vm.template.domain = templateValues.domain;
+            vm.template.environment = templateValues.environment;
 
             lookupsService.getLookupsByCategoryCode('domain').then(function(result) {
                 vm.domainLookups = result.data;

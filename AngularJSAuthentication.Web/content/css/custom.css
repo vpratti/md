@@ -67,3 +67,6 @@ tr.hover-table-row:hover > td {
     margin-left: 280px;
 }
 
+div.md > div.modal-dialog {
+  width: 350px;
+}

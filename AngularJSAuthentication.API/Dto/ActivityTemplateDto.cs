@@ -17,6 +17,12 @@ namespace AngularJSAuthentication.API.Dto
 
         public string Name { get; set; }
 
+        public string Stage { get; set; }
+
+        public string Environment { get; set; }
+
+        public string Domain { get; set; }
+
         public bool Active { get; set; }
 
         public List<TemplateTaskDto> TemplateTasks { get; set; }  

@@ -5,32 +5,35 @@
     <div class="modal-body">
         <label class="font-bold">Stage</label>
         <div class="form-group">
-            <ui-select ng-model="vm.template.stage" theme="select2" style="width:50%" required>
+            <ui-select ng-if="!vm.templateValues.stage" ng-model="vm.template.stage" theme="select2" class="w-full" required>
                 <ui-select-match placeholder="Select Stage">{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices repeat="lookup.name as lookup in vm.stageLookups | filter:$select.search track by $index">
                     {{lookup.name}}
                 </ui-select-choices>
             </ui-select>
+            <input ng-if="vm.templateValues.stage" type="text" class="form-control w-full" ng-model="vm.template.stage" disabled>
         </div>
 
         <label class="font-bold">Environment</label>
         <div class="form-group">
-            <ui-select ng-model="vm.template.environment" theme="select2" style="width:50%" required>
+            <ui-select ng-if="!vm.templateValues.environment" ng-model="vm.template.environment" theme="select2" class="w-full" required>
                 <ui-select-match placeholder="Select Environment">{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices repeat="lookup.name as lookup in vm.environmentLookups | filter:$select.search track by $index">
                     {{lookup.name}}
                 </ui-select-choices>
             </ui-select>
+            <input ng-if="vm.templateValues.environment" type="text" class="form-control w-full" ng-model="vm.template.environment" disabled>
         </div>
 
         <label class="font-bold">Domain</label>
         <div class="form-group">
-            <ui-select ng-model="vm.template.domain" theme="select2" style="width:50%" required>
+            <ui-select ng-if="!vm.templateValues.domain" ng-model="vm.template.domain" theme="select2" class="w-full" required>
                 <ui-select-match placeholder="Select Domain">{{$select.selected.name}}</ui-select-match>
                 <ui-select-choices repeat="lookup.name as lookup in vm.domainLookups | filter:$select.search track by $index">
                     {{lookup.name}}
                 </ui-select-choices>
             </ui-select>
+            <input ng-if="vm.templateValues.domain" type="text" class="form-control w-full" ng-model="vm.template.domain" disabled>
         </div>
         <div class="form-group">
             <label class="font-bold">T-</label>
@@ -66,7 +69,7 @@
         <label class="font-bold">Milestone</label>
         <div class="form-inline m-vertical animated fadeIn">
             <div class="form-group">
-                <input type="text" class="form-control" ng-disabled="vm.template.milestone" placeholder="Milestone Group" data-ng-model="vm.template.milestoneGroup" style="width:285px;">
+                <input type="text" class="form-control w-full" ng-disabled="vm.template.milestone" placeholder="Milestone Group" data-ng-model="vm.template.milestoneGroup">
             </div>
             <div class="checkbox m-l m-r-xs">
                 <label class="i-checks">

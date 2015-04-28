@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using AngularJSAuthentication.API.Constants;
@@ -108,6 +109,8 @@ namespace AngularJSAuthentication.API.Controllers
         public async Task<IHttpActionResult> GetLookupsByCategoryCode(string code)
         {
             List<LookupValue> result = await _lookupRepository.GetLookupValuesByCategoryCode(code);
+
+            result = result.Where(i => i.Active).ToList();
 
             List<LookupValueDto> mappedResult = _mappingEngine.Map<List<LookupValue>, List<LookupValueDto>>(result);
 

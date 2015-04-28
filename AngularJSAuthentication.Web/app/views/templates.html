@@ -1,7 +1,7 @@
 ﻿<div class="app-content-body  app-content-full animated fadeIn" style="overflow: hidden">
     <div class="hbox hbox-auto-xs bg-light " ng-init="app.settings.asideFolded = true; app.settings.asideFixed = true; app.settings.asideDock = false; app.settings.container = false; app.hideAside = false">
         <!--Main area start-->
-        <div class="col w-xxl">
+        <div class="col w-auto">
             <ui-breadcrumbs ng-if="authentication.isAuth" displayname-property="data.displayName"
                             template-url="/app/views/uiBreadcrumbs.html">
             </ui-breadcrumbs>
@@ -10,20 +10,16 @@
                     <div class="cell">
                         <div class="cell-inner">
                             <div class="wrapper-md">
-                                <div class="form-inline" ng-form="newTemplateForm">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control input-sm" placeholder="Template Name" data-ng-model="vm.newTemplateName" style="width: 200px;" required="">
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="btn btn-sm btn-primary m-vertical" ng-disabled="newTemplateForm.$invalid" ng-click="vm.addTemplate();">Add Template</button>
-                                    </div>
-                                </div>
+                                <button class="btn btn-sm btn-primary m-vertical" ng-disabled="newTemplateForm.$invalid" ng-click="vm.addTemplate();">Add Template</button>
                                 <div class="panel panel-default">
                                     <div class="table-responsive">
                                         <table class="table table-striped b-t b-light">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
+                                                    <th>Stage</th>
+                                                    <th>Domain</th>
+                                                    <th>Environment</th>
                                                     <th class="action-column">Actions</th>
                                                 </tr>
                                             </thead>
@@ -32,6 +28,9 @@
                                                     ng-class="{'selected-row' : template == vm.selectedTemplate}"
                                                     class="hover-table-row">
                                                     <td ng-click="vm.selectTemplate(template)">{{template.name}}</td>
+                                                    <td ng-click="vm.selectTemplate(template)">{{template.stage}}</td>
+                                                    <td ng-click="vm.selectTemplate(template)">{{template.domain}}</td>
+                                                    <td ng-click="vm.selectTemplate(template)">{{template.environment}}</td>
                                                     <td class="center-x">
                                                         <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" aria-hidden="true"></span>&nbsp;
                                                         <span class="fa fa-trash-o hover-danger cursor-pointer" aria-hidden="true" ng-click="vm.deleteTemplate(template.id);"></span>
