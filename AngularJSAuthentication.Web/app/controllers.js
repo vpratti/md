@@ -632,6 +632,7 @@
         vm.deleteTemplate = deleteTemplate;
         vm.deleteTemplateTask = deleteTemplateTask;
         vm.editTemplateTask = editTemplateTask;
+        vm.editTemplate = editTemplate;
 
         function init() {
             activityTemplatesService.getTemplates().then(function(result) {
@@ -669,6 +670,16 @@
         function addTemplate() {
             activityTemplates.addTemplate().result.then(function(result) {
                 vm.activityTemplates.push(result);
+            });
+        }
+
+        function editTemplate(template) {
+            activityTemplates.editTemplate(angular.copy(template)).result.then(function (result) {
+                var index = vm.activityTemplates.indexOfByProperty('id', result.id);
+                vm.activityTemplates[index] = result;
+                if (vm.selectedTemplate.id == result.id) {
+                    vm.selectedTemplate = vm.activityTemplates[index];
+                }
             });
         }
 
@@ -828,34 +839,79 @@
 
         function init() {
             vm.templateValues = templateValues;
+            vm.isLoading = true;
 
             $q.all(
             [
                 lookupsService.getLookupsByCategoryCode('domain'),
                 lookupsService.getLookupsByCategoryCode('stage'),
-                lookupsService.getLookupsByCategoryCode('environment')
+                lookupsService.getLookupsByCategoryCode('environment'),
+                activityTemplatesService.getActivityTasks()
             ]).then(function(result) {
                 vm.domainLookups = result[0].data;
                 vm.stageLookups = result[1].data;
                 vm.environmentLookups = result[2].data;
+                onActivityTasksLoaded(result[3]);
                 vm.templateTask = templateTask;
+                vm.isLoading = false;
+            });
+        }
+
+        function onActivityTasksLoaded(result) {
+            templateTasks = _.remove(templateTasks, function (n) {
+                return n.id !== templateTask.taskId;
             });
 
-            activityTemplatesService.getActivityTasks().then(function (result) {
-                templateTasks = _.remove(templateTasks, function(n) {
-                    return n.id !== templateTask.taskId;
-                });
-
-                result.data = _.remove(result.data, function (n) {
-                    return !(templateTasks.indexOfByProperty('taskId', n.id) > -1);
-                });
-
-                vm.activityTasks = result.data;
+            result.data = _.remove(result.data, function (n) {
+                return !(templateTasks.indexOfByProperty('taskId', n.id) > -1);
             });
+
+            vm.activityTasks = result.data;
         }
 
         function updateTemplateTask() {
             activityTemplatesService.updateTemplateTask(vm.templateTask).then(function(result) {
+                $modalInstance.close(result.data);
+            });
+        }
+
+        vm.init();
+    }
+}(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('editTemplateCtrl', editTemplateCtrl);
+
+    editTemplateCtrl.$inject = ['$q', 'template', 'lookupsService', '$modalInstance', 'activityTemplatesService'];
+
+    function editTemplateCtrl($q, template, lookupsService, $modalInstance, activityTemplatesService) {
+        var vm = this;
+        vm.init = init;
+        vm.$modalInstance = $modalInstance;
+        vm.updateTemplate = updateTemplate;
+
+        function init() {
+            vm.isLoading = true;
+            $q.all(
+           [
+               lookupsService.getLookupsByCategoryCode('domain'),
+               lookupsService.getLookupsByCategoryCode('stage'),
+               lookupsService.getLookupsByCategoryCode('environment'),
+           ]).then(function (result) {
+               vm.domainLookups = result[0].data;
+               vm.stageLookups = result[1].data;
+               vm.environmentLookups = result[2].data;
+               vm.template = template;
+               vm.isLoading = false;
+           });
+        }
+
+        function updateTemplate() {
+            activityTemplatesService.updateTemplate(vm.template).then(function(result) {
                 $modalInstance.close(result.data);
             });
         }

@@ -401,7 +401,8 @@
             getActivityTasks: getActivityTasks,
             deleteTemplate: deleteTemplate,
             deleteTemplateTask: deleteTemplateTask,
-            updateTemplateTask: updateTemplateTask
+            updateTemplateTask: updateTemplateTask,
+            updateTemplate: updateTemplate
         };
 
         return factory;
@@ -416,6 +417,10 @@
 
         function createTemplate(template) {
             return $http.post(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/CreateTemplate', template);
+        }
+
+        function updateTemplate(template) {
+            return $http.put(ngAuthSettings.apiServiceBaseUri + 'api/ActivityTemplates/UpdateTemplate', template);
         }
 
         function createTemplateTask(template) {
@@ -450,7 +455,8 @@
         var factory = {
             addTemplateTask: addTemplateTask,
             addTemplate: addTemplate,
-            editTemplateTask: editTemplateTask
+            editTemplateTask: editTemplateTask,
+            editTemplate: editTemplate
         };
 
         return factory;
@@ -498,6 +504,19 @@
                 templateUrl: 'app/views/addTemplate.html',
                 controller: 'addTemplateCtrl as vm',
                 windowClass: 'md'
+            });
+        }
+
+        function editTemplate(template) {
+            return $modal.open({
+                templateUrl: 'app/views/editTemplate.html',
+                controller: 'editTemplateCtrl as vm',
+                windowClass: 'md',
+                resolve: {
+                    template: function() {
+                        return template;
+                    }
+                }
             });
         }
     }

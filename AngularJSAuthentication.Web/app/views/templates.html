@@ -32,7 +32,7 @@
                                                     <td ng-click="vm.selectTemplate(template)">{{template.domain}}</td>
                                                     <td ng-click="vm.selectTemplate(template)">{{template.environment}}</td>
                                                     <td class="center-x">
-                                                        <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" aria-hidden="true"></span>&nbsp;
+                                                        <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" ng-click="vm.editTemplate(template)" aria-hidden="true"></span>&nbsp;
                                                         <span class="fa fa-trash-o hover-danger cursor-pointer" aria-hidden="true" ng-click="vm.deleteTemplate(template.id);"></span>
                                                     </td>
                                                 </tr>
@@ -89,10 +89,7 @@
                                                     <td>{{task.environment}}</td>
                                                     <td>{{task.tminus}}</td>
                                                     <td>{{task.milestone}}</td>
-                                                    <td>
-                                                        <span ng-if="task.milestoneGroup == null || task.milestoneGroup == ''">None</span>
-                                                        <span ng-if="task.milestoneGroup && task.milestoneGroup != ''">task.milestoneGroup</span>
-                                                    </td>
+                                                    <td>{{task.milestoneGroup}}</td>
                                                     <td class="center-x">
                                                         <span class="glyphicon glyphicon-pencil hover-warning cursor-pointer" ng-click="vm.editTemplateTask(task)" aria-hidden="true"></span>&nbsp;
                                                         <span class="fa fa-trash-o hover-danger cursor-pointer" aria-hidden="true" ng-click="vm.deleteTemplateTask(task)"></span>

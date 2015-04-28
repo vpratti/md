@@ -57,7 +57,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="vm.updateTemplateTask();" ng-disabled="editTemplateTaskForm.$invalid && editTemplateTaskForm.$dirty">Update</button>
+        <button class="btn btn-primary" ng-click="vm.updateTemplateTask();" ng-disabled="editTemplateTaskForm.$invalid || !editTemplateTaskForm.$dirty || vm.isLoading">Update</button>
         <button class="btn btn-danger" ng-click="vm.$modalInstance.dismiss();">Cancel</button>
     </div>
 </div>

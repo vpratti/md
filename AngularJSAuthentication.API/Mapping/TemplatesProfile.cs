@@ -13,7 +13,7 @@ namespace AngularJSAuthentication.API.Mapping
         {
             base.Configure();
 
-            Mapper.CreateMap<ActivityTemplate, AcvitityTemplateDto>()
+            Mapper.CreateMap<ActivityTemplate, ActivityTemplateDto>()
                 .ForMember(dest => dest.TemplateTasks, opt => opt.ResolveUsing(new TemplateTasksDtoResolver()))
                 .IgnoreAllNonExisting();
 

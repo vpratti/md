@@ -29,8 +29,8 @@ namespace AngularJSAuthentication.API.Controllers
         {
             List<ActivityTemplate> result = _activityTemplatesRepository.GetTemplates();
 
-            List<AcvitityTemplateDto> mappedResult =
-                _mapppingEngine.Map<List<ActivityTemplate>, List<AcvitityTemplateDto>>(result);
+            List<ActivityTemplateDto> mappedResult =
+                _mapppingEngine.Map<List<ActivityTemplate>, List<ActivityTemplateDto>>(result);
 
             return Ok(mappedResult);
         }
@@ -55,7 +55,19 @@ namespace AngularJSAuthentication.API.Controllers
             ActivityTemplate result =
                 _activityTemplatesRepository.CreateActivityTemplate(newActivityTemplateDto);
 
-            var mappedResult = _mapppingEngine.Map<ActivityTemplate, AcvitityTemplateDto>(result);
+            var mappedResult = _mapppingEngine.Map<ActivityTemplate, ActivityTemplateDto>(result);
+
+            return Ok(mappedResult);
+        }
+
+        [HttpPut]
+        [Authorize]
+        [Route("UpdateTemplate")]
+        public async Task<IHttpActionResult> UpdateTemplate(ActivityTemplateDto activityTemplateDto)
+        {
+            ActivityTemplate result = await _activityTemplatesRepository.UpdateTemplate(activityTemplateDto);
+
+            var mappedResult = _mapppingEngine.Map<ActivityTemplate, ActivityTemplateDto>(result);
 
             return Ok(mappedResult);
         }

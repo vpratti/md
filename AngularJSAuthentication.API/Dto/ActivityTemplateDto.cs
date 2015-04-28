@@ -3,11 +3,11 @@ using AngularJSAuthentication.API.Models;
 
 namespace AngularJSAuthentication.API.Dto
 {
-    public class AcvitityTemplateDto
+    public class ActivityTemplateDto
     {
-        public AcvitityTemplateDto() { }
+        public ActivityTemplateDto() { }
 
-        public AcvitityTemplateDto(ActivityTemplate activityTemplate)
+        public ActivityTemplateDto(ActivityTemplate activityTemplate)
         {
             Id = activityTemplate.Id;
             Name = activityTemplate.Name;

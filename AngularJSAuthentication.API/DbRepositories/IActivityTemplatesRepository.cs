@@ -23,5 +23,7 @@ namespace AngularJSAuthentication.API.DbRepositories
         Task DeleteTemplateTask(DeleteTemplateTaskObj deleteTemplateTaskObj);
 
         Task<TemplateTask> UpdateTemplateTask(TemplateTaskDto templateTaskDto);
+
+        Task<ActivityTemplate> UpdateTemplate(ActivityTemplateDto activityTemplateDto);
     }
 }

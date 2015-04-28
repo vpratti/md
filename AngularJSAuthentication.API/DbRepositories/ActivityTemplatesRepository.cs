@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using AngularJSAuthentication.API.Controllers;
 using AngularJSAuthentication.API.DbContexts;
 using AngularJSAuthentication.API.Dto;
 using AngularJSAuthentication.API.Models;
@@ -101,6 +100,17 @@ namespace AngularJSAuthentication.API.DbRepositories
                         i.TaskId == templateTaskDto.TaskId && i.TemplateId == templateTaskDto.TemplateId);
 
             templateTask.UpdateTemplateTask(templateTaskDto, HttpContext.Current.User.Identity.Name);
+
+            await _context.SaveChangesAsync();
+
+            return templateTask;
+        }
+
+        public async Task<ActivityTemplate> UpdateTemplate(ActivityTemplateDto activityTemplateDto)
+        {
+            ActivityTemplate templateTask = await _context.ActivityTemplates.FindAsync(activityTemplateDto.Id);
+            
+            templateTask.UpdateActivityTemplate(activityTemplateDto, HttpContext.Current.User.Identity.Name);
 
             await _context.SaveChangesAsync();
 
