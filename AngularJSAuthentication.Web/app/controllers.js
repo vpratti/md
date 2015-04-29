@@ -1,4 +1,4 @@
-﻿(function (angular) {
+﻿(function(angular) {
     'use strict';
 
     angular
@@ -17,7 +17,7 @@
 
         $scope.message = "";
 
-        $scope.login = function () {
+        $scope.login = function() {
             $scope.inProgress = true;
             authService.login($scope.loginData).then(function() {
                     $location.path('/dashboard');
@@ -76,7 +76,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -86,7 +86,7 @@
     indexCtrl.$inject = ['$scope', '$location', 'authService'];
 
     function indexCtrl($scope, $location, authService) {
-        $scope.logOut = function () {
+        $scope.logOut = function() {
             authService.logOut();
             $location.path('/');
         }
@@ -95,7 +95,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -109,7 +109,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -136,9 +136,9 @@
             });
         }
 
-        vm.createUser = function () {
+        vm.createUser = function() {
             utility.confirm("Are you sure you want to create this user?").result.then(function() {
-                authService.saveRegistration(vm.newUser).then(function () {
+                authService.saveRegistration(vm.newUser).then(function() {
                     //todo consider sending back in payload so we dont have to do another call to refresh the screen
                     vm.getAllUsers();
                     vm.newUser = new userModel();
@@ -168,17 +168,17 @@
             });
         }
 
-        vm.unlock = function (user) {
+        vm.unlock = function(user) {
             utility.confirm("Are you sure you want to unlock this user?").result.then(function() {
-                accountLocksService.unlock(user.id).then(function () {
+                accountLocksService.unlock(user.id).then(function() {
                     user.isLocked = false;
                 });
             });
         }
 
-        vm.lock = function (user) {
-            utility.confirm("Are you sure you want to lock this user?").result.then(function () {
-                accountLocksService.lock(user.id).then(function () {
+        vm.lock = function(user) {
+            utility.confirm("Are you sure you want to lock this user?").result.then(function() {
+                accountLocksService.lock(user.id).then(function() {
                     user.isLocked = true;
                 });
             });
@@ -188,7 +188,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -202,17 +202,17 @@
         vm.roles = [];
         vm.newRole = "";
 
-        vm.deleteRole = function (id) {
+        vm.deleteRole = function(id) {
             utility.confirm("Are you sure you want to delete this role?").result.then(function() {
-                rolesService.deleteRole(id).then(function () {
+                rolesService.deleteRole(id).then(function() {
                     vm.getRoles();
                 });
             });
         }
 
-        vm.createRole = function () {
+        vm.createRole = function() {
             utility.confirm("Are you sure you want to create this role?").result.then(function() {
-                rolesService.createRole(vm.newRole).then(function (result) {
+                rolesService.createRole(vm.newRole).then(function(result) {
                     vm.newRole = "";
                     vm.roles = result.data;
                 });
@@ -233,7 +233,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -249,7 +249,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -271,7 +271,7 @@
         }
 
         vm.init = function() {
-            rolesService.getAllRoles().then(function (result) {
+            rolesService.getAllRoles().then(function(result) {
                 vm.availableRoles = result.data;
             });
         }
@@ -280,7 +280,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -295,7 +295,7 @@
         vm.email = "";
 
         vm.resetPassword = function() {
-            passwordRecoveryService.resetPassword(vm.email).then(function () {
+            passwordRecoveryService.resetPassword(vm.email).then(function() {
                 $modalInstance.close('Temporary password has been sent to ' + vm.email);
             }, function() {
                 messaging.publish(vcAppConstants.vcErrorNotificationEvt, { message: 'Failed to reset password' }); //todo add interceptor to catch all errors
@@ -304,7 +304,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -330,12 +330,12 @@
                     function onConfirm() {
                         authService.saveAnonymousRegistration(vm.newUser)
                             .then(
-                            function onSuccess() {
-                                $state.transitionTo('login', {}, { reload: true, inherit: false, notify: true, location: "replace" });
-                            },
-                            function onError() {
-                                vm.inProgress = false;
-                            });
+                                function onSuccess() {
+                                    $state.transitionTo('login', {}, { reload: true, inherit: false, notify: true, location: "replace" });
+                                },
+                                function onError() {
+                                    vm.inProgress = false;
+                                });
                     },
                     function onReject() {
                         vm.inProgress = false;
@@ -346,7 +346,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -379,7 +379,7 @@
         }
 
         function addCategory() {
-            categoryFactory.addCategory().result.then(function () {
+            categoryFactory.addCategory().result.then(function() {
                 vm.populateCategories();
             });
         }
@@ -397,11 +397,11 @@
 
         function deleteLookupValue(id) {
             utility.confirm('Are you sure you want to delete this lookup value?').result.then(function() {
-                lookupsService.deleteLookupValue(id).then(function () {
+                lookupsService.deleteLookupValue(id).then(function() {
                     if (id == vm.selectedLookupValue.id) {
                         vm.selectedLookupValue = null;
                     }
-                    vm.selectedCategory.values = _.remove(vm.selectedCategory.values, function (n) {
+                    vm.selectedCategory.values = _.remove(vm.selectedCategory.values, function(n) {
                         return n.id != id;
                     });
                 });
@@ -417,8 +417,8 @@
 
         function deleteAlias(id) {
             utility.confirm('Are you sure you want to delete this alias?').result.then(function() {
-                lookupsService.deleteAlias(id).then(function () {
-                    vm.selectedLookupValue.lookupAliases = _.remove(vm.selectedLookupValue.lookupAliases, function (n) {
+                lookupsService.deleteAlias(id).then(function() {
+                    vm.selectedLookupValue.lookupAliases = _.remove(vm.selectedLookupValue.lookupAliases, function(n) {
                         return n.id != id;
                     });
                 });
@@ -433,13 +433,13 @@
         }
 
         function deleteCategory(id) {
-            lookupsService.deleteCategory(id).then(function () {
+            lookupsService.deleteCategory(id).then(function() {
                 if (id == vm.selectedCategory.id) {
                     vm.selectedCategory = null;
                     vm.selectedLookupValue = null;
                 }
 
-                vm.categories = _.remove(vm.categories, function (n) {
+                vm.categories = _.remove(vm.categories, function(n) {
                     return n.id != id;
                 });
             });
@@ -452,7 +452,7 @@
         }
 
         function createCategory() {
-            lookupsService.createCategory(vm.newCategory).then(function () {
+            lookupsService.createCategory(vm.newCategory).then(function() {
                 vm.newCategory = {};
                 vm.populateCategories();
             });
@@ -494,7 +494,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -511,7 +511,8 @@
         vm.lookupsService = lookupsService;
 
         function init() {
-            vm.category = category;}
+            vm.category = category;
+        }
 
         function editCategory() {
             lookupsService.editCategory(vm.category);
@@ -522,7 +523,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -545,11 +546,11 @@
         }
 
         function createTimeframe() {
-            timelineService.createTimeframe(vm.timeframe).then(function (result) {
+            timelineService.createTimeframe(vm.timeframe).then(function(result) {
                 if (angular.isDefined(vm.timeframe.parentTimeFrame) && vm.timeframe.parentTimeFrame != null) {
                     var index = vm.timeframes.indexOfByProperty('id', vm.timeframe.parentTimeFrame.id);
 
-                    vm.timeframes[index].children.push({label: result.data.name, id:result.data.id});
+                    vm.timeframes[index].children.push({ label: result.data.name, id: result.data.id });
                 } else {
                     vm.timeframes.push(result.data);
                 }
@@ -559,14 +560,14 @@
         }
 
         function populateTimeframes() {
-            timelineService.getTimeframes().then(function (result) {
+            timelineService.getTimeframes().then(function(result) {
                 vm.timeframes = result.data;
             });
         }
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -591,7 +592,7 @@
         }
 
         function removeLookupValue(lookupValue) {
-            vm.newCategory.values = _.remove(vm.newLookupValues, function (n) {
+            vm.newCategory.values = _.remove(vm.newLookupValues, function(n) {
                 return n.name != lookupValue.name;
             });
         }
@@ -605,7 +606,7 @@
         }
 
         function createCategory() {
-            lookupsService.createCategory(vm.newCategory).then(function () {
+            lookupsService.createCategory(vm.newCategory).then(function() {
                 $modalInstance.close();
             });
         }
@@ -614,7 +615,7 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
@@ -655,8 +656,8 @@
 
         function deleteTemplateTask(task) {
             utility.confirm('Are you sure you want to delete this template task?').result.then(function() {
-                activityTemplatesService.deleteTemplateTask(task.taskId, task.templateId).then(function () {
-                    vm.selectedTemplate.templateTasks = _.remove(vm.selectedTemplate.templateTasks, function (n) {
+                activityTemplatesService.deleteTemplateTask(task.taskId, task.templateId).then(function() {
+                    vm.selectedTemplate.templateTasks = _.remove(vm.selectedTemplate.templateTasks, function(n) {
                         return n.id !== task.id;
                     });
                 });
@@ -674,7 +675,7 @@
         }
 
         function editTemplate(template) {
-            activityTemplates.editTemplate(angular.copy(template)).result.then(function (result) {
+            activityTemplates.editTemplate(angular.copy(template)).result.then(function(result) {
                 var index = vm.activityTemplates.indexOfByProperty('id', result.id);
                 vm.activityTemplates[index] = result;
                 if (vm.selectedTemplate.id == result.id) {
@@ -685,7 +686,7 @@
 
         function createTemplateTask() {
             var templateTasksCopy = angular.copy(vm.selectedTemplate.templateTasks);
-            activityTemplates.addTemplateTask(vm.selectedTemplate.id, templateTasksCopy, getTemplateValues()).result.then(function (data) {
+            activityTemplates.addTemplateTask(vm.selectedTemplate.id, templateTasksCopy, getTemplateValues()).result.then(function(data) {
                 vm.selectedTemplate.templateTasks.push(data);
             });
         }
@@ -729,15 +730,15 @@
         vm.init = init;
 
         function init() {
-            lookupsService.getLookupsByCategoryCode('domain').then(function (result) {
+            lookupsService.getLookupsByCategoryCode('domain').then(function(result) {
                 vm.domainLookups = result.data;
             });
 
-            lookupsService.getLookupsByCategoryCode('stage').then(function (result) {
+            lookupsService.getLookupsByCategoryCode('stage').then(function(result) {
                 vm.stageLookups = result.data;
             });
 
-            lookupsService.getLookupsByCategoryCode('environment').then(function (result) {
+            lookupsService.getLookupsByCategoryCode('environment').then(function(result) {
                 vm.environmentLookups = result.data;
             });
         }
@@ -752,15 +753,17 @@
     }
 }(angular));
 
-(function (angular) {
+(function(angular) {
     'use strict';
 
     angular
         .module('VirtualClarityApp')
         .controller('addTemplateTaskCtrl', addTemplateTaskCtrl);
 
-    addTemplateTaskCtrl.$inject = ['$modalInstance', 'activityTemplatesService', 'templateId', 'templateTasks', 'lookupsService',
-    'templateValues'];
+    addTemplateTaskCtrl.$inject = [
+        '$modalInstance', 'activityTemplatesService', 'templateId', 'templateTasks', 'lookupsService',
+        'templateValues'
+    ];
 
     function addTemplateTaskCtrl($modalInstance, activityTemplatesService, templateId, templateTasks, lookupsService,
         templateValues) {
@@ -779,24 +782,24 @@
             vm.templateTask.environment = templateValues.environment;
 
             if (!vm.templateTask.domain) {
-                lookupsService.getLookupsByCategoryCode('domain').then(function (result) {
+                lookupsService.getLookupsByCategoryCode('domain').then(function(result) {
                     vm.domainLookups = result.data;
                 });
             }
 
             if (!vm.templateTask.stage) {
-                lookupsService.getLookupsByCategoryCode('stage').then(function (result) {
+                lookupsService.getLookupsByCategoryCode('stage').then(function(result) {
                     vm.stageLookups = result.data;
                 });
             }
 
             if (!vm.templateTask.environment) {
-                lookupsService.getLookupsByCategoryCode('environment').then(function (result) {
+                lookupsService.getLookupsByCategoryCode('environment').then(function(result) {
                     vm.environmentLookups = result.data;
                 });
             }
 
-            activityTemplatesService.getActivityTasks().then(function (result) {
+            activityTemplatesService.getActivityTasks().then(function(result) {
                 result.data = _.remove(result.data, function(n) {
                     return !(templateTasks.indexOfByProperty('taskId', n.id) > -1);
                 });
@@ -897,23 +900,42 @@
         function init() {
             vm.isLoading = true;
             $q.all(
-           [
-               lookupsService.getLookupsByCategoryCode('domain'),
-               lookupsService.getLookupsByCategoryCode('stage'),
-               lookupsService.getLookupsByCategoryCode('environment'),
-           ]).then(function (result) {
-               vm.domainLookups = result[0].data;
-               vm.stageLookups = result[1].data;
-               vm.environmentLookups = result[2].data;
-               vm.template = template;
-               vm.isLoading = false;
-           });
+            [
+                lookupsService.getLookupsByCategoryCode('domain'),
+                lookupsService.getLookupsByCategoryCode('stage'),
+                lookupsService.getLookupsByCategoryCode('environment'),
+            ]).then(function(result) {
+                vm.domainLookups = result[0].data;
+                vm.stageLookups = result[1].data;
+                vm.environmentLookups = result[2].data;
+                vm.template = template;
+                vm.isLoading = false;
+            });
         }
 
         function updateTemplate() {
             activityTemplatesService.updateTemplate(vm.template).then(function(result) {
                 $modalInstance.close(result.data);
             });
+        }
+
+        vm.init();
+    }
+}(angular));
+
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('VirtualClarityApp')
+        .controller('activitytaskManagementCtrl', activitytaskManagementCtrl);
+
+    function activitytaskManagementCtrl() {
+        var vm = this;
+        vm.init = init;
+
+        function init() {
+            
         }
 
         vm.init();

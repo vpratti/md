@@ -16,7 +16,7 @@
 
         function recoverPassword() {
             return $modal.open({
-                templateUrl: 'app/views/passwordRecovery.html',
+                templateUrl: 'app/views/modals/passwordRecovery.html',
                 controller: 'passwordRecoveryCtrl as vm',
                 size: 'sm'
             });
@@ -64,7 +64,7 @@
 
         function editUser(user) {
             return $modal.open({
-                templateUrl: 'app/views/editUser.html',
+                templateUrl: 'app/views/modals/editUser.html',
                 controller: 'editUserCtrl as vm',
                 resolve: {
                     user: function () {
@@ -158,7 +158,7 @@
 
         function confirm(message) {
             return $modal.open({
-                templateUrl: 'app/views/confirm.html',
+                templateUrl: 'app/views/modals/confirm.html',
                 controller: 'confirmCtrl as vm',
                 size: 'sm',
                 resolve: {
@@ -320,7 +320,7 @@
 
         function editCategory(category) {
             return $modal.open({
-                templateUrl: 'app/views/editCategory.html',
+                templateUrl: 'app/views/modals/editCategory.html',
                 controller: 'editCategoryCtrl as vm',
                 resolve: {
                     category: function() {
@@ -377,7 +377,7 @@
 
         function addCategory() {
             return $modal.open({
-                templateUrl: 'app/views/addCategory.html',
+                templateUrl: 'app/views/modals/addCategory.html',
                 controller: 'addCategoryCtrl as vm',
             });
         }
@@ -463,7 +463,7 @@
 
         function addTemplateTask(templateId, templateTasks, templateValues) {
             return $modal.open({
-                templateUrl: 'app/views/addTemplateTask.html',
+                templateUrl: 'app/views/modals/addTemplateTask.html',
                 controller: 'addTemplateTaskCtrl as vm',
                 resolve: {
                     templateId: function() {
@@ -482,7 +482,7 @@
 
         function editTemplateTask(templateTask, templateTasks, templateValues) {
             return $modal.open({
-                templateUrl: 'app/views/editTemplateTask.html',
+                templateUrl: 'app/views/modals/editTemplateTask.html',
                 controller: 'editTemplateTaskCtrl as vm',
                 resolve: {
                     templateTask: function () {
@@ -501,7 +501,7 @@
 
         function addTemplate() {
             return $modal.open({
-                templateUrl: 'app/views/addTemplate.html',
+                templateUrl: 'app/views/modals/addTemplate.html',
                 controller: 'addTemplateCtrl as vm',
                 windowClass: 'md'
             });
@@ -509,7 +509,7 @@
 
         function editTemplate(template) {
             return $modal.open({
-                templateUrl: 'app/views/editTemplate.html',
+                templateUrl: 'app/views/modals/editTemplate.html',
                 controller: 'editTemplateCtrl as vm',
                 windowClass: 'md',
                 resolve: {

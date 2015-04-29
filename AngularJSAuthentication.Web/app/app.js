@@ -83,13 +83,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
                 displayName: 'Timeline'
             },
             resolve: {
-                parentTimeframes: ['timelineService', '$window', function (timelineService, $window) {
-                    return timelineService.getTimeframes().error(function (result, event) {
-                        if (event == 401) {
-                            $window.location.href = "/";
-                        }
-                    });
-                }]
+                parentTimeframes: [
+                    'timelineService', '$window', function(timelineService, $window) {
+                        return timelineService.getTimeframes().error(function(result, event) {
+                            if (event == 401) {
+                                $window.location.href = "/";
+                            }
+                        });
+                    }
+                ]
             }
         })
         .state('templates', {
@@ -99,6 +101,21 @@ app.config(function($stateProvider, $urlRouterProvider) {
             data: {
                 displayName: 'Templates'
             }
+        })
+        .state('activitytaskManagement', {
+            url: "/activitytaskManagement",
+            templateUrl: "app/views/activitytaskManagement.html",
+            controller: "activitytaskManagementCtrl as vm",
+            data: {
+                displayName: 'Activity Tasks'
+            },
+            onEnter: [
+                '$window', 'authService', function ($window, authService) {
+                    if (!authService.authentication.isAdmin) {
+                        $window.location.href = "#/dashboard";
+                    }
+                }
+            ]
         });
 
     $urlRouterProvider.otherwise('/');
